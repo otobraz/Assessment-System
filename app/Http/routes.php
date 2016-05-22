@@ -11,6 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => ['web']], function () {
+
+   // System home routes
+   Route::get('/', ['as' => 'home', 'uses' => 'HomeController@getIndex']);
+   Route::get('/index', ['as' => 'home', 'uses' => 'HomeController@getIndex']);
+
+   // Admin home route
+   Route::get('/admin', ['as' => 'adminHome', 'uses' => 'HomeController@getAdminHome']);
+
+   // Students home route
+   Route::get('/aluno', ['as' => 'studentHome', 'uses' => 'HomeController@getStudentHome']);
+
+   // About route
+   Route::get('sobre', function(){
+      return view('about');
+   });
+
+   // Contact routes
+   Route::get('contato', function(){
+      return view('contact');
+   });
+
 });

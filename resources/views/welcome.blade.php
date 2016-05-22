@@ -39,6 +39,9 @@
         <div class="container">
             <div class="content">
                 <div class="title">Laravel 5</div>
+
+                <a href="{{ url('admin') }}">Administrador</a>
+                <a href="{{ url('aluno') }}">Aluno</a>
             </div>
         </div>
     </body>
