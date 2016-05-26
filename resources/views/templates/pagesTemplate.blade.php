@@ -6,7 +6,7 @@
    @section('header')
       <meta http-equiv="content-type" content="text/html; charset=UTF-8">
       <meta charset="utf-8">
-      <title>Sistema de Suporte NT</title>
+      <title>Sistema de Avaliação</title>
       <meta name="generator" content="Bootply" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
       <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
@@ -40,13 +40,17 @@
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                      <li>
-                        <label class="lead"><a href="{{url('perfil')}}">Perfil</a></label>
+                        @if(true) <!-- Se houver usuário logado -->
+                           <a href="{{url('perfil')}}">{{"Nome do Usuário"}}</a>
+                        @endif
                      </li>
                      <li>
                         <a>{{date('d/M')}}</a>
                      </li>
                      <li>
-                        <a href="{{url('logout')}}"><span class="glyphicon glyphicon-off"></span> Sair</a>
+                        @if(true) <!-- Se houver usuário logado -->
+                           <a href="{{url('logout')}}"><span class="glyphicon glyphicon-off"></span> Sair</a>
+                        @endif
                      </li>
                   </ul>
                </div>

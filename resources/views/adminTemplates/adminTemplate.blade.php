@@ -21,19 +21,18 @@
                   <!-- Collect the nav links, forms, and other content for toggling -->
                   <div class="navbar-inverse collapse navbar-collapse">
                      <ul class="nav navbar-nav">
-                        {{-- <li><a href="{{path('informacoes')}}">Informações</a></li>
-                        <li><a href="{{path('contato')}}">Contato</a></li> --}}
                         <li><a href="{{ url('oparea') }}">Área Operacional</a></li>
                         <li><a href="{{ url('oparea') }}">Área Operacional</a></li>
                      </ul>
                      <ul class="nav navbar-nav navbar-right">
                         <li>
-                           {{-- <a href="{{path('admin_chamados_perfil_individual')}}">{{usuario.nome}}</a> --}}
-                           <a href="{{ url('oparea') }}">Área Operacional</a>
+                           <a href="{{url('perfil')}}">{{"Nome do Usuário"}}</a>
                         </li>
                         <li>
-                           {{-- <a href="{{path('logout')}}"><span class="glyphicon glyphicon-off"></span> Sair</a> --}}
-                           <a href="{{ url('oparea') }}">Área Operacional</a>
+                           <a>{{date('d/M')}}</a>
+                        </li>
+                        <li>
+                           <a href="{{url('logout')}}"><span class="glyphicon glyphicon-off"></span> Sair</a>
                         </li>
                      </ul>
                   </div>

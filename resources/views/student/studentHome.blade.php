@@ -3,10 +3,10 @@
 @section('content')
    <div class="container">
      <div class="col-md-3">
-        {#<p class="lead"><i class="glyphicon glyphicon-globe"></i> Atendimento Geral</p>
+        <p class="lead"><i class="glyphicon glyphicon-globe"></i> Atendimento Geral</p>
         <div class="list-group">
            {{-- <a type="button" class="list-group-item" href="{{path('login')}}"><b><i class="glyphicon glyphicon-home"></i> Home</b></a> --}}
-        </div>#}
+        </div>
         <p class="lead"><i class="glyphicon glyphicon-tasks"></i> Chamados Do Sistema</p>
         <div class="list-group">
            {{-- <a href="{{path('admin_chamados_em_aberto')}}" class="list-group-item"><b><i class="glyphicon glyphicon-inbox"></i> Em Aberto</b></a>

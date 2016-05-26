@@ -13,6 +13,11 @@
 
 Route::group(['middleware' => ['web']], function () {
 
+   // About route
+   Route::get('ldap', function(){
+      return view('ldap_tester');
+   });
+
    // System home routes
    Route::get('/', ['as' => 'home', 'uses' => 'HomeController@getIndex']);
    Route::get('/index', ['as' => 'home', 'uses' => 'HomeController@getIndex']);
@@ -32,5 +37,8 @@ Route::group(['middleware' => ['web']], function () {
    Route::get('contato', function(){
       return view('contact');
    });
+
+   // Login route
+   Route::get('/login', ['as' => 'getLogin', 'uses' => 'HomeController@getLogin']);
 
 });

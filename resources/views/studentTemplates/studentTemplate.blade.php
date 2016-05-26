@@ -25,7 +25,7 @@
                              <!-- Brand and toggle get grouped for better mobile display -->
                              <div class="navbar-header">
                                  {{-- <a class="navbar-brand" href="{{path('login')}}">SisNti</a> --}}
-                                 <a class="navbar-brand"  href="{{ url('oparea') }}">Área Operacional</a>
+                                 <a class="navbar-brand"  href="{{ url('oparea') }}">Sistema de Avaliação</a>
                                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
@@ -38,17 +38,19 @@
                                  <ul class="nav navbar-nav">
                                     {{-- <li><a href="{{path('informacoes')}}">Informações</a></li>
                                     <li><a href="{{path('contato')}}">Contato</a></li> --}}
-                                    <li><a href="{{ url('oparea') }}">Área Operacional</a></li>
-                                     <li><a href="{{ url('oparea') }}">Área Operacional</a></li>
+                                    <li><a href="{{ url('oparea') }}">Pesquisa de Disciplina</a></li>
+                                    <li><a href="{{ url('oparea') }}">Pesquisa de TCC</a></li>
+                                    <li><a href="{{ url('oparea') }}">Forum</a></li>
                                  </ul>
                                  <ul class="nav navbar-nav navbar-right">
                                     <li>
-                                        {{-- <a href="{{path('admin_chamados_perfil_individual')}}">{{usuario.nome}}</a> --}}
-                                        <a href="{{ url('oparea') }}">Área Operacional</a>
+                                       <a href="{{url('perfil')}}">{{"Nome do Usuário"}}</a>
                                     </li>
                                     <li>
-                                        {{-- <a href="{{path('logout')}}"><span class="glyphicon glyphicon-off"></span> Sair</a> --}}
-                                        <a href="{{ url('oparea') }}">Área Operacional</a>
+                                       <a>{{date('d/M')}}</a>
+                                    </li>
+                                    <li>
+                                       <a href="{{url('logout')}}"><span class="glyphicon glyphicon-off"></span> Sair</a>
                                     </li>
                                  </ul>
                              </div>
