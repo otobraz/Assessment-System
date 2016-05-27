@@ -25,7 +25,7 @@
                <ul class="nav navbar-nav navbar-right">
                   <li>
                      @if(true) <!-- Se houver usuário logado -->
-                        <a href="{{url('perfil')}}">{{"Nome do Usuário"}}</a>
+                        <a href="{{url('perfil')}}">{{$users}}</a>
                      @endif
                   </li>
                   <li>

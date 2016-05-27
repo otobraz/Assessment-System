@@ -4,9 +4,101 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2c04816e93c3e4fdac32da0323675565",
-    "content-hash": "8b1485987e7c5949da82435d403e52e8",
+    "hash": "8c3e3bb46b1a71d32dfcbbd15fe3478a",
+    "content-hash": "cb959f8a62964687c002f3ae11be66c5",
     "packages": [
+        {
+            "name": "adldap2/adldap2",
+            "version": "v6.0.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Adldap2/Adldap2.git",
+                "reference": "90b2e76fd4d04a23295e9ec3ec3c9579775901cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/90b2e76fd4d04a23295e9ec3ec3c9579775901cf",
+                "reference": "90b2e76fd4d04a23295e9ec3ec3c9579775901cf",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ldap": "*",
+                "illuminate/support": "~5.2",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "4.6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Adldap\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Steve Bauman",
+                    "email": "steven_bauman@outlook.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A PHP LDAP Package for Active Directory Manipulation.",
+            "keywords": [
+                "active directory",
+                "ad",
+                "adLDAP",
+                "adldap2",
+                "directory",
+                "ldap",
+                "windows"
+            ],
+            "time": "2016-05-24 14:07:49"
+        },
+        {
+            "name": "adldap2/adldap2-laravel",
+            "version": "v2.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Adldap2/Adldap2-Laravel.git",
+                "reference": "ff97b61c9438ad903decc3ece8a56a5e8d0d2220"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2-Laravel/zipball/ff97b61c9438ad903decc3ece8a56a5e8d0d2220",
+                "reference": "ff97b61c9438ad903decc3ece8a56a5e8d0d2220",
+                "shasum": ""
+            },
+            "require": {
+                "adldap2/adldap2": "6.0.*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.2"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Adldap\\Laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Adldap2 for Laravel 5.",
+            "keywords": [
+                "adLDAP",
+                "adldap2",
+                "laravel",
+                "ldap"
+            ],
+            "time": "2016-05-22 04:17:24"
+        },
         {
             "name": "classpreloader/classpreloader",
             "version": "3.0.0",

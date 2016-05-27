@@ -155,6 +155,7 @@ return [
         ShareYourThoughts\Providers\AuthServiceProvider::class,
         ShareYourThoughts\Providers\EventServiceProvider::class,
         ShareYourThoughts\Providers\RouteServiceProvider::class,
+        Adldap\Laravel\AdldapServiceProvider::class,
 
     ],
 
@@ -201,6 +202,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Adldap' => Adldap\Laravel\Facades\Adldap::class,
 
     ],
 

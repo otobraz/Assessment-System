@@ -14,9 +14,11 @@
 Route::group(['middleware' => ['web']], function () {
 
    // About route
-   Route::get('ldap', function(){
+   Route::get('ldap_tester', function(){
       return view('ldap_tester');
    });
+   
+   Route::get('/ldap', ['as' => 'ldap', 'uses' => 'UserController@index']);
 
    // System home routes
    Route::get('/', ['as' => 'home', 'uses' => 'HomeController@getIndex']);

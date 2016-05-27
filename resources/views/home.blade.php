@@ -18,6 +18,7 @@
                <ul class="nav navbar-nav">
                    <li><a href="{{url('sobre')}}">Informações</a></li>
                    <li><a href="{{url('contato')}}">Contato</a></li>
+                   <li><a href="{{url('ldap')}}">Testar Ldap</a></li>
                </ul>
                <ul class="nav navbar-nav navbar-right">
                    <li>
