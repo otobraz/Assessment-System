@@ -5,7 +5,7 @@
       <div class="container">
            <!-- Brand and toggle get grouped for better mobile display -->
            <div class="navbar-header">
-               <a class="navbar-brand" href="{{url('index')}}">SystemName</a>
+               <a class="navbar-brand" href="{{url('/')}}">SystemName</a>
                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                    <span class="icon-bar"></span>
                    <span class="icon-bar"></span>
@@ -32,20 +32,21 @@
 @section('content')
    <div class="col-lg-12">
       <img class="img-responsive col-lg-6" src="{{asset('images/logoNTI.jpeg')}}" alt="Logo NTI">
-      <form class="form-horizontal col-lg-6" method="POST" action="{{--url('login_check')--}}">
+      <form class="form-horizontal col-lg-6" method="POST" action="{{url('login')}}">
+         {{ csrf_field() }}
            <fildset>
                <legend>Login no Sistema</legend>
                <div class="col-lg-9">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                       <input class="form-control input-xlarge" type="text" id="username" placeholder="CPF" autofocus>
+                       <input class="form-control input-xlarge" type="text" name="username" id="username" placeholder="CPF" autofocus>
                    </div>
                    <br/>
                </div>
                <div class="col-lg-9">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                       <input class="form-control input-xlarge " type="password" id="password" placeholder="Senha">
+                       <input class="form-control input-xlarge " type="password" name="password" id="password" placeholder="Senha">
                    </div>
                </div>
                <div class="col-lg-9">

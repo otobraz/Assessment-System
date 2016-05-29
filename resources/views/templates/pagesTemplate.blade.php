@@ -24,7 +24,7 @@
             <div class="container">
                <!-- Brand and toggle get grouped for better mobile display -->
                <div class="navbar-header">
-                  <a class="navbar-brand" href="{{url('/')}}">SystemName</a>
+                  <a class="navbar-brand"  href="{{ url('/') }}">SystemName</a>
                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                      <span class="icon-bar"></span>
                      <span class="icon-bar"></span>
@@ -40,15 +40,15 @@
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                      <li>
-                        @if(true) <!-- Se houver usuário logado -->
-                           <a href="{{url('perfil')}}">{{"Nome do Usuário"}}</a>
+                        @if(session('name')) <!-- Se houver usuário logado -->
+                           <a href="{{url('perfil')}}">{{session('name') . " " . session('last_name')}}</a>
                         @endif
                      </li>
                      <li>
                         <a>{{date('d/M')}}</a>
                      </li>
                      <li>
-                        @if(true) <!-- Se houver usuário logado -->
+                        @if(session('name')) <!-- Se houver usuário logado -->
                            <a href="{{url('logout')}}"><span class="glyphicon glyphicon-off"></span> Sair</a>
                         @endif
                      </li>
@@ -58,7 +58,7 @@
          </nav><!-- /.navbar-collapse -->
       @show
 
-   </div>
+   </div> <!-- navbar -->
 
    <div class="container">
 
@@ -75,8 +75,11 @@
    </div>
 </div>
 @show --}}
+   @if(session('message'))
+      {{ session('message') }}
+   @endif
 
-      @yield('content')
+   @yield('content')
 
    </div>
 

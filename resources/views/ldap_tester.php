@@ -35,4 +35,4 @@
 // var_dump($info);
 //
 // ldap_unbind($ldapConn);
-echo $users;
+echo $username;

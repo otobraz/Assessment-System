@@ -156,6 +156,7 @@ return [
         ShareYourThoughts\Providers\EventServiceProvider::class,
         ShareYourThoughts\Providers\RouteServiceProvider::class,
         Adldap\Laravel\AdldapServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 

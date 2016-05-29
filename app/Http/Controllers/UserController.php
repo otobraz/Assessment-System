@@ -7,30 +7,23 @@ use Adldap\Contracts\AdldapInterface;
 
 class UserController extends Controller
 {
-      /**
-   * @var Adldap
-   */
-   protected $adldap;
 
-   /**
-   * Constructor.
-   *
-   * @param AdldapInterface $adldap
-   */
-   public function __construct(AdldapInterface $adldap)
-   {
-      $this->adldap = $adldap;
+   public function logout(Request $request){
+      $request->session()->flush();
+      return redirect('/')->with('message', 'Você foi desconectado com sucesso!');
    }
 
-   /**
-   * Displays the all LDAP users.
-   *
-   * @return \Illuminate\View\View
-   */
-   public function index()
-   {
-      $users = $this->adldap->getDefaultProvider()->search()->where('uid', '=', '09647636644')->get();
+   public function getStudentsHome(Request $request){
+      if($request->session()->get('type') == 1){
+         return view('student/studentHome');
+      }
+      return redirect('login');
+   }
 
-      return view('ldap_tester', compact('users'));
+   public function getProfessorsHome(Request $request){
+      if($request->session()->get('type') == 2){
+         return view('professor/professorHome');
+      }
+      return redirect('login');
    }
 }

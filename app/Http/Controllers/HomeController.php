@@ -4,25 +4,30 @@ namespace ShareYourThoughts\Http\Controllers;
 
 use ShareYourThoughts\Http\Requests;
 use Illuminate\Http\Request;
-use View;
 
 class HomeController extends Controller
 {
 
     public function getIndex()
     {
-       return View::make('home');
+       return view('home');
     }
 
     public function getAdminHome(){
-      return View::make('admin/adminHome');
+      return view('admin/adminHome');
    }
 
-   public function getStudentHome(){
-      return View::make('student/studentHome');
+   public function getUsersHome(Request $request){
+      if($request->session()->get('group') == "SISTEMAS DE INFORMACAO"){
+         $request->session()->put('type', 1);
+         return redirect()->route('studentsHome');
+      }else{
+         $request->session()->put('type', 2);
+         return redirect()->route('professorsHome');
+      }
    }
 
    public function getLogin() {
-      return View::make('login');
+      return view('login');
    }
 }
