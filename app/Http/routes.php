@@ -11,7 +11,6 @@
 |
 */
 
-
 // About route
 Route::get('ldap_tester', function(){
    return view('ldap_tester');
