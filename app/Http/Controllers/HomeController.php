@@ -18,12 +18,12 @@ class HomeController extends Controller
    }
 
    public function getUsersHome(Request $request){
-      if($request->session()->get('group') == "SISTEMAS DE INFORMACAO"){
-         $request->session()->put('type', 1);
+      if($request->session()->get('type') == 1){
          return redirect()->route('studentsHome');
-      }else{
-         $request->session()->put('type', 2);
+      }else if($request->session()->get('type') == 2){
          return redirect()->route('professorsHome');
+      }else if(!$request->session()->get('type')){
+         return redirect()->route('login');
       }
    }
 

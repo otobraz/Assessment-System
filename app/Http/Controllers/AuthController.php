@@ -10,19 +10,19 @@ use DB;
 class AuthController extends Controller{
 
    public function getLdapUser($ldapData = null, $username = null){
-      $ds = ldap_connect($ldapData->server); // your ldap server
-      $bind = ldap_bind($ds, $ldapData->cn . "," . $ldapData->domain, base64_decode("$ldapData->bind_dn_password"));
+      $ds = ldap_connect($ldapData['server']); // your ldap server
+      $bind = ldap_bind($ds, $ldapData['cn'] . "," . $ldapData['domain'], base64_decode($ldapData['password']));
       if ($bind) {
-         $filter = "(" . $ldapData->user_id . "=" . $username . ")"; // this command requires some filter
+         $filter = "(" . $ldapData['id_field'] . "=" . $username . ")"; // this command requires some filter
          $justThese = array(
-            $ldapData->user_id,
-            $ldapData->user_given_name,
-            $ldapData->user_last_name,
-            $ldapData->user_email,
-            $ldapData->user_group,
-            $ldapData->user_password
+            $ldapData['id_field'],
+            $ldapData['given_name_field'],
+            $ldapData['last_name_field'],
+            $ldapData['email_field'],
+            $ldapData['group_field'],
+            $ldapData['password_field']
          ); // the attributes to pull, which is much more efficient than pulling all attributes if you don't do this
-         $sr = ldap_search($ds, $ldapData->domain, $filter, $justThese);
+         $sr = ldap_search($ds, $ldapData['domain'], $filter, $justThese);
          $entry = ldap_get_entries($ds, $sr);
          if ($entry['count'] > 0) {
             return $entry;
@@ -57,8 +57,8 @@ class AuthController extends Controller{
       }
    }
 
-   public function getLogin(){
-      if(session('username')){
+   public function getLogin(Request $request){
+      if($request->session()->has('username')){
          // Redirect to user's home page
          return redirect()->action('HomeController@getUsersHome');
       }else {
@@ -67,25 +67,28 @@ class AuthController extends Controller{
    }
 
    public function postLogin(Request $request){
-      if(session('username')){
+      if($request->session()->has('username')){
          // Redirect to user's home page
          return redirect()->action('HomeController@getUsersHome');
       }else {
-         $ldapData = DB::table('ldap_data')->first();
+         $ldapData = config('my_config.ldapData');
+         $ldapUserGroups = config('my_config.userGroups');
          $ldapUser = $this->getLdapUser($ldapData, $request->input('username'));
-         $userPassword = substr($ldapUser[0][$ldapData->user_password][0], 5);
+         $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
          if ($this->isPasswordValid($userPassword, $request->input('password'))){
             $authenticatedUser = array(
-               'username' => $ldapUser[0][$ldapData->user_id][0],
-               'name' => $ldapUser[0][$ldapData->user_given_name][0],
-               'last_name' => $ldapUser[0][$ldapData->user_last_name][0],
-               'email' => $ldapUser[0][$ldapData->user_email][0],
-               'group' => $ldapUser[0][$ldapData->user_group][0],
+               'username' => $ldapUser[0][$ldapData['id_field']][0],
+               'name' => $ldapUser[0][$ldapData['given_name_field']][0],
+               'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
+               'email' => $ldapUser[0][$ldapData['email_field']][0],
+               'group' => $ldapUser[0][$ldapData['group_field']][0],
+               'type' => $ldapUserGroups[$ldapUser[0][$ldapData['group_field']][0]]
             );
             $this->insertUpdateUser($authenticatedUser);
             $request->session()->put($authenticatedUser);
             return redirect()->action('HomeController@getUsersHome');
          }
+         return redirect('login')->with('message', 'Usuário e/ou Senha inválidos');
       }
    }
 
