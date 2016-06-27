@@ -16,7 +16,7 @@
 
     <!-- Custom CSS -->
     <link href="css/agency.css" rel="stylesheet">
-     <link href="css/style.css" rel="stylesheet">
+     <link href="css/styles.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -47,7 +47,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">SystemName</a>
+                <a class="navbar-brand page-scroll" href="#page-top">Sistema de Avaliação</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -82,7 +82,8 @@
                <div class="intro-lead-in">Seja Bem-vindo!</div>
                {{-- <div class="intro-heading">Seja Bem-Vindo!</div> --}}
                 <a href="#about" class="page-scroll btn btn-xl home-btn">Saiba mais!</a>
-                <a href="{{url('login')}}" class="page-scroll btn btn-xl home-btn">ACESSE AQUI!</a>
+                <a href="#loginModal" class="page-scroll btn btn-xl" data-toggle="modal">ACESSE AQUI!</a>
+                {{-- <a href="#loginModal" class="page-scroll btn btn-xl home-btn">ACESSE AQUI!</a> --}}
             </div>
         </div>
     </header>
@@ -465,8 +466,40 @@
         </div>
     </footer>
 
-    <!-- Portfolio Modals -->
-    <!-- Use the modals below to showcase details about your portfolio projects! -->
+    <!-- Modals -->
+
+    <!-- Login Modal -->
+   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+               <h4 class="modal-title" id="">LOGIN</h4>
+            </div>
+            <form class="form-horizontal" method="POST" action="{{url('login')}}">
+               {{ csrf_field() }}
+               <div class="modal-body">
+
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                     <input class="form-control input-xlarge" type="text" name="username" id="username" placeholder="CPF" autofocus>
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                     <input class="form-control input-xlarge " type="password" name="password" id="password" placeholder="Senha">
+                  </div>
+
+               </div>
+
+               <div class="modal-footer">
+                  <button type="submit" class="btn modal-btn btn-primary">Entrar</button>
+                  <button type="reset" class="btn modal-btn btn-default">Limpar</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
 
     <!-- Portfolio Modal 1 -->
     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">

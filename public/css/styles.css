@@ -4,6 +4,10 @@
   }
 }
 
+.modal-btn{
+   width: 90px;
+}
+
 .the-buttons > li {
   float: left;
   height: 80px;

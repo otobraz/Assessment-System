@@ -5,16 +5,16 @@
       // The UFOP LDAP information to connect and retrieve the necessary fields from the users
       'ldapData' => [
 
-         'server'  => '200.239.152.140',
-         'domain' => 'dc=ufop,dc=br',
-         'cn' => 'cn=arp',
-         'password' => 'dGgwMTIz',
-         'id_field' => 'uid',
-         'password_field' => 'userpassword',
-         'given_name_field' => 'cn',
-         'last_name_field' => 'sn',
-         'email_field' => 'mail',
-         'group_field' => 'ou'
+         'server'  => env('LDAP_SERVER', 'server'),
+         'domain' => env('LDAP_DOMAIN', 'domain'),
+         'cn' => env('LDAP_CN', 'cn'),
+         'password' => env('LDAP_PASSWORD', 'password'),
+         'id_field' => env('LDAP_ID_FIELD', 'idFieldName'),
+         'password_field' => env('LDAP_PASSWORD_FIELD', 'passwordFieldName'),
+         'given_name_field' => env('LDAP_NAME_FIELD', 'nameFieldName'),
+         'last_name_field' => env('LDAP_LASTNAME_FIELD', 'lastnameFieldName'),
+         'email_field' => env('LDAP_EMAIL_FIELD', 'emailFieldName'),
+         'group_field' => env('LDAP_GROUP_FIELD', 'groupFieldName')
 
       ],
 
@@ -33,7 +33,7 @@
          'DEPARTAMENTO DE ENGENHARIA DE PRODUCAO - ICEA' => 2,
          'DEPARTAMENTO DE ENGENHARIA ELETRICA' => 2,
          'INSTITUTO DE CIENCIAS EXATAS E APLICADAS' => 2
-         
+
       ]
    ]
 

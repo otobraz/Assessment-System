@@ -11,8 +11,8 @@ class AuthController extends Controller{
 
    public function getLdapUser($ldapData = null, $username = null){
       $ds = ldap_connect($ldapData['server']); // your ldap server
-      $bind = ldap_bind($ds, $ldapData['cn'] . "," . $ldapData['domain'], base64_decode($ldapData['password']));
-      if ($bind) {
+      try{
+         $bind = ldap_bind($ds, $ldapData['cn'] . "," . $ldapData['domain'], base64_decode($ldapData['password']));
          $filter = "(" . $ldapData['id_field'] . "=" . $username . ")"; // this command requires some filter
          $justThese = array(
             $ldapData['id_field'],
@@ -28,8 +28,9 @@ class AuthController extends Controller{
             return $entry;
          }
          return null;
+      }catch(\Exception $e){
+         abort(503);
       }
-      return null;
    }
 
    public function isPasswordValid($encodedPassword, $raw){
@@ -48,12 +49,12 @@ class AuthController extends Controller{
    public function insertUpdateUser($authenticatedUser){
       $userTable = DB::table('users');
       if($user = $userTable->where('username', $authenticatedUser['username'])
-         ->select('username', 'name', 'last_name', 'email', 'group')->get()){
+         ->select('username', 'name', 'last_name', 'email', 'group', 'type')->get()){
          if((array)$user[0] == $authenticatedUser){
             $userTable->update($authenticatedUser);
          }
       }else{
-         $userTable->insertGetId($user);
+         $userTable->insertGetId($authenticatedUser);
       }
    }
 
@@ -74,21 +75,24 @@ class AuthController extends Controller{
          $ldapData = config('my_config.ldapData');
          $ldapUserGroups = config('my_config.userGroups');
          $ldapUser = $this->getLdapUser($ldapData, $request->input('username'));
-         $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
-         if ($this->isPasswordValid($userPassword, $request->input('password'))){
-            $authenticatedUser = array(
-               'username' => $ldapUser[0][$ldapData['id_field']][0],
-               'name' => $ldapUser[0][$ldapData['given_name_field']][0],
-               'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
-               'email' => $ldapUser[0][$ldapData['email_field']][0],
-               'group' => $ldapUser[0][$ldapData['group_field']][0],
-               'type' => $ldapUserGroups[$ldapUser[0][$ldapData['group_field']][0]]
-            );
-            $this->insertUpdateUser($authenticatedUser);
-            $request->session()->put($authenticatedUser);
-            return redirect()->action('HomeController@getUsersHome');
+         if($type = $ldapUserGroups[$ldapUser[0][$ldapData['group_field']][0]]){
+            $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
+            if ($this->isPasswordValid($userPassword, $request->input('password'))){
+               $authenticatedUser = array(
+                  'username' => $ldapUser[0][$ldapData['id_field']][0],
+                  'name' => $ldapUser[0][$ldapData['given_name_field']][0],
+                  'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
+                  'email' => $ldapUser[0][$ldapData['email_field']][0],
+                  'group' => $ldapUser[0][$ldapData['group_field']][0],
+                  'type' => $type
+               );
+               $this->insertUpdateUser($authenticatedUser);
+               $request->session()->put($authenticatedUser);
+               return redirect()->action('HomeController@getUsersHome');
+            }
+            return redirect('login')->with('message', 'Usuário e/ou Senha inválidos');
          }
-         return redirect('login')->with('message', 'Usuário e/ou Senha inválidos');
+         return redirect('login')->with('message', 'Usuário Inválido');
       }
    }
 

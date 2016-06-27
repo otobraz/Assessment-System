@@ -10,6 +10,9 @@ class User extends Authenticatable
 
    protected $table = "users";
 
+   // The UFOP LDAP data
+   protected $ldapData;
+
    protected $username;
    protected $name;
    protected $last_name;
@@ -18,13 +21,14 @@ class User extends Authenticatable
    protected $password;
 
 
-   public function __construct($attributes){
+   public function __construct($attributes, $ldapData){
       $this->username = $attributes['username'];
       $this->name = $attributes['givenName'];
       $this->last_name = $attributes['lastName'];
       $this->email = $attributes['email'];
       $this->group = $attributes['group'];
       $this->password = $attributes['password'];
+      $this->ldapData = $ldapData;
    }
 
    /**
@@ -33,7 +37,7 @@ class User extends Authenticatable
     public function getAuthIdentifierName()
     {
         // Return the name of unique identifier for the user (e.g. "id")
-        return $this->username;
+        return $ldapData['id_field'];
     }
 
     /**

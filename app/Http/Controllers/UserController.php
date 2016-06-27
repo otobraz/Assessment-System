@@ -14,16 +14,16 @@ class UserController extends Controller
    }
 
    public function getStudentsHome(Request $request){
-      if($request->session()->get('type') == 1){
+      //if($request->session()->get('type') == 1){
          return view('student/studentHome');
-      }
-      return redirect('login');
+      //}
+      //return redirect('login');
    }
 
    public function getProfessorsHome(Request $request){
-      if($request->session()->get('type') == 2){
+      //if($request->session()->get('type') == 2){
          return view('professor/professorHome');
-      }
-      return redirect('login');
+      //}
+      //return redirect('login');
    }
 }

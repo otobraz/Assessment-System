@@ -2,6 +2,17 @@
 
 /*
 |--------------------------------------------------------------------------
+| Routes File
+|--------------------------------------------------------------------------
+|
+| Here is where you will register all of the routes in an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the controller to call when that URI is requested.
+|
+*/
+
+/*
+|--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
 |
@@ -11,28 +22,25 @@
 |
 */
 
-// About route
-Route::get('ldap_tester', function(){
-   return view('ldap_tester');
-});
+// Routes that can be accessed iff the user is authenticated
+Route::group(['middleware' => ['myAuth']], function () {
 
-Route::get('/ldap', ['as' => 'ldap', 'uses' => 'UserController@index']);
+   // Admin home route
+   Route::get('/admin', ['as' => 'adminHome', 'uses' => 'HomeController@getAdminHome']);
+
+   // Users' home routes
+   Route::get('aluno', ['as' => 'studentsHome', 'uses' => 'UserController@getStudentsHome']);
+   Route::get('professor', ['as' => 'professorsHome', 'uses' => 'UserController@getProfessorsHome']);
+
+   // Logout route
+   Route::get('logout', ['as' => 'getLogout', 'uses' => 'UserController@logout']);
+
+});
 
 // System home routes
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@getIndex']);
 
-// Admin home route
-Route::get('/admin', ['as' => 'adminHome', 'uses' => 'HomeController@getAdminHome']);
-
-Route::controller('homeController', 'HomeController');
-
-// Users' home routes
-Route::get('aluno', ['as' => 'studentsHome', 'uses' => 'UserController@getStudentsHome']);
-Route::get('professor', ['as' => 'professorsHome', 'uses' => 'UserController@getProfessorsHome']);
-
-// Route::get('/professor', ['as' => 'professorsHome', function(){
-//    return view('student/studentHome');
-// }]);
+Route::controller('home', 'HomeController');
 
 // About route
 Route::get('sobre', function(){
@@ -47,4 +55,3 @@ Route::get('contato', function(){
 // Login route
 Route::get('/login', ['as' => 'getLogin', 'uses' => 'AuthController@getLogin']);
 Route::post('/login', ['as' => 'postLogin', 'uses' => 'AuthController@postLogin']);
-Route::get('logout', ['as' => 'getLogout', 'uses' => 'UserController@logout']);
