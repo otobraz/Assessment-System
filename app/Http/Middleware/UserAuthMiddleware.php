@@ -15,7 +15,7 @@ class UserAuthMiddleware
    */
    public function handle($request, Closure $next)
    {
-      if ($userType = !$request->session()->has('type')) {
+      if ($userType = !$request->session()->has('username')) {
          if ($request->ajax() || $request->wantsJson()) {
             return response('Unauthorized.', 401);
          } else{

@@ -1,33 +1,37 @@
 @media screen and (min-width: 992px) {
-  .the-icons li {
-    width: 12.5%;
-  }
+   .the-icons li {
+      width: 12.5%;
+   }
 }
 
 .modal-btn{
    width: 90px;
 }
 
+.text-primary {
+   color: rgb(150, 32, 56);
+}
+
 .the-buttons > li {
-  float: left;
-  height: 80px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  font-size: 12px;
-  line-height: 1.25;
-  text-align: center;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  margin: 0 -1px -1px 0;
+   float: left;
+   height: 80px;
+   padding: 10px;
+   border: 1px solid #ddd;
+   font-size: 12px;
+   line-height: 1.25;
+   text-align: center;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   margin: 0 -1px -1px 0;
 }
 
 .the-icons .glyphicon {
-  display: block;
-  margin: 5px auto;
-  vertical-align: middle;
-  margin-right: 3px;
-  font-size: 24px;
+   display: block;
+   margin: 5px auto;
+   vertical-align: middle;
+   margin-right: 3px;
+   font-size: 24px;
 }
 
 .home-btn{
@@ -35,24 +39,106 @@
 }
 
 .the-icons li {
-  float: left;
-  width: 100px;
-  height: 110px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  font-size: 12px;
-  line-height: 1.25;
-  text-align: center;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  margin: 0 auto;
+   float: left;
+   width: 100px;
+   height: 110px;
+   padding: 10px;
+   border: 1px solid #ddd;
+   font-size: 12px;
+   line-height: 1.25;
+   text-align: center;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   margin: 0 auto;
 }
 
 .the-icons, .the-buttons {
-	list-style:none;
+   list-style:none;
 }
 
 .the-icons .glyphicon {
-	display:inline;
+   display:inline;
+}
+
+/* agency.css Overriding */
+
+.navbar-default .navbar-brand{
+   color: rgb(150, 32, 56);
+   font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-brand:active,
+.navbar-default .navbar-brand .active {
+   color: rgb(139, 19, 43);
+}
+
+a {
+   color: rgb(150, 32, 56);
+}
+
+a:hover,
+a:focus,
+a:active,
+a.active {
+   color: rgb(139, 19, 43);
+}
+
+.navbar-default .nav li a:hover,
+.navbar-default .nav li a:focus {
+   color: rgb(150, 32, 56);
+   outline: 0
+}
+
+.navbar-default .navbar-nav>.active>a {
+   background-color: rgb(150, 32, 56);
+}
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus {
+   background-color: rgb(139, 19, 43);
+}
+
+.btn-primary {
+    background-color: rgb(150, 32, 56);
+    border-color: rgb(150, 32, 56);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary .active,
+.open .dropdown-toggle .btn-primary {
+    background-color: rgb(139, 20, 43);
+    border-color: rgb(139, 15, 40);
+}
+
+.btn-xl {
+   background-color: rgb(150, 32, 56);
+   border-color: rgb(150, 32, 56);
+}
+
+.btn-xl:hover,
+.btn-xl:focus,
+.btn-xl:active,
+.btn-xl .active,
+.open .dropdown-toggle .btn-xl {
+   color: #fff;
+   background-color: rgb(139, 20, 43);
+   border-color: rgb(139, 15, 40);
+}
+
+.timeline>li .timeline-image {
+   background-color: rgb(139, 20, 43);
+}
+
+ul.social-buttons li a:hover,
+ul.social-buttons li a:focus,
+ul.social-buttons li a:active {
+   background-color: rgb(139, 20, 43);
+}
+
+#portfolio .portfolio-item .portfolio-link .portfolio-hover {
+   background: rgba(139, 20, 43, .9);
 }

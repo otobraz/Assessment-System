@@ -8,21 +8,23 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
-    public function getIndex()
-    {
-       return view('home');
-    }
+   public function getIndex(Request $request){
+      if($request->session()->has('username')){
+         return $this->getUsersHome($request);
+      }
+      return view('home');
+   }
 
-    public function getAdminHome(){
+   public function getAdminHome(){
       return view('admin/adminHome');
    }
 
    public function getUsersHome(Request $request){
-      if($request->session()->get('type') == 1){
+      if($request->session()->get('role_id') == 2){
          return redirect()->route('studentsHome');
-      }else if($request->session()->get('type') == 2){
+      }else if($request->session()->get('role_id') == 3){
          return redirect()->route('professorsHome');
-      }else if(!$request->session()->get('type')){
+      }else if(!$request->session()->get('role_id')){
          return redirect()->route('login');
       }
    }

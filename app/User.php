@@ -7,79 +7,47 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
 
-
    protected $table = "users";
-
-   // The UFOP LDAP data
-   protected $ldapData;
-
-   protected $username;
-   protected $name;
-   protected $last_name;
-   protected $email;
-   protected $group;
-   protected $password;
-
-
-   public function __construct($attributes, $ldapData){
-      $this->username = $attributes['username'];
-      $this->name = $attributes['givenName'];
-      $this->last_name = $attributes['lastName'];
-      $this->email = $attributes['email'];
-      $this->group = $attributes['group'];
-      $this->password = $attributes['password'];
-      $this->ldapData = $ldapData;
-   }
+   // // The UFOP LDAP data
+   // protected $username;
+   // protected $first_name;
+   // protected $last_name;
+   // protected $email;
+   // protected $group;
+   // protected $role;
+   // protected $password;
+   //
+   //
+   // public function __construct($attributes){
+   //    $this->username = $attributes['username'];
+   //    $this->firstName = $attributes['firstName'];
+   //    $this->lastName = $attributes['lastName'];
+   //    $this->email = $attributes['email'];
+   //    $this->group = $attributes['group'];
+   //    $this->role = $attribute['role'];
+   //    $this->password = $attributes['password'];
+   // }
+   //
+   // /**
+   // * The attributes that are mass assignable.
+   // *
+   // * @var array
+   // */
+   protected $fillable = [
+      'username',
+      'first_name',
+      'last_name',
+      'email',
+      'group',
+      'role_id'
+   ];
 
    /**
-     * @return string
-     */
-    public function getAuthIdentifierName()
-    {
-        // Return the name of unique identifier for the user (e.g. "id")
-        return $ldapData['id_field'];
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAuthIdentifier()
-    {
-        // Return the unique identifier for the user (e.g. their ID, 123)
-        return $this->username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAuthPassword()
-    {
-        // Returns the (hashed) password for the user
-        return $this->password;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRememberToken()
-    {
-        // Return the token used for the "remember me" functionality
-    }
-
-    /**
-     * @param  string  $value
-     * @return void
-     */
-    public function setRememberToken($value)
-    {
-        // Store a new token user for the "remember me" functionality
-    }
-
-    /**
-     * @return string
-     */
-    public function getRememberTokenName()
-    {
-        // Return the name of the column / attribute used to store the "remember me" token
-    }
+   * The attributes excluded from the model's JSON form.
+   *
+   * @var array
+   */
+   protected $hidden = [
+      'password'
+   ];
 }

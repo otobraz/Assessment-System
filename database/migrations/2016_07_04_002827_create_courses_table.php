@@ -13,8 +13,12 @@ class CreateCoursesTable extends Migration
     public function up()
     {
         Schema::create('courses', function (Blueprint $table) {
+
             $table->increments('id');
-            $table->string('course_name', 50);
+            $table->string('name', 50);
+            $table->integer('major_id')->unsigned();
+            $table->foreign('major_id')->references('id')->on('majors');
+
             $table->timestamp('updated_at');
             $table->timestamp('created_at')->useCurrent();
         });

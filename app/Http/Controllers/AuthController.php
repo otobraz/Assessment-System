@@ -49,7 +49,7 @@ class AuthController extends Controller{
    public function insertUpdateUser($authenticatedUser){
       $userTable = DB::table('users');
       if($user = $userTable->where('username', $authenticatedUser['username'])
-         ->select('username', 'name', 'last_name', 'email', 'group', 'type')->get()){
+         ->select('username', 'first_name', 'last_name', 'email', 'group', 'role_id')->get()){
          if((array)$user[0] == $authenticatedUser){
             $userTable->update($authenticatedUser);
          }
@@ -75,16 +75,16 @@ class AuthController extends Controller{
          $ldapData = config('my_config.ldapData');
          $ldapUserGroups = config('my_config.userGroups');
          $ldapUser = $this->getLdapUser($ldapData, $request->input('username'));
-         if($type = $ldapUserGroups[$ldapUser[0][$ldapData['group_field']][0]]){
+         if($role = $ldapUserGroups[$ldapUser[0][$ldapData['group_field']][0]]){
             $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
             if ($this->isPasswordValid($userPassword, $request->input('password'))){
                $authenticatedUser = array(
                   'username' => $ldapUser[0][$ldapData['id_field']][0],
-                  'name' => $ldapUser[0][$ldapData['given_name_field']][0],
+                  'first_name' => $ldapUser[0][$ldapData['given_name_field']][0],
                   'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
                   'email' => $ldapUser[0][$ldapData['email_field']][0],
                   'group' => $ldapUser[0][$ldapData['group_field']][0],
-                  'type' => $type
+                  'role_id' => $role
                );
                $this->insertUpdateUser($authenticatedUser);
                $request->session()->put($authenticatedUser);

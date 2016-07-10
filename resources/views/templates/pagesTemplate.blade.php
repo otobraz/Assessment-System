@@ -40,15 +40,15 @@
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                      <li>
-                        @if(session('name')) <!-- Se houver usuário logado -->
-                           <a href="{{url('perfil')}}">{{session('name') . " " . session('last_name')}}</a>
+                        @if(session('username')) <!-- Se houver usuário logado -->
+                           <a href="{{url('perfil')}}">{{session('first_name') . " " . session('last_name')}}</a>
                         @endif
                      </li>
                      <li>
                         <a>{{date('d/M')}}</a>
                      </li>
                      <li>
-                        @if(session('name')) <!-- Se houver usuário logado -->
+                        @if(session('username')) <!-- Se houver usuário logado -->
                            <a href="{{url('logout')}}"><span class="glyphicon glyphicon-off"></span> Sair</a>
                         @endif
                      </li>
@@ -104,7 +104,7 @@
 
       <!-- script references -->
       <script src="{{asset('js/jquery.js')}}" type="text/javascript"></script>
-      <script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
+      <script src="{{asset('js/bootstrap/bootstrap.min.js')}}" type="text/javascript"></script>
 
    @endsection
 
