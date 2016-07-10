@@ -16,7 +16,7 @@
                         <i class="fa fa-plus fa-3x"></i>
                      </div>
                   </div>
-                  <img src="img/portfolio/roundicons.png" class="img-responsive" alt="">
+                  <img src="agency/img/portfolio/roundicons.png" class="img-responsive" alt="">
                </a>
                <div class="portfolio-caption">
                   <h4>Round Icons</h4>
@@ -30,7 +30,7 @@
                         <i class="fa fa-plus fa-3x"></i>
                      </div>
                   </div>
-                  <img src="img/portfolio/startup-framework.png" class="img-responsive" alt="">
+                  <img src="agency/img/portfolio/startup-framework.png" class="img-responsive" alt="">
                </a>
                <div class="portfolio-caption">
                   <h4>Startup Framework</h4>
@@ -44,7 +44,7 @@
                         <i class="fa fa-plus fa-3x"></i>
                      </div>
                   </div>
-                  <img src="img/portfolio/treehouse.png" class="img-responsive" alt="">
+                  <img src="agency/img/portfolio/treehouse.png" class="img-responsive" alt="">
                </a>
                <div class="portfolio-caption">
                   <h4>Treehouse</h4>

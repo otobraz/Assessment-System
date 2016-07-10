@@ -12,10 +12,10 @@
    <title>Sistema de Avaliação</title>
 
    <!-- Bootstrap Core CSS -->
-   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 
    <!-- Custom CSS -->
-   <link href="css/agency.css" rel="stylesheet">
+   <link href="agency/css/agency.css" rel="stylesheet">
    <link href="css/styles.css" rel="stylesheet">
 
    <!-- Custom Fonts -->
@@ -71,10 +71,10 @@
    @include('home.home_modals')
 
    <!-- jQuery -->
-   <script src="js/jquery.js"></script>
+   <script src="jquery/jquery.js"></script>
 
    <!-- Bootstrap Core JavaScript -->
-   <script src="js/bootstrap.min.js"></script>
+   <script src="bootstrap/js/bootstrap.min.js"></script>
 
    <!-- Plugin JavaScript -->
    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
@@ -82,11 +82,11 @@
    <script src="js/cbpAnimatedHeader.js"></script>
 
    <!-- Contact Form JavaScript -->
-   <script src="js/jqBootstrapValidation.js"></script>
-   <script src="js/contact_me.js"></script>
+   <script src="agency/js/jqBootstrapValidation.js"></script>
+   <script src="agency/js/contact_me.js"></script>
 
    <!-- Custom Theme JavaScript -->
-   <script src="js/agency.js"></script>
+   <script src="agency/js/agency.js"></script>
 
 </body>
 

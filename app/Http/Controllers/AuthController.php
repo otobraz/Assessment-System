@@ -74,25 +74,25 @@ class AuthController extends Controller{
       }else {
          $ldapData = config('my_config.ldapData');
          $ldapUserGroups = config('my_config.userGroups');
-         $ldapUser = $this->getLdapUser($ldapData, $request->input('username'));
-         if($role = $ldapUserGroups[$ldapUser[0][$ldapData['group_field']][0]]){
-            $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
-            if ($this->isPasswordValid($userPassword, $request->input('password'))){
-               $authenticatedUser = array(
-                  'username' => $ldapUser[0][$ldapData['id_field']][0],
-                  'first_name' => $ldapUser[0][$ldapData['given_name_field']][0],
-                  'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
-                  'email' => $ldapUser[0][$ldapData['email_field']][0],
-                  'group' => $ldapUser[0][$ldapData['group_field']][0],
-                  'role_id' => $role
-               );
-               $this->insertUpdateUser($authenticatedUser);
-               $request->session()->put($authenticatedUser);
-               return redirect()->action('HomeController@getUsersHome');
+         if($ldapUser = $this->getLdapUser($ldapData, $request->input('username'))){
+            if($role = $ldapUserGroups[$ldapUser[0][$ldapData['group_field']][0]]){
+               $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
+               if ($this->isPasswordValid($userPassword, $request->input('password'))){
+                  $authenticatedUser = array(
+                     'username' => $ldapUser[0][$ldapData['id_field']][0],
+                     'first_name' => $ldapUser[0][$ldapData['given_name_field']][0],
+                     'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
+                     'email' => $ldapUser[0][$ldapData['email_field']][0],
+                     'group' => $ldapUser[0][$ldapData['group_field']][0],
+                     'role_id' => $role
+                  );
+                  $this->insertUpdateUser($authenticatedUser);
+                  $request->session()->put($authenticatedUser);
+                  return redirect()->action('HomeController@getUsersHome');
+               }
             }
-            return redirect('login')->with('message', 'Usuário e/ou Senha inválidos');
          }
-         return redirect('login')->with('message', 'Usuário Inválido');
+         return redirect('login')->with('authError', 'Usuário e/ou Senha inválidos');
       }
    }
 

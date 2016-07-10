@@ -4,10 +4,6 @@
    }
 }
 
-.modal-btn{
-   width: 90px;
-}
-
 .text-primary {
    color: rgb(150, 32, 56);
 }
@@ -61,6 +57,25 @@
    display:inline;
 }
 
+/* bootstrap.css Overriding */
+
+.modal-open {
+   overflow: inherit;
+}
+
+.btn-primary:active:hover,
+.btn-primary .active:hover,
+.open > .dropdown-toggle .btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary .active:focus,
+.open > .dropdown-toggle .btn-primary:focus,
+.btn-primary:active .focus,
+.btn-primary .active .focus,
+.open > .dropdown-toggle .btn-primary .focus {
+   background-color: rgb(139, 20, 43);
+   border-color: rgb(139, 15, 40);
+}
+
 /* agency.css Overriding */
 
 .navbar-default .navbar-brand{
@@ -101,8 +116,8 @@ a.active {
 }
 
 .btn-primary {
-    background-color: rgb(150, 32, 56);
-    border-color: rgb(150, 32, 56);
+   background-color: rgb(150, 32, 56);
+   border-color: rgb(150, 32, 56);
 }
 
 .btn-primary:hover,
@@ -110,8 +125,8 @@ a.active {
 .btn-primary:active,
 .btn-primary .active,
 .open .dropdown-toggle .btn-primary {
-    background-color: rgb(139, 20, 43);
-    border-color: rgb(139, 15, 40);
+   background-color: rgb(139, 20, 43);
+   border-color: rgb(139, 15, 40);
 }
 
 .btn-xl {
@@ -124,7 +139,6 @@ a.active {
 .btn-xl:active,
 .btn-xl .active,
 .open .dropdown-toggle .btn-xl {
-   color: #fff;
    background-color: rgb(139, 20, 43);
    border-color: rgb(139, 15, 40);
 }

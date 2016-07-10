@@ -9,7 +9,7 @@
       <title>Sistema de Avaliação</title>
       <meta name="generator" content="Bootply" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-      <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+      <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
       <link href="{{asset('css/styles.css')}}" rel="stylesheet" type="text/css">
    @show
 
@@ -75,9 +75,6 @@
    </div>
 </div>
 @show --}}
-   @if(session('message'))
-      {{ session('message') }}
-   @endif
 
    @yield('content')
 
@@ -103,8 +100,8 @@
    @section('scripts')
 
       <!-- script references -->
-      <script src="{{asset('js/jquery.js')}}" type="text/javascript"></script>
-      <script src="{{asset('js/bootstrap/bootstrap.min.js')}}" type="text/javascript"></script>
+      <script src="{{asset('jquery/jquery.js')}}" type="text/javascript"></script>
+      <script src="{{asset('bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
 
    @endsection
 
