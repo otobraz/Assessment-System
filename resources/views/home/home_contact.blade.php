@@ -4,7 +4,7 @@
       <div class="row">
          <div class="col-lg-12 text-center">
             <h2 class="section-heading">Informações para Contato</h2>
-            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+            <h3 class="section-subheading text-muted">Fale conosco! Respondemos o mais rápido possível!</h3>
          </div>
       </div>
       <div class="row">
@@ -30,7 +30,7 @@
                   <div class="clearfix"></div>
                   <div class="col-lg-12 text-center">
                      <div id="success"></div>
-                     <button type="submit" class="btn btn-xl">Send Message</button>
+                     <button type="submit" class="btn btn-xl">ENviar</button>
                   </div>
                </div>
             </form>

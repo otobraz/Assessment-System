@@ -76,6 +76,12 @@
    border-color: rgb(139, 15, 40);
 }
 
+hr.ufop{
+   max-width: 100px;
+   border-width: 2px;
+   border-color: rgb(139, 19, 43);
+}
+
 /* agency.css Overriding */
 
 .navbar-default .navbar-brand{
@@ -156,3 +162,52 @@ ul.social-buttons li a:active {
 #portfolio .portfolio-item .portfolio-link .portfolio-hover {
    background: rgba(139, 20, 43, .9);
 }
+
+header .intro-text {
+   padding-top: 600px;
+   padding-bottom: 50px;
+}
+
+::-moz-selection {
+   background-color: rgb(150, 32, 56);
+   color: #fff;
+}
+
+::selection {
+   background-color: rgb(150, 32, 56);
+   color: #fff;
+}
+
+.navbar-default .navbar-toggle {
+   background-color: rgb(150, 32, 56);
+   border-color: rgb(150, 32, 56);
+}
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+   background-color: rgb(139, 20, 43);
+}
+
+.timeline:before {
+   background: rgb(150, 32, 56);
+}
+
+.timeline > li .timeline-image {
+    border: 7px solid #ddd;
+
+/*.about{
+   background-color: rgb(150, 32, 56);
+   color: #fff;
+}*/
+
+/*.about .btn-about{
+   background-color: #fff;
+   color: rgb(29, 30, 30);
+}
+
+.about .btn-about:hover,
+.about .btn-about:active,
+.about .btn-about:focus,
+.about .btn-about .active{
+   background-color: #ddd;
+}*/

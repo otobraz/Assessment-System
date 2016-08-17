@@ -52,7 +52,7 @@
       <div class="container">
          <div class="row">
             <div class="col-md-4">
-               <span class="copyright">Oto Braz Assunção &copy; SystemName 2016</span>
+               <span class="copyright"><a href="https://github.com/otobraz" target="_blank">Oto Braz Assunção</a> &copy; Sistema de Avaliação 2016</span>
             </div>
             <div class="col-md-4">
                <ul class="list-inline social-buttons">

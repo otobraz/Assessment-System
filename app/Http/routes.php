@@ -35,6 +35,15 @@ Route::group(['middleware' => ['myAuth']], function () {
    // Logout route
    Route::get('logout', ['as' => 'getLogout', 'uses' => 'UserController@logout']);
 
+   // Dashboard route
+   Route::get('dashboard', function(){
+      return view('dashboard');
+   });
+
+   Route::get('dashboard1', function(){
+      return view('dashboard.starter1');
+   });
+
 });
 
 // System home routes
@@ -52,6 +61,9 @@ Route::get('contato', function(){
    return view('contact');
 });
 
+Route::get('lista', function(){
+   return view('lista_alunos');
+});
 // Login route
 Route::get('/login', ['as' => 'getLogin', 'uses' => 'AuthController@getLogin']);
 Route::post('/login', ['as' => 'postLogin', 'uses' => 'AuthController@postLogin']);

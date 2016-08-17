@@ -1,12 +1,16 @@
 <!-- About Section -->
 <section id="how">
+
    <div class="container">
       <div class="row">
          <div class="col-lg-12 text-center">
-            <h2 class="section-heading">Como usar?</h2>
-            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+            <h2 class="section-heading">Como contribuir?</h2>
+            <hr class="ufop"></hr>
+            <br />
+            {{-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> --}}
          </div>
       </div>
+
       <div class="row">
          <div class="col-lg-12">
             <ul class="timeline">
@@ -16,25 +20,25 @@
                   </div>
                   <div class="timeline-panel">
                      <div class="timeline-heading">
-                        <h4>2009-2011</h4>
-                        <h4 class="subheading">Our Humble Beginnings</h4>
+                        <h4>Professor</h4>
+                        <h4 class="subheading">Disponibilize questionários</h4>
                      </div>
                      <div class="timeline-body">
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                        <p class="text-muted">Defina e disponibilize questionários às turmas lecionadas ou alunos orientados.</p>
                      </div>
                   </div>
                </li>
                <li class="timeline-inverted">
-                  <div class="timeline-image">
-                     <img class="img-circle img-responsive" src="agency/img/about/2.jpg" alt="">
+                  <div class="timeline-image ">
+                     <img class="img-circle img-responsive" src="agency/img/about/2.png" alt="">
                   </div>
                   <div class="timeline-panel">
                      <div class="timeline-heading">
-                        <h4>March 2011</h4>
-                        <h4 class="subheading">An Agency is Born</h4>
+                        <h4>Aluno</h4>
+                        <h4 class="subheading">Respondam os questionários</h4>
                      </div>
                      <div class="timeline-body">
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                        <p class="text-muted">Dê suas opiniões a respeito das classes assistidas e orientações recebidas.</p>
                      </div>
                   </div>
                </li>
@@ -44,11 +48,11 @@
                   </div>
                   <div class="timeline-panel">
                      <div class="timeline-heading">
-                        <h4>December 2012</h4>
-                        <h4 class="subheading">Transition to Full Service</h4>
+                        <h4>Professor</h4>
+                        <h4 class="subheading">Analise os resultados</h4>
                      </div>
                      <div class="timeline-body">
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                        <p class="text-muted">Utilize o feedback para analise das opiniões dos alunos. Busque a melhora contínua do ensino.</p>
                      </div>
                   </div>
                </li>
@@ -58,19 +62,18 @@
                   </div>
                   <div class="timeline-panel">
                      <div class="timeline-heading">
-                        <h4>July 2014</h4>
-                        <h4 class="subheading">Phase Two Expansion</h4>
+                        <h4>Aluno</h4>
+                        <h4 class="subheading">Visualize os resultados</h4>
                      </div>
                      <div class="timeline-body">
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                        <p class="text-muted">Busque por professores, entenda as metodologias deles, saiba o que os orientandos têm a dizer sobre eles.</p>
                      </div>
                   </div>
                </li>
+
                <li class="timeline-inverted">
                   <div class="timeline-image">
-                     <h4>Compartilhe
-                        <br>a sua
-                        <br>Opinião!</h4>
+                     <h4><br>Colabore!</h4>
                      </div>
                   </li>
                </ul>

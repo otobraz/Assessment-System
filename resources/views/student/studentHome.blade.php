@@ -1,47 +1,65 @@
-@extends('templates.pagesTemplate')
+@extends('dashboard.dashboard_base')
+
+@section('sidebar')
+
+   <!-- Left side column. contains the sidebar -->
+   <aside class="main-sidebar">
+
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+
+         <!-- Sidebar user panel (optional) -->
+         <div class="user-panel">
+            <div class="pull-left image">
+               <img src="{{ asset("img/user.png") }}" class="img-circle" alt="User Image"/>
+            </div>
+            <div class="pull-left info">
+               <p></p>
+               <p>{{Session::get('first_name')}}</p>
+
+               <!-- Status -->
+               {{-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> --}}
+            </div>
+         </div>
+
+         <!-- search form (Optional) -->
+         <form action="{{url('search')}}" method="post" class="sidebar-form">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <div class="input-group">
+               <input type="text" name="q" class="form-control" placeholder="Procure..."/>
+               <span class="input-group-btn">
+                  <button type='submit' name='search' class="btn btn-flat"><i class="fa fa-search"></i></button>
+               </span>
+            </div>
+         </form>
+         <!-- /.search form -->
+
+         <!-- Sidebar Menu -->
+         <ul class="sidebar-menu">
+            <li class="header">MENU</li>
+            <!-- Optionally, you can add icons to the links -->
+            <li>
+               <a href="{{url('/forum')}}"><i class="fa fa-comments-o"></i> <span>Questionários</span></a>
+            </li>
+            <li>
+               <a href="{{url('/forum')}}"><i class="fa fa-book"></i> <span>Minhas Classes</span></a>
+            </li>
+            <li>
+               <a href="{{url('/forum')}}"><i class="fa fa-graduation-cap"></i> <span>Professores</span></a>
+            </li>
+            <li>
+               <a href="{{url('dashboard/edit/user/' . Session::get('id'))}}"><i class="fa fa-pencil-square-o"></i> <span>Editar Cadastro</span></a>
+            </li>
+            <li>
+               <a href="{{url('user/logout')}}"><i class="fa fa-sign-out"></i> <span>Sair</span></a>
+            </li>
+         </ul><!-- /.sidebar-menu -->
+      </section>
+      <!-- /.sidebar -->
+   </aside>
+
+@endsection
 
 @section('content')
-   <div class="container">
-     <div class="col-md-3">
-        <p class="lead"><i class="glyphicon glyphicon-globe"></i> Atendimento Geral</p>
-        <div class="list-group">
-           <a type="button" class="list-group-item" href="{{url('login')}}"><b><i class="glyphicon glyphicon-home"></i> Home</b></a>
-        </div>
-        <p class="lead"><i class="glyphicon glyphicon-tasks"></i> Chamados Do Sistema</p>
-        <div class="list-group">
-           <a href="{{url('admin_chamados_em_aberto')}}" class="list-group-item"><b><i class="glyphicon glyphicon-inbox"></i> Em Aberto</b></a>
-           <a href="{{url('admin_chamados_aguardando_atendimento')}}" class="list-group-item"><b><i class="glyphicon glyphicon-list-alt"></i> Aguardando Atendimento</b></a>
-        </div>
-        <div class="list-group">
-           <a type="button" class="list-group-item" href="javascript:void(0);" onclick="return trocar(submenu, marc1);"><b><i class="glyphicon glyphicon-list"></i> Outros </b> <i id="marc1" style="font-size: 8px" class="glyphicon glyphicon-chevron-down"></i></a>
-           <div id="submenu" name="submenu" style="display: none;">
-              <a href="{{url('admin_chamados_em_atendimento_sistema')}}" class="list-group-item"><b>&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size: 10px" class="glyphicon glyphicon-chevron-right"></i> Em Atendimento</b></a>
-              <a href="{{url('admin_chamados_em_espera_sistema')}}" class="list-group-item"><b>&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size: 10px" class="glyphicon glyphicon-chevron-right"></i> Em Espera</b></a>
-              <a href="{{url('admin_chamados_concluidos_sistema')}}" class="list-group-item"><b>&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size: 10px" class="glyphicon glyphicon-chevron-right"></i> Concluídos</b></a>
-              <a href="{{url('admin_chamados_todos')}}" class="list-group-item"><b>&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size: 10px" class="glyphicon glyphicon-chevron-right"></i> Todos</b></a>
-           </div>
-        </div>
-        <p class="lead"><i class="glyphicon glyphicon-user"></i> Meus Atendimentos</p>
-        <div class="list-group">
-           <a href="{{url('admin_chamados_em_atendimento_individual')}}" class="list-group-item"><b>Em Andamento</b></a>
-           <a href="{{url('admin_chamados_em_espera_individual')}}" class="list-group-item"><b>Em Espera</b></a>
-           <a href="{{url('admin_chamados_concluidos_individual')}}" class="list-group-item"><b>Concluídos</b></a>
-        </div>
-        <p class="lead"><i class="glyphicon glyphicon-play-circle"></i> Serviços de Solicitante</p>
-        <div class="list-group">
-           <a href="{{url('admin_chamados_novo_individual_solicitacao')}}" class="list-group-item"><b>Abrir Chamado</b></a>
-           <a href="{{url('admin_chamados_individual_solicitacao')}}" class="list-group-item"><b>Meus Chamados</b></a>
-           <a href="{{url('admin_chamados_perfil_individual')}}" class="list-group-item"><b>Perfil de Usuário</b></a>
-        </div>
-        <div class="list-group">
-           <p class="lead"><i class="glyphicon glyphicon-globe"></i> Outros Serviços</p>
-           <a type="button" class="list-group-item" href="javascript:void(0);" onclick="return trocar(submenuRelatorio, marc2);"><b><i class="glyphicon glyphicon-book"></i> Relatórios</b> <i id="marc2" style="font-size: 8px" class="glyphicon glyphicon-chevron-down"></i></a>
-           <div id="submenuRelatorio" name="submenu" style="display: none;">
-              <a href="{{url('admin_chamados_em_aberto')}}" class="list-group-item"><b>&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size: 10px" style="font-size: 10px" class="glyphicon glyphicon-chevron-right"></i> Individual</b></a>
-              <a href="{{url('admin_chamados_aguardando_atendimento')}}" class="list-group-item"><b>&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size: 10px" style="font-size: 10px" class="glyphicon glyphicon-chevron-right"></i> Coletivo</b></a>
-              <a href="{{url('admin_chamados_aguardando_atendimento')}}" class="list-group-item"><b>&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size: 10px" style="font-size: 10px" class="glyphicon glyphicon-chevron-right"></i> Avançado</b></a>
-           </div>
-        </div>
-     </div>
-   </div>
+
 @endsection

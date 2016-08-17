@@ -7,10 +7,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ asset("image/user.png") }}" class="img-circle" alt="User Image" height="160px" width="160px"/>
+                <img src="{{ asset("img/user.png") }}" class="img-circle" alt="User Image" height="160px" width="160px"/>
             </div>
             <div class="pull-left info">
-                <p>{{Session::get('first_name') Session::get('last_name')}}</p>
+                <p>{{Session::get('first_name')}}</p>
                 <!-- Status -->
                 {{-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> --}}
             </div>
@@ -20,7 +20,7 @@
         <form action="{{url('search')}}" method="post" class="sidebar-form">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <div class="input-group">
-              <input type="text" name="q" class="form-control" placeholder="Procure no fórum..."/>
+              <input type="text" name="q" class="form-control" placeholder="Procure por professores..."/>
               <span class="input-group-btn">
                 <button type='submit' name='search' class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
@@ -34,8 +34,20 @@
             <!-- Optionally, you can add icons to the links -->
             <li><a href="{{url('/forum')}}"><span><i class="fa fa-comments-o"></i> Questionários</span></a></li>
             <li><a href="{{url('/forum')}}"><span><i class="fa fa-comments-o"></i> Minhas Classes</span></a></li>
-            <li><a href="{{url('dashboard/edit/user/' . Session::get('id'))}}"><span><i class="fa fa-pencil-square-o"></i> Editar Cadastro</span></a></li>
+            <li><a href="{{url('/forum')}}"><span><i class="fa fa-comments-o"></i>Professores</span></a></li>
+            <li><a href="{{url('dashboard/edit/user/' . Session::get('id'))}}"><span><i class="fa fa-pencil-square-o"></i> Perfil</span></a></li>
             <li><a href="{{url('user/logout')}}"><span><i class="fa fa-sign-out"></i> Sair</span></a></li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#">Link in level 2</a></li>
+                <li><a href="#">Link in level 2</a></li>
+              </ul>
+            </li>
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
