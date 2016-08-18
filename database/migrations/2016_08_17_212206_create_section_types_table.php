@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMajorsTable extends Migration
+class CreateSectionTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,9 @@ class CreateMajorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('majors', function (Blueprint $table) {
-
+        Schema::create('section_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('type', 30);
 
             $table->timestamp('updated_at');
             $table->timestamp('created_at')->useCurrent();
@@ -29,6 +28,6 @@ class CreateMajorsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('majors');
+        Schema::drop('section_types');
     }
 }
