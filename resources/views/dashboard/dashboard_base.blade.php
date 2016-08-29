@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
+
 <head>
    <meta charset="UTF-8">
-   <title>Painel de Controle</title>
+
+   <title>@yield('title')</title>
 
    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
    <!-- Bootstrap 3.3.2 -->
@@ -18,7 +16,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
    <!-- Theme style -->
    <link href="{{ asset('dist/css/AdminLTE.min.css')}}" rel="stylesheet" type="text/css" />
 
-   <link href="{{ asset('dist/css/skins/skin-ufop.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('dist/css/skins/skin-ufop.css')}}" rel="stylesheet" type="text/css" />
+
+   <link href="{{asset('css/styles.css')}}" rel="stylesheet" type="text/css" />
 
    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

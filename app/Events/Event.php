@@ -1,6 +1,6 @@
 <?php
 
-namespace ShareYourThoughts\Events;
+namespace App\Events;
 
 abstract class Event
 {

@@ -1,9 +1,14 @@
 <?php
 
-namespace ShareYourThoughts\Http\Controllers;
+namespace App\Http\Controllers;
 
-use ShareYourThoughts\Http\Requests;
+use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Student;
+use App\Department;
+use App\Professor;
+use App\Major;
+use App\Admin;
 
 class HomeController extends Controller
 {
@@ -15,21 +20,29 @@ class HomeController extends Controller
       return view('home');
    }
 
-   public function getAdminHome(){
-      return view('admin/adminHome');
+   public function adminHome(){
+      $students = Student::with('major')->get();
+      $professors = Professor::with('department')->get();
+      $majors = Major::all();
+      $departments = Department::all();
+      $admins = Admin::all();
+      return view('admin/adminHome', compact(
+         'students',
+         'professors',
+         'admins',
+         'majors',
+         'departments'
+      ));
    }
 
    public function getUsersHome(Request $request){
-      if($request->session()->get('role_id') == 2){
-         return redirect()->route('studentsHome');
-      }else if($request->session()->get('role_id') == 3){
-         return redirect()->route('professorsHome');
-      }else if(!$request->session()->get('role_id')){
-         return redirect()->route('login');
+      if($request->session()->get('role') == 1){
+         return view('student/studentHome');
+      }else if($request->session()->get('role') == 2){
+         return view('professor/professorHome');
+      }else if(!$request->session()->get('role')){
+         return $this->adminHome();
       }
    }
 
-   public function getLogin() {
-      return view('login');
-   }
 }

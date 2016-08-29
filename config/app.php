@@ -151,10 +151,10 @@ return [
         /*
          * Application Service Providers...
          */
-        ShareYourThoughts\Providers\AppServiceProvider::class,
-        ShareYourThoughts\Providers\AuthServiceProvider::class,
-        ShareYourThoughts\Providers\EventServiceProvider::class,
-        ShareYourThoughts\Providers\RouteServiceProvider::class,
+        App\Providers\AppServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,
         Adldap\Laravel\AdldapServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 

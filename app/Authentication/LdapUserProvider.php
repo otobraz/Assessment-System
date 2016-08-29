@@ -1,6 +1,6 @@
 <?php
 
-namespace ShareYourThoughts\Authentication;
+namespace App\Authentication;
 
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Contracts\Auth\Authenticatable;

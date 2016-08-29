@@ -26,44 +26,54 @@
 Route::group(['middleware' => ['myAuth']], function () {
 
    // Admin home route
-   Route::get('/admin', ['as' => 'adminHome', 'uses' => 'HomeController@getAdminHome']);
+   // Route::get('admin', ['as' => 'adminHome', 'uses' => 'AdminController@getIndex']);
+   //
+   // // Users' home routes
+   // Route::get('aluno', ['as' => 'studentsHome', 'uses' => 'StudentController@getIndex']);
+   // Route::get('professor', ['as' => 'professorsHome', 'uses' => 'ProfessorController@getIndex']);
 
-   // Users' home routes
-   Route::get('aluno', ['as' => 'studentsHome', 'uses' => 'UserController@getStudentsHome']);
-   Route::get('professor', ['as' => 'professorsHome', 'uses' => 'UserController@getProfessorsHome']);
+   // Home pages
+   Route::get('aluno/home', ['as' => 'studentHome', 'uses' => 'HomeController@getUsersHome']);
+   Route::get('/professor/home', ['as' => 'professorHome', 'uses' => 'HomeController@getUsersHome']);
+   Route::get('/admin/home', ['as' => 'adminHome', 'uses' => 'HomeController@adminHome']);
 
-   // Logout route
-   Route::get('logout', ['as' => 'getLogout', 'uses' => 'UserController@logout']);
+   // Logout
+   Route::get('logout', ['as' => 'studentLogout', 'uses' => 'AuthController@logout']);
 
-   // Dashboard route
-   Route::get('dashboard', function(){
-      return view('dashboard');
-   });
+   // Route::get('alunos', ['as' => 'viewStudents', 'uses' => 'StudentController@getAll']);
+   // Route::get('cursos', ['as' => 'viewMajors', 'uses' => 'MajorController@getAll']);
 
-   Route::get('dashboard1', function(){
-      return view('dashboard.starter1');
-   });
+   // Resources
+   Route::resource('curso', 'MajorController', ['names' => [
+      'create' => 'curso.criar'
+   ]]);
+
+   Route::resource('departamento', 'DepartmentController');
+   Route::resource('aluno', 'StudentController');
+   Route::resource('professor', 'ProfessorController');
+   Route::resource('admin', 'AdminController');
 
 });
 
-// System home routes
+// System home
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@getIndex']);
 
-Route::controller('home', 'HomeController');
+//Route::controller('home', 'HomeController');
 
 // About route
-Route::get('sobre', function(){
-   return view('about');
-});
+// Route::get('sobre', function(){
+//    return view('about');
+// });
+//
+// // Contact routes
+// Route::get('contato', function(){
+//    return view('contact');
+// });
+//
+// Route::get('lista', function(){
+//    return view('lista_alunos');
+// });
 
-// Contact routes
-Route::get('contato', function(){
-   return view('contact');
-});
-
-Route::get('lista', function(){
-   return view('lista_alunos');
-});
-// Login route
+// Login
 Route::get('/login', ['as' => 'getLogin', 'uses' => 'AuthController@getLogin']);
 Route::post('/login', ['as' => 'postLogin', 'uses' => 'AuthController@postLogin']);
