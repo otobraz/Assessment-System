@@ -2,6 +2,7 @@
 <html>
 
 <head>
+
    <meta charset="UTF-8">
 
    <title>@yield('title')</title>
@@ -43,7 +44,7 @@
          <section class="content-header">
             <h1>
                Painel de Controle
-               <small>Bem vindo {{Session::get('first_name')}}</small>
+               <small>Bem vindo {{session()->get('first_name')}}</small>
             </h1>
             <!-- You can dynamically generate breadcrumbs here -->
             {{-- <ol class="breadcrumb">
@@ -65,6 +66,7 @@
 </div><!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
+
 <!-- jQuery 2.1.3 -->
 <script src="{{asset('plugins/jQuery/jQuery-2.2.3.min.js')}}"></script>
 
@@ -73,3 +75,9 @@
 
 <!-- AdminLTE JS -->
 <script src="{{asset('dist/js/app.min.js')}}"></script>
+
+@yield('myScripts')
+
+</body>
+
+</html>

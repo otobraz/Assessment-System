@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+
+use Hash;
+
 use App\Major;
 use App\Department;
 use App\Student;
+use App\Admin;
 
 class AuthController extends Controller{
 
@@ -100,14 +104,14 @@ class AuthController extends Controller{
                      'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
                      'email' => $ldapUser[0][$ldapData['email_field']][0],
                      'major_id' => $major->id,
-                     'role' => 1
+                     'role' => 'Aluno'
                   );
                   $this->insertUpdateStudent($authenticatedUser);
                   $request->session()->put($authenticatedUser);
                   return redirect()->route('studentHome');
                }
 
-            // If the user's 'ou' field is in the departments table, he is a professor
+               // If the user's 'ou' field is in the departments table, he is a professor
             }else if($department = Department::where('department', $ouValue)->first()){
                $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
                if ($this->isPasswordValid($userPassword, $request->input('password'))){
@@ -117,7 +121,7 @@ class AuthController extends Controller{
                      'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
                      'email' => $ldapUser[0][$ldapData['email_field']][0],
                      'department_id' => $department->id,
-                     'role' => 2
+                     'role' => 'Professor'
                   );
                   $this->insertUpdateProfessor($authenticatedUser);
                   $request->session()->put($authenticatedUser); // put role in session
@@ -125,8 +129,19 @@ class AuthController extends Controller{
                }
             }
          }
-         $request->session()->put('username','admin'); // to be deleted
-         return redirect()->route('adminHome');
+         $user = Admin::where('username', $request->username)->first();
+         //dd(bcrypt($request->password));
+         //dd(Hash::check($request->input('password'), $user->password));
+         if(isset($user) && Hash::check($request->input('password'), $user->password)){
+            $request->session()->put(array(
+               'username' => $user->username,
+               'first_name' => $user->first_name,
+               'last_name' => $user->last_name,
+               'email' => $user->email,
+               'role' => 'Administrador'
+            ));
+            return redirect()->route('adminHome');
+         }
          return redirect('login')->with('authError', 'Usuário e/ou Senha inválidos');
       }
    }

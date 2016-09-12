@@ -34,6 +34,30 @@
       <ul class="sidebar-menu">
          <li class="header">MENU</li>
          <!-- Optionally, you can add icons to the links -->
+
+         <li class="treeview">
+            <a href="#"><i class="glyphicon glyphicon-folder-open"></i> <span>Gerenciar</span>
+               <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+               </span>
+            </a>
+            <ul class="treeview-menu">
+               <li>
+                  <a href="{{route('major.index')}}"><i class="glyphicon glyphicon-book"></i> <span>Cursos</span></a>
+               </li>
+            </ul>
+            <ul class="treeview-menu">
+               <li>
+                  <a href="{{route('admin.index')}}"><i class="glyphicon glyphicon-book"></i> <span>Administradores</span></a>
+               </li>
+            </ul>
+            <ul class="treeview-menu">
+               <li>
+                  <a href="{{route('department.index')}}"><i class="glyphicon glyphicon-book"></i> <span>Departamentos</span></a>
+               </li>
+            </ul>
+         </li>
+
          <li>
             <a href="{{url('/alunos')}}"><i class="fa fa-comments-o"></i> <span>Questionários</span></a>
          </li>
@@ -46,6 +70,7 @@
          <li>
             <a href="{{url('dashboard/edit/user/' . Session::get('id'))}}"><i class="fa fa-pencil-square-o"></i> <span>Editar Cadastro</span></a>
          </li>
+
          <li>
             <a href="{{url('user/logout')}}"><i class="fa fa-sign-out"></i> <span>Sair</span></a>
          </li>

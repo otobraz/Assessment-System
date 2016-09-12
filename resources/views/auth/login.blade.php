@@ -43,8 +43,10 @@
                         </div>
                      @endif
                      <br/>
-                     <button class="btn btn-default"  type="reset"><i class="glyphicon glyphicon-erase"></i> Limpar</button>
-                     <button class="btn btn-primary" type="submit"><i class="fa fa-sign-in"></i> Entrar</button>
+                     <p class="text-center">
+                        <button class="btn btn-default"  type="reset"><i class="glyphicon glyphicon-erase"></i> Limpar</button>
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-sign-in"></i> Entrar</button>
+                     <p>
                   </fildset>
                </form>
             </div>

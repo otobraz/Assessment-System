@@ -8,7 +8,7 @@
    color: rgb(150, 32, 56);
 }
 
-.the-buttons > li {
+/*.the-buttons > li {
    float: left;
    height: 80px;
    padding: 10px;
@@ -28,13 +28,13 @@
    vertical-align: middle;
    margin-right: 3px;
    font-size: 24px;
-}
+}*/
 
-.home-btn{
+/*.home-btn{
    width: 200px;
-}
+}*/
 
-.the-icons li {
+/*.the-icons li {
    float: left;
    width: 100px;
    height: 110px;
@@ -47,15 +47,15 @@
    -moz-box-sizing: border-box;
    box-sizing: border-box;
    margin: 0 auto;
-}
+}*/
 
-.the-icons, .the-buttons {
+/*.the-icons, .the-buttons {
    list-style:none;
 }
 
 .the-icons .glyphicon {
    display:inline;
-}
+}*/
 
 /* bootstrap.css Overriding */
 
@@ -76,7 +76,7 @@
    border-color: rgb(139, 15, 40);
 }
 
-hr.ufop{
+.ufop{
    max-width: 100px;
    border-width: 2px;
    border-color: rgb(139, 19, 43);
@@ -121,6 +121,10 @@ a.active {
    background-color: rgb(139, 19, 43);
 }
 
+.btn-dashboard {
+   font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif
+
+}
 .btn-primary {
    background-color: rgb(150, 32, 56);
    border-color: rgb(150, 32, 56);
@@ -159,9 +163,9 @@ ul.social-buttons li a:active {
    background-color: rgb(139, 20, 43);
 }
 
-#portfolio .portfolio-item .portfolio-link .portfolio-hover {
+/*#portfolio .portfolio-item .portfolio-link .portfolio-hover {
    background: rgba(139, 20, 43, .9);
-}
+}*/
 
 header .intro-text {
    padding-top: 600px;
@@ -193,21 +197,28 @@ header .intro-text {
 }
 
 .timeline > li .timeline-image {
-    border: 7px solid #ddd;
+   border: 7px solid #ddd;
 
-/*.about{
-   background-color: rgb(150, 32, 56);
-   color: #fff;
-}*/
-
-/*.about .btn-about{
-   background-color: #fff;
-   color: rgb(29, 30, 30);
 }
 
-.about .btn-about:hover,
-.about .btn-about:active,
-.about .btn-about:focus,
-.about .btn-about .active{
-   background-color: #ddd;
-}*/
+.form-control{
+   border-radius: 4px;
+}
+
+.input-group .input-group-addon {
+   border-radius: 4px;
+   border-top-right-radius: 0;
+   border-bottom-right-radius: 0;
+   background-color: #eee;
+   border: 1px solid #ccc;
+}
+
+.btn-default {
+   color: #333;
+   background-color: #fff;
+   border-color: #ccc;
+}
+
+.modal {
+   background: none;
+}

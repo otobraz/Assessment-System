@@ -121,7 +121,7 @@ Design some buttons
       <!-- The user image in the navbar-->
       <img src="{{ asset("img/user.png") }}" class="user-image" alt="User Image" height="160px" width="160px"/>
       <!-- hidden-xs hides the username on small devices so only the image appears. -->
-      <span class="hidden-xs">{{Session::get('first_name')}} {{Session::get('last_name')}}</span>
+      <span class="hidden-xs">{{session()->get('first_name')}} {{session()->get('last_name')}}</span>
    </a>
    <ul class="dropdown-menu">
       <!-- The user image in the menu -->
@@ -129,8 +129,8 @@ Design some buttons
          <img src="{{ asset("img/user.png") }}" class="img-circle" alt="User Image" height="160px" width="160px"/>
 
          <p>
-            {{Session::get('first_name')}}
-            <small>{{Session::get('group')}}</small>
+            {{session()->get('first_name')}}
+            <small>{{session()->get('role')}}</small>
          </p>
       </li>
       <!-- Menu Body -->
@@ -148,10 +148,10 @@ Design some buttons
 <!-- Menu Footer-->
 <li class="user-footer">
    <div class="pull-left">
-      <a href="#" class="btn btn-default btn-flat">Perfil</a>
+      <a href="#" class="btn btn-default"><i class="fa fa-eye"></i> Perfil</a>
    </div>
    <div class="pull-right">
-      <a href="{{url('logout')}}" class="btn btn-default btn-flat">Sair <i class="fa fa-sign-out"></i></a>
+      <a href="{{url('logout')}}" class="btn btn-default"><i class="fa fa-sign-out"></i> Sair</a>
    </div>
 </li>
 </ul>

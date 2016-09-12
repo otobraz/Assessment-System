@@ -1,7 +1,7 @@
 @extends('dashboard.dashboard_base')
 
 @section('title')
-   Criar Curso
+   Criar | Departamento
 @endsection
 
 @section('sidebar')
@@ -11,16 +11,16 @@
 @section('content')
    <div class="container">
       <div class="col-md-offset-4 col-md-4">
-         <form class="form-signin" method="POST" action="{{action('MajorController@store')}}">
+         <form class="form-signin" method="POST" action="{{action('DepartmentController@store')}}">
             {{ csrf_field() }}
             <fildset>
-               <legend>Criar novo Curso</legend>
+               <legend>Criar novo Departamento</legend>
 
                <div class="form-group">
-                  <label for="major">Nome do curso:</label>
-                  <input class="form-control input-xlarge" type="text" name="major" id="major"
-                  placeholder="Nome do curso" autofocus required
-                  oninvalid="setCustomValidity('Informe o nome do curso.')"
+                  <label for="department">Departamento:</label>
+                  <input class="form-control input-xlarge" type="text" name="department" id="department"
+                  placeholder="Nome do departamento" autofocus required
+                  oninvalid="setCustomValidity('Informe o nome do departamento.')"
                   oninput="setCustomValidity('')"
                   >
                </div>
@@ -28,7 +28,7 @@
                   <label for="initials">Sigla:</label>
                   <input class="form-control input-xlarge " type="text" name="initials" id="initials"
                   placeholder="Sigla" required
-                  oninvalid="setCustomValidity('Informe a sigla do curso.')"
+                  oninvalid="setCustomValidity('Informe a sigla do departamento.')"
                   oninput="setCustomValidity('')"
                   >
                </div>

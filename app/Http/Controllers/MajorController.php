@@ -38,7 +38,9 @@ class MajorController extends Controller
    */
    public function store(Request $request)
    {
-      //
+      $major = new Major($request->all());
+      $major->save();
+      return redirect()->route('major.index');
    }
 
    /**
@@ -49,7 +51,7 @@ class MajorController extends Controller
    */
    public function show($id)
    {
-      //
+
    }
 
    /**
@@ -60,7 +62,8 @@ class MajorController extends Controller
    */
    public function edit($id)
    {
-      //
+      $major = Major::find(decrypt($id));
+      return view('major.edit', compact('major'));
    }
 
    /**
@@ -72,7 +75,11 @@ class MajorController extends Controller
    */
    public function update(Request $request, $id)
    {
-      //
+      $major = Major::find(decrypt($id));
+      $major->major = $request->major;
+      $major->initials = $request->initials;
+      $major->save();
+      return redirect()->route('major.index');
    }
 
    /**
@@ -83,6 +90,7 @@ class MajorController extends Controller
    */
    public function destroy($id)
    {
-      //
+      Major::find(decrypt($id))->delete();
+      return redirect()->route('major.index');
    }
 }

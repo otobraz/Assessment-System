@@ -36,9 +36,9 @@ class HomeController extends Controller
    }
 
    public function getUsersHome(Request $request){
-      if($request->session()->get('role') == 1){
+      if($request->session()->get('role') === 'Aluno'){
          return view('student/studentHome');
-      }else if($request->session()->get('role') == 2){
+      }else if($request->session()->get('role') === 'Professor'){
          return view('professor/professorHome');
       }else if(!$request->session()->get('role')){
          return $this->adminHome();

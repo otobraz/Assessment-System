@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Admin;
+use Hash;
 
 class AdminController extends Controller
 {
@@ -26,7 +27,7 @@ class AdminController extends Controller
    */
    public function create()
    {
-      //
+      return view('admin.create');
    }
 
    /**
@@ -37,7 +38,14 @@ class AdminController extends Controller
    */
    public function store(Request $request)
    {
-      //
+      $admin = new Admin();
+      $admin->first_name = $request->first_name;
+      $admin->last_name = $request->last_name;
+      $admin->email = $request->email;
+      $admin->username = $request->username;
+      $admin->password = bcrypt($request->password);
+      $admin->save();
+      return redirect()->route('admin.index');
    }
 
    /**
@@ -59,7 +67,8 @@ class AdminController extends Controller
    */
    public function edit($id)
    {
-      //
+      $admin = Admin::find(decrypt($id));
+      return view('admin.edit', compact('admin'));
    }
 
    /**
@@ -71,7 +80,16 @@ class AdminController extends Controller
    */
    public function update(Request $request, $id)
    {
-      //
+      $admin = Admin::find(decrypt($id));
+      $admin->first_name = $request->first_name;
+      $admin->last_name = $request->last_name;
+      $admin->email = $request->email;
+      $admin->username = $request->username;
+      if (Hash::needsRehash($request->password)) {
+         $admin->password = bcrypt($request->password);
+      }
+      $admin->save();
+      return redirect()->route('admin.index');
    }
 
    /**
@@ -82,6 +100,7 @@ class AdminController extends Controller
    */
    public function destroy($id)
    {
-      //
+      Admin::find(decrypt($id))->delete();
+      return redirect()->route('admin.index');
    }
 }
