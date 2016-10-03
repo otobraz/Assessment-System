@@ -17,7 +17,7 @@ class CreateMultipleChoiceResponsesTable extends Migration
          $table->integer('response_id')->unsigned();
          $table->integer('question_id')->unsigned();
 
-         $table->unique( ['response_id','question_id']);
+         $table->unique(['response_id','question_id']);
 
          $table->foreign('response_id')->references('id')->on('responses');
          $table->foreign('question_id')->references('id')->on('questions');

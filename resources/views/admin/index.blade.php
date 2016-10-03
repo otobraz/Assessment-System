@@ -1,25 +1,31 @@
-@extends('dashboard.dashboard_base')
+@extends('layout.admin.base')
 
 @section('title')
-   Administradores | Gerenciar
+   Gerenciar | Administradores
 @endsection
 
-@section('sidebar')
-   @include('admin.sidebar')
+@section('content-header')
+   <h1>
+      Gerenciar Administradores
+   </h1>
+   <hr>
 @endsection
 
 @section('content')
 
    <div class="container">
-      <div class="col-md-offset-2 col-md-8">
-
-         <a class="btn btn-primary" role="button"
-         style="color: white" href="{{route('admin.create')}}"><i class="fa fa-lg fa-plus-square-o"></i> Cadastrar Administrador</a>
-
-         <br/><br/>
-
-         @include('admin.admins_list')
-
+      <div class="panel panel-default">
+         <div class="panel-heading contains-buttons">
+            <a class="btn btn-primary pull-right" role="button"
+            style="color: white" href="{{route('admin.create')}}">Novo Administrador</a>
+            <p class="panel-title contains-buttons pull-left">Administradores</p>
+            <span class="clearfix"></span>
+         </div>
+         <div class="panel-body">
+            @include('alert-message.success')
+            @include('alert-message.error')
+            @include('admin.admins-list')
+         </div>
       </div>
    </div>
 

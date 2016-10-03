@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSurveyQuestionTable extends Migration
+class CreateQuestionSurveyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateSurveyQuestionTable extends Migration
      */
     public function up()
     {
-        Schema::create('survey_question', function (Blueprint $table) {
+        Schema::create('question_survey', function (Blueprint $table) {
             $table->integer('survey_id')->unsigned();
             $table->integer('question_id')->unsigned();
 

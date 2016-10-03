@@ -1,25 +1,29 @@
-@extends('dashboard.dashboard_base')
+@extends('layout.admin.base')
 
 @section('title')
-   Cursos | Gerenciar
+   Gerenciar | Cursos
 @endsection
 
-@section('sidebar')
-   @include('admin.sidebar')
+@section('content-header')
+   <h1>Gerenciar Cursos</h1>
+   <hr class="hr-ufop">
 @endsection
 
 @section('content')
 
    <div class="container">
-      <div class="col-md-offset-2 col-md-8">
-
-         <a class="btn btn-primary" role="button"
-         style="color: white" href="{{route('major.create')}}"><i class="fa fa-lg fa-plus-square-o"></i> Criar Curso</a>
-
-         <br/><br/>
-
-         @include('major.majors_list')
-
+      <div class="panel panel-default">
+         <div class="panel-heading contains-buttons">
+            <a class="btn btn-primary pull-right" role="button"
+            style="color: white" href="{{route('major.create')}}">Novo Curso</a>
+            <p class="panel-title contains-buttons pull-left">CURSOS</p>
+            <span class="clearfix"></span>
+         </div>
+         <div class="panel-body">
+            @include('alert-message.success')
+            @include('alert-message.error')
+            @include('major.majors-list')
+         </div>
       </div>
    </div>
 

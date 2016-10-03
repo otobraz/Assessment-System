@@ -13,11 +13,12 @@ class CreateSingleChoiceResponsesTable extends Migration
    public function up()
    {
       Schema::create('single_choice_responses', function (Blueprint $table) {
+         $table->increments('id');
          $table->integer('choice_id')->unsigned();
          $table->integer('response_id')->unsigned();
          $table->integer('question_id')->unsigned();
 
-         $table->primary(['response_id', 'question_id']);
+         $table->unique(['response_id', 'question_id']);
 
          $table->foreign('choice_id')->references('id')->on('choices');
          $table->foreign('response_id')->references('id')->on('responses');

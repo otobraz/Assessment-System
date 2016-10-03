@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Student;
+use App\Models\Student;
 
 class StudentController extends Controller
 {
@@ -48,7 +48,8 @@ class StudentController extends Controller
    */
    public function show($id)
    {
-      //
+      $student = Student::find(decrypt($id));
+      return view('student.show', compact('student'));
    }
 
    /**
@@ -57,21 +58,9 @@ class StudentController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-   public function edit($id)
+   public function edit()
    {
-      //
-   }
-
-   /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-   public function update(Request $request, $id)
-   {
-      //
+      return redirect()->away('https://zeppelin10.ufop.br/minhaUfop/desktop/login.xhtml');
    }
 
    /**

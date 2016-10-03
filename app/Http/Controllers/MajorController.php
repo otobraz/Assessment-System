@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Major;
+use App\Models\Major;
 
 class MajorController extends Controller
 {
@@ -39,8 +39,10 @@ class MajorController extends Controller
    public function store(Request $request)
    {
       $major = new Major($request->all());
-      $major->save();
-      return redirect()->route('major.index');
+      if($major->save()){
+         return redirect()->route('major.index')->with('successMessage', 'Curso criado com sucesso');
+      }
+      return redirect()->route('major.create')->with('errorMessage', 'Erro ao criar curso');
    }
 
    /**
@@ -78,8 +80,10 @@ class MajorController extends Controller
       $major = Major::find(decrypt($id));
       $major->major = $request->major;
       $major->initials = $request->initials;
-      $major->save();
-      return redirect()->route('major.index');
+      if($major->save()){
+         return redirect()->route('major.index')->with('successMessage', 'Informações atualizadas com sucesso');
+      }
+      return redirect()->route('major.create')->with('errorMessage', 'Erro ao atualizar informações');
    }
 
    /**
@@ -91,6 +95,6 @@ class MajorController extends Controller
    public function destroy($id)
    {
       Major::find(decrypt($id))->delete();
-      return redirect()->route('major.index');
+      return redirect()->route('major.index')->with('successMessage', 'Registro excluído com sucesso.');
    }
 }

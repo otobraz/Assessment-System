@@ -36,17 +36,17 @@
 
 <body id="page-top" class="index">
 
-   @include('home.home_nav')
+   @include('layout.home.nav')
 
-   @include('home.home_header')
+   @include('layout.home.header')
 
-   @include('home.home_about')
+   @include('layout.home.about')
 
-   @include('home.home_why')
+   @include('layout.home.why')
 
-   @include('home.home_how')
+   @include('layout.home.how')
 
-   @include('home.home_contact')
+   @include('layout.home.contact')
 
    <footer>
       <div class="container">
@@ -68,7 +68,7 @@
       </div>
    </footer>
 
-   @include('home.home_modals')
+   @include('layout.home.modals')
 
    <!-- jQuery -->
    <script src="jquery/jquery.js"></script>

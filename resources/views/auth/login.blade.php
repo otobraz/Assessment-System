@@ -6,7 +6,7 @@
       <div class="container">
          <div class="row">
             <div class="col-md-offset-4 col-md-4"> {{-- Define a coluna de tamanho 6 mas com offset de coluna 3 --}}
-               <img src="{{asset('image/logoFull.png')}}" height="300px" width="250px" class="img-responsive center-block" alt="Logotipo"/>
+               <!-- <img src="{{asset('image/logoFull.png')}}" height="300px" width="250px" class="img-responsive center-block" alt="Logotipo"/> -->
                <form class="form-signin" method="POST" action="{{url('login')}}">
                   {{ csrf_field() }}
                   <fildset>

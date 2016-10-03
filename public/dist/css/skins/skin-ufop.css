@@ -60,15 +60,15 @@
 .skin-ufop .wrapper,
 .skin-ufop .main-sidebar,
 .skin-ufop .left-side {
-   background-color: #222d32;
+   background-color: #454545;
 }
 .skin-ufop .user-panel > .info,
 .skin-ufop .user-panel > .info > a {
    color: #fff;
 }
 .skin-ufop .sidebar-menu > li.header {
-   color: #4b646f;
-   background: #1a2226;
+   color: #909090;
+   background: #202020;
 }
 .skin-ufop .sidebar-menu > li > a {
    border-left: 3px solid transparent;
@@ -76,21 +76,21 @@
 .skin-ufop .sidebar-menu > li:hover > a,
 .skin-ufop .sidebar-menu > li.active > a {
    color: #ffffff;
-   background: #1e282c;
+   background: #303030;
    border-left-color: #962038;
 }
 .skin-ufop .sidebar-menu > li > .treeview-menu {
    margin: 0 1px;
-   background: #2c3b41;
+   background: #353535;
 }
 .skin-ufop .sidebar a {
-   color: #b8c7ce;
+   color: #CCCCCC;
 }
 .skin-ufop .sidebar a:hover {
    text-decoration: none;
 }
 .skin-ufop .treeview-menu > li > a {
-   color: #8aa4af;
+   color: #909090;
 }
 .skin-ufop .treeview-menu > li.active > a,
 .skin-ufop .treeview-menu > li > a:hover {
@@ -98,13 +98,13 @@
 }
 .skin-ufop .sidebar-form {
    border-radius: 3px;
-   border: 1px solid #374850;
+   border: 1px solid #353535;
    margin: 10px 10px;
 }
 .skin-ufop .sidebar-form input[type="text"],
 .skin-ufop .sidebar-form .btn {
    box-shadow: none;
-   background-color: #374850;
+   background-color: #353535;
    border: 1px solid transparent;
    height: 35px;
    -webkit-transition: all 0.3s ease-in-out;

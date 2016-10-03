@@ -16,11 +16,12 @@ class CreateResponsesTable extends Migration
          $table->increments('id');
 
          $table->integer('survey_id')->unsigned();
-         $table->integer('section_id')->unsigned();
          $table->integer('student_id')->unsigned();
 
-         $table->foreign(['section_id', 'student_id'])->references(['section_id', 'student_id'])->on('section_student');
-         $table->foreign(['section_id', 'survey_id'])->references(['section_id', 'survey_id'])->on('section_survey');
+         $table->unique(['survey_id', 'student_id']);
+
+         $table->foreign('survey_id')->references('id')->on('surveys');
+         $table->foreign('student_id')->references('id')->on('students');
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();

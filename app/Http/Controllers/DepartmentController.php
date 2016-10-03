@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Department;
+
+use App\Models\Department;
 
 class departmentController extends Controller
 {
@@ -39,8 +40,11 @@ class departmentController extends Controller
    public function store(Request $request)
    {
       $department = new Department($request->all());
-      $department->save();
-      return redirect()->route('department.index');
+      if($department->save()){
+         return redirect()->route('department.index')->with('successMessage', 'Departamento criado com sucesso');
+      }
+      return redirect()->route('department.create')->with('errorMessage', 'Erro ao criar departamento');
+
    }
 
    /**
@@ -78,8 +82,11 @@ class departmentController extends Controller
       $department = Department::find(decrypt($id));
       $department->department = $request->department;
       $department->initials = $request->initials;
-      $department->save();
-      return redirect()->route('department.index');
+      if($department->save()){
+         return redirect()->route('department.index')->with('successMessage', 'Informações atualizadas com sucesso');
+      }
+      return redirect()->route('department.edit')->with('errorMessage', 'Erro ao atualizar o departamento');
+
    }
 
    /**
@@ -91,6 +98,6 @@ class departmentController extends Controller
    public function destroy($id)
    {
       Department::find(decrypt($id))->delete();
-      return redirect()->route('department.index');
+      return redirect()->route('department.index')->with('successMessage', 'Registro excluído com sucesso.');
    }
 }
