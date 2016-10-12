@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Models\Survey;
 use App\Models\Professor;
 use App\Models\Student;
+use App\Models\Question;
 
 class SurveyController extends Controller
 {
@@ -38,8 +39,9 @@ class SurveyController extends Controller
    public function create()
    {
       $sections = Professor::find(session()->get('id'))->sections;
+      $questions = Question::all();
       if(session()->get('role') === 'Administrador'){
-         return view('survey.admin.create', compact('sections'));
+         return view('survey.admin.create', compact('sections', 'questions'));
       }else if(session()->get('role') === 'Professor'){
          return view('survey.professor.create', compact('sections'));
       }
@@ -103,4 +105,13 @@ class SurveyController extends Controller
       //
    }
 
+   public function ajaxShowQuestion($id){
+      $question = Question::find($id);
+      return view('survey.admin.question', compact('question'))->render();
+   }
+
+   public function ajaxQuestionsSelect($count){
+      $questions = Question::all();
+      return view('survey.admin.select-questions', compact('questions', 'count'))->render();
+   }
 }

@@ -85,5 +85,5 @@
 @endsection
 
 @section('myScripts')
-   <script type="text/javascript" src="{{URL::asset('/js/deleteModal.js')}}"></script>
+   <script src="{{URL::asset('/js/deleteModal.js')}}"></script>
 @endsection

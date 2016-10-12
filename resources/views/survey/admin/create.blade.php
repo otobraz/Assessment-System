@@ -11,34 +11,58 @@
 
 @section('content')
 
-   <div class="container">
-      <div class="panel panel-default">
-         <div class="panel-body">
-            <form class="form-signin" method="POST" action="{{action('SurveyController@store')}}">
-               <div class="form-group">
-                  <label for="section">Atribuir questionário as turmas:</label>
-                  @foreach ($sections as $section)
-                     <div class="checkbox">
-                        <label>
-                           <input type="checkbox" name="sections[]" value="{{$section->id}}">
-                           {{$section->course->course . " - " . $section->year . "/" . $section->semester}}
-                        </label>
+   <div class="row">
+      <div class="col-md-10">
+         <div class="panel panel-default">
+            <div class="panel-body">
+               <form class="form-signin" method="POST" action="{{action('SurveyController@store')}}">
+                  @include('alert-message.success')
+                  @include('alert-message.error')
+
+                  <div id="section-select-panel" class="panel panel-default">
+                     <div class="panel-body">
+                        <div class="form-group">
+                           <label for="section">Atribuir questionário as turmas:</label>
+                           @foreach ($sections as $section)
+                              <div class="checkbox">
+                                 <label>
+                                    <input type="checkbox" name="sections[]" value="{{$section->id}}">
+                                    {{$section->course->course . " - " . $section->year . "/" . $section->semester}}
+                                 </label>
+                              </div>
+                           @endforeach
+                        </div>
                      </div>
-                  @endforeach
+                  </div>
+
+                  <hr class="hr-ufop">
+                  <h3 class="text-center">Pré-Visualização</h3>
+                  <hr class="hr-ufop">
+
+                  <div id="survey-preview-panel" class="panel panel-default">
+                     <div class="panel-body">
+                     </div>
+                  </div>
                </div>
-               <div class="form-group">
-                 <label for="name"></label>
-                 <input type="text" class="form-control" id="name" placeholder="">
-                 <p class="help-block">Help text here.</p>
+            </div>
+         </div>
+         <div class="col-md-2">
+            <div class="panel panel-default fixed">
+               <div class="panel-body">
+                  <button type="button" class="btn btn-block btn-primary" name="btn-blank-question">Nova Questão</button>
+                  <hr class="hr-ufop">
+                  <button type="button" class="btn btn-block btn-primary" name="btn-select-question">Selecionar Questão</button>
                </div>
-               @include('alert-message.success')
-               @include('alert-message.error')
+
             </div>
          </div>
       </div>
+   </div>
 
-   @endsection
+@endsection
 
-   @section('myScripts')
+@section('myScripts')
 
-   @endsection
+   <script src="{{URL::asset('/js/createSurvey.js')}}"></script>
+
+@endsection
