@@ -9,6 +9,7 @@ use App\Models\Survey;
 use App\Models\Professor;
 use App\Models\Student;
 use App\Models\Question;
+use App\Models\QuestionType;
 
 class SurveyController extends Controller
 {
@@ -55,7 +56,7 @@ class SurveyController extends Controller
    */
    public function store(Request $request)
    {
-      //
+      dd($request->all());
    }
 
    /**
@@ -107,11 +108,33 @@ class SurveyController extends Controller
 
    public function ajaxShowQuestion($id){
       $question = Question::find($id);
-      return view('survey.admin.question', compact('question'))->render();
+      return view('survey.ajax.question', compact('question'))->render();
    }
 
-   public function ajaxQuestionsSelect($count){
+   public function ajaxSelectQuestion($count){
       $questions = Question::all();
-      return view('survey.admin.select-questions', compact('questions', 'count'))->render();
+      return view('survey.ajax.select-questions', compact('questions', 'count'))->render();
    }
+
+   public function ajaxCreateQuestion($count){
+      $questionTypes = QuestionType::all();
+      return view('survey.ajax.create-question', compact('questionTypes', 'count'))->render();
+   }
+
+   public function ajaxCreateInput($count, $questionType){
+      switch ($questionType) {
+         case '1':
+            return view('survey.ajax.text-input', compact('count'))->render();
+            break;
+
+         case '2':
+            return view('survey.ajax.radio-input', compact('count'))->render();
+            break;
+
+         case '3':
+            return view('survey.ajax.checkbox-input', compact('count'))->render();
+            break;
+      }
+   }
+
 }

@@ -264,3 +264,7 @@ div .fixed{
 .panel-survey{
    background-color: #F5F5F5;
 }
+
+.dynamic-input-group{
+   padding-top: 2px;
+}

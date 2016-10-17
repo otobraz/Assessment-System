@@ -110,11 +110,33 @@ class AuthController extends Controller{
       return view('auth.login');
    }
 
+   public function postAdminLogin(Admin $user, Request $request){
+
+      //dd(bcrypt($request->password));
+      //dd(Hash::check($request->input('password'), $user->password));
+      if(Hash::check($request->input('password'), $user->password)){
+         $request->session()->put(array(
+            'id' => $user->id,
+            'username' => $user->username,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
+            'role' => 'Administrador'
+         ));
+         return redirect()->route('home');
+      }
+      return redirect('login')->with('authError', 'Usuário e/ou Senha inválidos');
+   }
+
    public function postLogin(Request $request){
       if($request->session()->has('username')){
-         // Redirect to user's home page
          return redirect()->route('home');
-      }else {
+      }
+
+      $user = Admin::where('username', $request->username)->first();
+      if (isset($user)){
+         return $this->postAdminLogin($user, $request);
+      }else{
          $ldapData = config('my_config.ldapData');
          // $ldapUserGroups = config('my_config.userGroups');
          if($ldapUser = $this->getLdapUser($ldapData, $request->input('username'))){
@@ -154,22 +176,8 @@ class AuthController extends Controller{
                   return redirect()->route('home');
                }
             }
+            return redirect('login')->with('authError', 'Usuário e/ou Senha inválidos');
          }
-         $user = Admin::where('username', $request->username)->first();
-         //dd(bcrypt($request->password));
-         //dd(Hash::check($request->input('password'), $user->password));
-         if(isset($user) && Hash::check($request->input('password'), $user->password)){
-            $request->session()->put(array(
-               'id' => $user->id,
-               'username' => $user->username,
-               'first_name' => $user->first_name,
-               'last_name' => $user->last_name,
-               'email' => $user->email,
-               'role' => 'Administrador'
-            ));
-            return redirect()->route('home');
-         }
-         return redirect('login')->with('authError', 'Usuário e/ou Senha inválidos');
       }
    }
 
