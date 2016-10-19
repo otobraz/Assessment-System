@@ -36,12 +36,12 @@ Route::group(['middleware' => ['auth.user']], function () {
    Route::get('questionario/criar', ['as' => 'survey.create', 'uses' => 'SurveyController@create']);
    Route::post('questionario/criar', ['as' => 'survey.store', 'uses' => 'SurveyController@store']);
 
-
+   // Ajax
    Route::get('questionario/ajax/escolher-questao/{count}', ['as' => 'ajax.selectQuestion', 'uses' => 'SurveyController@ajaxSelectQuestion']);
    Route::get('questionario/ajax/questao/{id}', ['as' => 'ajax.showQuestion', 'uses' => 'SurveyController@ajaxShowQuestion']);
 
    Route::get('questionario/ajax/nova-questao/{count}', ['as' => 'ajax.createQuestion', 'uses' => 'SurveyController@ajaxCreateQuestion']);
-   Route::get('questionario/ajax/novo-input/{count}/{questionType}', ['as' => 'ajax.createInput', 'uses' => 'SurveyController@ajaxCreateInput']);
+   Route::get('questionario/ajax/novo-input/{name}/{questionType}', ['as' => 'ajax.createInput', 'uses' => 'SurveyController@ajaxCreateInput']);
 
    // Route::get('questionario/ajax/questao/criar', ['as' => 'ajax.createQuestion', 'uses' => 'SurveyController@ajaxCreateQuestion']);
 

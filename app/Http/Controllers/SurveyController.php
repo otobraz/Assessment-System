@@ -121,18 +121,18 @@ class SurveyController extends Controller
       return view('survey.ajax.create-question', compact('questionTypes', 'count'))->render();
    }
 
-   public function ajaxCreateInput($count, $questionType){
+   public function ajaxCreateInput($name, $questionType){
       switch ($questionType) {
          case '1':
-            return view('survey.ajax.text-input', compact('count'))->render();
+            return view('survey.ajax.text-input', compact('name'))->render();
             break;
 
          case '2':
-            return view('survey.ajax.radio-input', compact('count'))->render();
+            return view('survey.ajax.radio-input', compact('name'))->render();
             break;
 
          case '3':
-            return view('survey.ajax.checkbox-input', compact('count'))->render();
+            return view('survey.ajax.checkbox-input', compact('name'))->render();
             break;
       }
    }

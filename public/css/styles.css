@@ -268,3 +268,12 @@ div .fixed{
 .dynamic-input-group{
    padding-top: 2px;
 }
+
+.btn-div{
+   text-align: right;
+   padding-bottom: 15px;
+}
+
+.remove-question{
+   color: gray;
+}

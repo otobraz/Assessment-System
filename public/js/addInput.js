@@ -1,7 +1,6 @@
 $(document).on('click', '.btn-add', function(e)
 {
 
-
    var controlForm = $(this).parents('.dynamic-form-group');
    var currentEntry = $(this).parents('.dynamic-input-group');
    var newEntry = $(currentEntry.clone()).appendTo(controlForm);
@@ -15,6 +14,14 @@ $(document).on('click', '.btn-add', function(e)
 }).on('click', '.btn-remove', function(e){
 
    $(this).parents('.input-group:first').remove();
+
+   return false;
+
+});
+
+$(document).on('click', '.remove-question', function(e){
+
+   $(this).parents('.question-spot:first').remove();
 
    return false;
 

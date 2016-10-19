@@ -1,15 +1,16 @@
 $("button[name='btn-blank-question']").on("click", function(){
 
    var count = $("div[name='question-spot']").size();
-   var selectSpotId = "select-" + count + "-spot";
-   var questionSpotId = "question-" + count + "-spot";
+   // var selectSpotId = "select-" + count + "-spot";
+   // var questionSpotId = "question-" + count + "-spot";
 
    $("#survey-preview-panel > .panel-body").append(
-      "<div name='select-question-type-spot' id='" + selectSpotId + "'></div><div name='question-spot' id='" + questionSpotId + "'></div><hr class='hr-ufop'>"
+      "<div class='question-spot' name='question-spot'><div name='select-question-spot' class='select-question-spot'></div><div name='input-spot'></div></div>"
    );
 
-   $("#" + selectSpotId).load("ajax/nova-questao/" + count);
-   $("#" + questionSpotId).load("ajax/novo-input/question-" + count + "/2");
+   var selectDiv = $("div[name='select-question-spot']").last();
+   selectDiv.load("ajax/nova-questao/" + count);
+   selectDiv.next().load("ajax/novo-input/question-" + count + "/2");
 
 });
 
@@ -20,24 +21,26 @@ $("#survey-preview-panel > .panel-body").on("click", ".select-question-type", fu
 }).on("change", ".select-question-type", function(){
 
    var questionTypeId = this.value;
-   var selectId = $(this).attr('id');
+   var id = $(this).attr('id');
    var previousValue = $(this).data('val');
+   var selectDiv = $(this).parents(".select-question-spot:first");
+   var inputDiv = selectDiv.next();
 
    if(previousValue == 1 || questionTypeId == 1){
 
-      $("#" + selectId + "-spot").load("ajax/novo-input/" + selectId + "/" + questionTypeId);
+      inputDiv.load("ajax/novo-input/" + id + "/" + questionTypeId);
 
    }else if (questionTypeId == 2) {
 
-      var oldName = selectId + "-checkboxes"
-      var newName = selectId + "-radios"
+      var oldName = id + "-checkboxes"
+      var newName = id + "-radios"
       $("input[name='" + oldName + "']").attr("type", "radio");
       $("input[name='" + oldName + "']").attr("name", newName);
 
    }else if (questionTypeId == 3){
 
-      var oldName = selectId + "-radios"
-      var newName = selectId + "-checkboxes"
+      var oldName = id + "-radios"
+      var newName = id + "-checkboxes"
       $("input[name='" + oldName + "']").attr("type", "checkbox");
       $("input[name='" + oldName + "']").attr("name", newName);
 
