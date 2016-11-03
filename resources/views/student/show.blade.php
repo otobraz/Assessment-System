@@ -19,11 +19,15 @@
                   <tbody>
                      <tr>
                         <th>Nome:</th>
-                        <td>{{$student->first_name . " " . $student->last_name}}</td>
+                        <td>{{$student->nome . " " . $student->sobrenome}}</td>
                      </tr>
                      <tr>
                         <th>Curso:</th>
-                        <td>{{$student->major->major}}</td>
+                        <td>{{$student->curso->curso}}</td>
+                     </tr>
+                     <tr>
+                        <th>Matrícula:</th>
+                        <td>{{$student->matricula}}</td>
                      </tr>
                      <tr>
                         <th>Login (CPF):</th>
@@ -39,37 +43,6 @@
                </table>
                <a class="btn btn-primary btn-block" target="_blank" style="color: white" type="button" data-toggle="modal" href="{{action('StudentController@edit')}}"> Editar Cadastro
                </a>
-
-
-               <!-- <div class="form-horizontal">
-                  <div class="form-group">
-                     <label for="name" class="control-label col-md-2">Nome</label>
-                     <div class="col-md-10">
-                        <input class="form-control" type="text" name="name" value="{{$student->first_name . " " . $student->last_name}}" disabled>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label for="email" class="control-label col-md-2">E-mail</label>
-                     <div class="col-md-10">
-                        <input class="form-control" type="text" name="email" value="{{$student->email}}" disabled>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label for="major" class="control-label col-md-2">Curso</label>
-                     <div class="col-md-10">
-                        <input class="form-control" type="text" name="major" value="{{$student->major->major}}" disabled>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label for="major" class="control-label col-md-2">Curso</label>
-                     <div class="col-md-10">
-                        <input class="form-control" type="text" name="major" value="{{$student->major->major}}" disabled>
-                     </div>
-                  </div>
-               </div> -->
-
-
-
 
             </div>
          </div>

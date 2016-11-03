@@ -15,7 +15,7 @@ class ProfessorMiddleware
    */
    public function handle($request, Closure $next)
    {
-      if ($request->session()->get('role') != 'Professor') {
+      if ($request->session()->get('role') != '2') {
          if ($request->ajax() || $request->wantsJson()) {
             return response('Unauthorized.', 401);
          } else{

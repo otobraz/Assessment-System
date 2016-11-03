@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SectionType extends Model
+class TipoPergunta extends Model
 {
 
-   protected $table = 'section_types';
+   protected $table = 'tipos_pergunta';
 
    protected $fillable = [
-      'type'
+      'tipo'
    ];
 
    /**
@@ -22,9 +22,8 @@ class SectionType extends Model
 
    ];
 
-   public function sections(){
-      return $this->hasMany('App\Models\Section');
+   public function perguntas(){
+      return $this->hasMany('App\Models\Pergunta', 'tipo_id');
    }
-
 
 }

@@ -40,7 +40,7 @@
                                  <div class="checkbox">
                                     <label>
                                        <input type="checkbox" name="sections[]" value="{{$section->id}}">
-                                       {{$section->course->course . " - " . $section->year . "/" . $section->semester}}
+                                       {{$section->disciplina->disciplina . " - " . $section->ano . "/" . $section->semestre}}
                                     </label>
                                  </div>
                               @endforeach
@@ -66,7 +66,7 @@
             </div>
          </div>
       </div>
-      
+
       <div class="col-md-2">
          <div class="panel panel-default fixed">
             <div class="panel-body">

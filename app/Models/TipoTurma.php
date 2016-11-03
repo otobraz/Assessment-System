@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class QuestionType extends Model
+class TipoTurma extends Model
 {
 
-   protected $table = 'question_types';
+   protected $table = 'tipos_turma';
 
    protected $fillable = [
-      'type'
+      'tipo'
    ];
 
    /**
@@ -22,8 +22,9 @@ class QuestionType extends Model
 
    ];
 
-   public function questions(){
-      return $this->hasMany('App\Models\Question', 'type_id');
+   public function turmas(){
+      return $this->hasMany('App\Models\Turma', 'tipo_id');
    }
+
 
 }

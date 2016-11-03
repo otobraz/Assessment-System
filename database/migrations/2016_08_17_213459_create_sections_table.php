@@ -12,15 +12,16 @@ class CreateSectionsTable extends Migration
    */
    public function up()
    {
-      Schema::create('sections', function (Blueprint $table) {
-         $table->increments('id');
-         $table->integer('year');
-         $table->integer('semester');
-         $table->integer('course_id')->unsigned();
-         $table->integer('type_id')->unsigned();
+      Schema::create('turmas', function (Blueprint $table) {
 
-         $table->foreign('course_id')->references('id')->on('courses');
-         $table->foreign('type_id')->references('id')->on('section_types');
+         $table->increments('id');
+         $table->integer('ano');
+         $table->integer('semestre');
+         $table->integer('disciplina_id')->unsigned();
+         // $table->integer('tipo_id')->unsigned();
+
+         $table->foreign('disciplina_id')->references('id')->on('disciplinas');
+         $table->foreign('tipo_id')->references('id')->on('tipos_turma');
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();
@@ -34,6 +35,6 @@ class CreateSectionsTable extends Migration
    */
    public function down()
    {
-      Schema::drop('sections');
+      Schema::drop('turmas');
    }
 }

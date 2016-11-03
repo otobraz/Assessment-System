@@ -15,7 +15,7 @@ class StudentMiddleware
      */
     public function handle($request, Closure $next)
     {
-      if ($request->session()->get('role') != 'Aluno') {
+      if ($request->session()->get('role') != '1') {
          if ($request->ajax() || $request->wantsJson()) {
            return response('Unauthorized.', 401);
          } else{

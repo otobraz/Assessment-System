@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Major extends Model
+class Curso extends Model
 {
 
-   protected $table = 'majors';
+   protected $table = 'cursos';
 
    protected $fillable = [
-      'major',
-      'initials'
+      'cod_curso',
+      'curso'
    ];
 
    /**
@@ -23,12 +23,8 @@ class Major extends Model
 
    ];
 
-   public function students(){
+   public function alunos(){
       return $this->hasMany('App\Models\Student');
-   }
-
-   public function courses(){
-      return $this->belongsToMany('App\Models\Course');
    }
 
 }

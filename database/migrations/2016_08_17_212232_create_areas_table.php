@@ -16,8 +16,8 @@ class CreateAreasTable extends Migration
          $table->increments('id');
          $table->string('area');
 
-         $table->timestamp('updated_at');
-         $table->timestamp('created_at')->useCurrent();
+         $table->timestamp('atualizado_em');
+         $table->timestamp('criado_em')->useCurrent();
       });
    }
 

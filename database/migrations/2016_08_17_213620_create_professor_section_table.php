@@ -5,34 +5,35 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateProfessorSectionTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('professor_section', function (Blueprint $table) {
-            $table->integer('section_id')->unsigned();
-            $table->integer('professor_id')->unsigned();
+   /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+   public function up()
+   {
+      Schema::create('professor_turma', function (Blueprint $table) {
+         $table->integer('professor_id')->unsigned();
+         $table->integer('turma_id')->unsigned();
 
-            $table->primary(['section_id', 'professor_id']);
 
-            $table->foreign('section_id')->references('id')->on('sections');
-            $table->foreign('professor_id')->references('id')->on('professors');
+         $table->primary(['professor_id', 'turma_id']);
 
-            $table->timestamp('updated_at');
-            $table->timestamp('created_at')->useCurrent();
-        });
-    }
+         $table->foreign('turma_id')->references('id')->on('turmas');
+         $table->foreign('professor_id')->references('id')->on('professores');
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::drop('section_professor');
-    }
+         $table->timestamp('updated_at');
+         $table->timestamp('created_at')->useCurrent();
+      });
+   }
+
+   /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+   public function down()
+   {
+      Schema::drop('professor_turma');
+   }
 }

@@ -22,7 +22,7 @@ class Area extends Model
 
    ];
 
-   public function professors(){
+   public function professores(){
       return $this->belongsToMany('App\Models\Professor');
    }
 }

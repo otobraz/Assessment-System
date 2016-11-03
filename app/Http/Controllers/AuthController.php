@@ -7,9 +7,9 @@ use Illuminate\Http\RedirectResponse;
 
 use Hash;
 
-use App\Models\Major;
-use App\Models\Department;
-use App\Models\Student;
+use App\Models\Curso;
+use App\Models\Departamento;
+use App\Models\Aluno;
 use App\Models\Professor;
 use App\Models\Admin;
 
@@ -53,18 +53,23 @@ class AuthController extends Controller{
    }
 
    public function insertUpdateStudent($authenticatedUser){
-      $user = Student::where('username', $authenticatedUser['username'])->first();
+      $user = Aluno::where('usuario', $authenticatedUser['username'])->first();
       if(isset($user)){
-         session()->put('id', $user->id);
-         $user->fill($authenticatedUser);
+         $user->usuario = $authenticatedUser['username'];
+         $user->nome = $authenticatedUser['first_name'];
+         $user->sobrenome = $authenticatedUser['last_name'];
+         $user->email = $authenticatedUser['email'];
+         $user->curso_id = $authenticatedUser['major_id'];
          $user->save();
+         session()->put('id', $user->id);
       }else{
-         $newUser = new Student();
-         $newUser->username = $authenticatedUser['username'];
-         $newUser->first_name = $authenticatedUser['first_name'];
-         $newUser->last_name = $authenticatedUser['last_name'];
+         $newUser = new Aluno();
+         $newUser->usuario = $authenticatedUser['username'];
+         $newUser->matricula = $authenticatedUser['username'];
+         $newUser->nome = $authenticatedUser['first_name'];
+         $newUser->sobrenome = $authenticatedUser['last_name'];
          $newUser->email = $authenticatedUser['email'];
-         $newUser->major_id = $authenticatedUser['major_id'];
+         $newUser->curso_id = $authenticatedUser['major_id'];
          $newUser->save();
          session()->put('id', $newUser->id);
       }
@@ -77,18 +82,23 @@ class AuthController extends Controller{
    }
 
    public function insertUpdateProfessor($authenticatedUser){
-      $user = Professor::where('username', $authenticatedUser['username'])->first();
+      $user = Professor::where('usuario', $authenticatedUser['username'])->first();
       if(isset($user)){
-         session()->put('id', $user->id);
-         $user->fill($authenticatedUser);
+         $user->usuario = $authenticatedUser['username'];
+         $user->nome = $authenticatedUser['first_name'];
+         $user->sobrenome = $authenticatedUser['last_name'];
+         // $user->email = $authenticatedUser['email'];
+         $user->departamento_id = $authenticatedUser['major_id'];
          $user->save();
+         session()->put('id', $user->id);
       }else{
          $newUser = new Professor();
-         $newUser->username = $authenticatedUser['username'];
-         $newUser->first_name = $authenticatedUser['first_name'];
-         $newUser->last_name = $authenticatedUser['last_name'];
+         $newUser->usuario = $authenticatedUser['username'];
+         $newUser->siape = $authenticatedUser['username'];
+         $newUser->nome = $authenticatedUser['first_name'];
+         $newUser->sobrenome = $authenticatedUser['last_name'];
          $newUser->email = $authenticatedUser['email'];
-         $newUser->department_id = $authenticatedUser['department_id'];
+         $newUser->departamento_id = $authenticatedUser['department_id'];
          $newUser->save();
          session()->put('id', $newUser->id);
       }
@@ -114,14 +124,14 @@ class AuthController extends Controller{
 
       //dd(bcrypt($request->password));
       //dd(Hash::check($request->input('password'), $user->password));
-      if(Hash::check($request->input('password'), $user->password)){
+      if(Hash::check($request->input('password'), $user->senha)){
          $request->session()->put(array(
             'id' => $user->id,
-            'username' => $user->username,
-            'first_name' => $user->first_name,
-            'last_name' => $user->last_name,
+            'username' => $user->usuario,
+            'first_name' => $user->nome,
+            'last_name' => $user->sobrenome,
             'email' => $user->email,
-            'role' => 'Administrador'
+            'role' => '0'
          ));
          return redirect()->route('home');
       }
@@ -133,7 +143,7 @@ class AuthController extends Controller{
          return redirect()->route('home');
       }
 
-      $user = Admin::where('username', $request->username)->first();
+      $user = Admin::where('usuario', $request->username)->first();
       if (isset($user)){
          return $this->postAdminLogin($user, $request);
       }else{
@@ -143,7 +153,7 @@ class AuthController extends Controller{
             $ou = $ldapUser[0][$ldapData['group_field']][0];
 
             // If the user's 'ou' field is in the majors table, he is a student
-            if($major = Major::where('major', $ldapUser[0][$ldapData['group_field']][0])->first()){
+            if($major = Curso::where('curso', $ldapUser[0][$ldapData['group_field']][0])->first()){
                $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
                if ($this->isPasswordValid($userPassword, $request->input('password'))){
                   $authenticatedUser = array(
@@ -152,7 +162,7 @@ class AuthController extends Controller{
                      'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
                      'email' => $ldapUser[0][$ldapData['email_field']][0],
                      'major_id' => $major->id,
-                     'role' => 'Aluno'
+                     'role' => '1'
                   );
                   $this->insertUpdateStudent($authenticatedUser);
                   $request->session()->put($authenticatedUser);
@@ -160,7 +170,7 @@ class AuthController extends Controller{
                }
 
             // If the user's 'ou' field is in the departments table, he is a professor
-            }else if($department = Department::where('department', 'LIKE', "%$ou%")->first()){
+         }else if($department = Departamento::where('departamento', 'LIKE', "%$ou%")->first()){
                $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
                if ($this->isPasswordValid($userPassword, $request->input('password'))){
                   $authenticatedUser = array(
@@ -169,7 +179,7 @@ class AuthController extends Controller{
                      'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
                      'email' => $ldapUser[0][$ldapData['email_field']][0],
                      'department_id' => $department->id,
-                     'role' => 'Professor'
+                     'role' => '2'
                   );
                   $this->insertUpdateProfessor($authenticatedUser);
                   $request->session()->put($authenticatedUser); // put role in session

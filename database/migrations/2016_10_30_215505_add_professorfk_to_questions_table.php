@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddCompositeuniquekeysToResponsesTable extends Migration
+class AddProfessorfkToQuestionsTable extends Migration
 {
    /**
    * Run the migrations.
@@ -12,11 +12,13 @@ class AddCompositeuniquekeysToResponsesTable extends Migration
    */
    public function up()
    {
+      Schema::table('perguntas', function (Blueprint $table) {
 
-      Schema::table('responses', function (Blueprint $table) {
-         $table->unique(['survey_id', 'student_id']);
+         $table->integer('professor_id')->unsigned()->nullable()->after('tipo_id');
+
+         $table->foreign('professor_id')->references('id')->on('professores');
+
       });
-
    }
 
    /**

@@ -5,34 +5,35 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateSectionSurveyTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('section_survey', function (Blueprint $table) {
-            $table->integer('section_id')->unsigned();
-            $table->integer('survey_id')->unsigned();
+   /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+   public function up()
+   {
+      Schema::create('questionario_turma', function (Blueprint $table) {
+         $table->integer('questionario_id')->unsigned();
+         $table->integer('turma_id')->unsigned();
 
-            $table->primary(['section_id', 'survey_id']);
 
-            $table->foreign('section_id')->references('id')->on('sections');
-            $table->foreign('survey_id')->references('id')->on('surveys');
+         $table->primary(['questionario_id', 'turma_id']);
 
-            $table->timestamp('updated_at');
-            $table->timestamp('created_at')->useCurrent();
-        });
-    }
+         $table->foreign('turma_id')->references('id')->on('turmas');
+         $table->foreign('questionario_id')->references('id')->on('questionarios');
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::drop('section_survey');
-    }
+         $table->timestamp('updated_at');
+         $table->timestamp('created_at')->useCurrent();
+      });
+   }
+
+   /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+   public function down()
+   {
+      Schema::drop('questionario_turma');
+   }
 }

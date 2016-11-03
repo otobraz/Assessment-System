@@ -13,7 +13,7 @@
       @foreach($questionTypes as $questionType)
          <tr>
             <td>{{$questionType->id}}</td>
-            <td>{{$questionType->type}}</td>
+            <td>{{$questionType->tipo}}</td>
             <td>
                <a href="{{route('questionType.edit', encrypt($questionType->id))}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
             </td>

@@ -39,11 +39,11 @@ class AdminController extends Controller
    public function store(Request $request)
    {
       $admin = new Admin();
-      $admin->first_name = $request->first_name;
-      $admin->last_name = $request->last_name;
+      $admin->nome = $request->first_name;
+      $admin->sobrenome = $request->last_name;
       $admin->email = $request->email;
-      $admin->username = $request->username;
-      $admin->password = bcrypt($request->password);
+      $admin->usuario = $request->username;
+      $admin->senha = bcrypt($request->password);
       if($admin->save()){
          return redirect()->route('admin.index')->with('successMessage', 'Administrador cadastrado com sucesso');
       }
@@ -90,10 +90,10 @@ class AdminController extends Controller
    public function update(Request $request, $id)
    {
       $admin = Admin::find(decrypt($id));
-      $admin->first_name = $request->first_name;
-      $admin->last_name = $request->last_name;
+      $admin->nome = $request->first_name;
+      $admin->sobrenome = $request->last_name;
       $admin->email = $request->email;
-      $admin->username = $request->username;
+      $admin->usuario = $request->username;
       if($admin->save()){
          return redirect()->route('admin.edit', ['id' => $id])->with('successMessage', 'Informações alteradas com sucesso.');
       }
@@ -103,10 +103,10 @@ class AdminController extends Controller
 
    public function updatePassword(Request $request, $id){
       $admin = Admin::find(decrypt($id));
-      if(isset($admin) && Hash::check($request->password, $admin->password)){
+      if(isset($admin) && Hash::check($request->password, $admin->senha)){
          if($request->newPassword === $request->passwordConfirmation){
             if (Hash::needsRehash($request->password)) {
-               $admin->password = bcrypt($request->newPassword);
+               $admin->senha = bcrypt($request->newPassword);
             }
             if($admin->save()){
                return redirect()->route('admin.edit', ['id' => $id])->with('successMessage', 'Senha alterada com sucesso.');

@@ -12,16 +12,16 @@ class CreateResponsesTable extends Migration
    */
    public function up()
    {
-      Schema::create('responses', function (Blueprint $table) {
+      Schema::create('respostas', function (Blueprint $table) {
          $table->increments('id');
 
-         $table->integer('survey_id')->unsigned();
-         $table->integer('student_id')->unsigned();
+         $table->integer('aluno_id')->unsigned();
+         $table->integer('questionario_id')->unsigned();
 
-         $table->unique(['survey_id', 'student_id']);
+         $table->unique(['aluno_id', 'questionario_id']);
 
-         $table->foreign('survey_id')->references('id')->on('surveys');
-         $table->foreign('student_id')->references('id')->on('students');
+         $table->foreign('questionario_id')->references('id')->on('questionarios');
+         $table->foreign('aluno_id')->references('id')->on('alunos');
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();
@@ -35,6 +35,6 @@ class CreateResponsesTable extends Migration
    */
    public function down()
    {
-      Schema::drop('responses');
+      Schema::drop('respostas');
    }
 }

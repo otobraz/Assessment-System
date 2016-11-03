@@ -12,9 +12,10 @@ class CreateSectionTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('section_types', function (Blueprint $table) {
+        Schema::create('tipos_turma', function (Blueprint $table) {
+           
             $table->increments('id');
-            $table->string('type', 30);
+            $table->string('tipo', 30);
 
             $table->timestamp('updated_at');
             $table->timestamp('created_at')->useCurrent();
@@ -28,6 +29,6 @@ class CreateSectionTypesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('section_types');
+        Schema::drop('tipos_turma');
     }
 }

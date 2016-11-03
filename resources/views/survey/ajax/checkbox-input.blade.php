@@ -11,4 +11,4 @@
       </span>
    </div><!-- /input-group -->
 </div>
-<hr class='hr-ufop'>
+<hr class="hr-ufop">

@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
-use App\Models\Department;
+use App\Models\Departamento;
 
-class departmentController extends Controller
+class DepartmentController extends Controller
 {
 
    /**
@@ -17,7 +17,7 @@ class departmentController extends Controller
    */
    public function index()
    {
-      $departments = Department::all();
+      $departments = Departamento::all();
       return view ('department.index', compact('departments'));
    }
 
@@ -39,7 +39,9 @@ class departmentController extends Controller
    */
    public function store(Request $request)
    {
-      $department = new Department($request->all());
+      $department = new Departamento();
+      $department->departamento = $request->department;
+      $department->cod_departamento = $request->initials;
       if($department->save()){
          return redirect()->route('department.index')->with('successMessage', 'Departamento criado com sucesso');
       }
@@ -66,7 +68,7 @@ class departmentController extends Controller
    */
    public function edit($id)
    {
-      $department = Department::find(decrypt($id));
+      $department = Departamento::find(decrypt($id));
       return view('department.edit', compact('department'));
    }
 
@@ -79,9 +81,9 @@ class departmentController extends Controller
    */
    public function update(Request $request, $id)
    {
-      $department = Department::find(decrypt($id));
-      $department->department = $request->department;
-      $department->initials = $request->initials;
+      $department = Departamento::find(decrypt($id));
+      $department->departamento = $request->department;
+      $department->cod_departamento = $request->initials;
       if($department->save()){
          return redirect()->route('department.index')->with('successMessage', 'Informações atualizadas com sucesso');
       }
@@ -97,7 +99,7 @@ class departmentController extends Controller
    */
    public function destroy($id)
    {
-      Department::find(decrypt($id))->delete();
+      Departament::find(decrypt($id))->delete();
       return redirect()->route('department.index')->with('successMessage', 'Registro excluído com sucesso.');
    }
 }

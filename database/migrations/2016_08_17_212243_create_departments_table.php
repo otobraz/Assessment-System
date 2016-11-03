@@ -12,10 +12,11 @@ class CreateDepartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('departamentos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('department', 100);
-            $table->string('initials', 10);
+            $table->string('cod_departamento', 10);
+            $table->string('departamento', 100);
+
 
             $table->timestamp('updated_at');
             $table->timestamp('created_at')->useCurrent();
@@ -29,6 +30,6 @@ class CreateDepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('departments');
+        Schema::drop('departamentos');
     }
 }

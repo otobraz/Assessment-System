@@ -12,15 +12,15 @@ class CreateProfessorsTable extends Migration
    */
    public function up()
    {
-      Schema::create('professors', function (Blueprint $table) {
+      Schema::create('professores', function (Blueprint $table) {
          $table->increments('id');
-         $table->string('username', 11)->unique();
-         $table->string('first_name', 20);
-         $table->string('last_name', 50);
-         $table->string('email', 50)->unique();
-         $table->integer('department_id')->unsigned();
+         $table->string('usuario', 11)->unique();
+         $table->string('nome', 20)->nullable();
+         $table->string('sobrenome', 50)->nullable();
+         $table->string('email', 50)->unique()->nullable();
+         $table->integer('departamento_id')->unsigned();
 
-         $table->foreign('department_id')->references('id')->on('departments');
+         $table->foreign('departamento_id')->references('id')->on('departamentos');
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();
@@ -34,6 +34,6 @@ class CreateProfessorsTable extends Migration
    */
    public function down()
    {
-      Schema::drop('professors');
+      Schema::drop('professores');
    }
 }

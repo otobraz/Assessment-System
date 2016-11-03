@@ -12,14 +12,15 @@ class CreateSectionStudentTable extends Migration
    */
    public function up()
    {
-      Schema::create('section_student', function (Blueprint $table) {
-         $table->integer('section_id')->unsigned();
-         $table->integer('student_id')->unsigned();
+      Schema::create('aluno_turma', function (Blueprint $table) {
+         $table->integer('aluno_id')->unsigned();
+         $table->integer('turma_id')->unsigned();
 
-         $table->primary(['section_id', 'student_id']);
 
-         $table->foreign('section_id')->references('id')->on('sections');
-         $table->foreign('student_id')->references('id')->on('students');
+         $table->primary(['aluno_id', 'turma_id']);
+
+         $table->foreign('turma_id')->references('id')->on('turmas');
+         $table->foreign('aluno_id')->references('id')->on('alunos');
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();
@@ -33,6 +34,6 @@ class CreateSectionStudentTable extends Migration
    */
    public function down()
    {
-      Schema::drop('section_student');
+      Schema::drop('aluno_turma');
    }
 }

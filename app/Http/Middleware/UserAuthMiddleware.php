@@ -15,7 +15,7 @@ class UserAuthMiddleware
    */
    public function handle($request, Closure $next)
    {
-      if (!$request->session()->has('username')) {
+      if (!$request->session()->has('role')) {
          if ($request->ajax() || $request->wantsJson()) {
             return response('Unauthorized.', 401);
          } else{

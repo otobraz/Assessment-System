@@ -36,10 +36,10 @@
             <a href="{{action('SurveyController@index')}}"><i class="fa fa-comments-o"></i> <span>Questionários</span></a>
          </li>
          <li>
-            <a href="{{url('/forum')}}"><i class="fa fa-book"></i> <span>Minhas Classes</span></a>
+            <a href="#"><i class="fa fa-book"></i> <span>Minhas Classes</span></a>
          </li>
          <li>
-            <a href="{{url('/forum')}}"><i class="fa fa-graduation-cap"></i> <span>Professores</span></a>
+            <a href="#"><i class="fa fa-graduation-cap"></i> <span>Professores</span></a>
          </li>
          <li>
             <a href="{{action('StudentController@edit')}}" target="_blank"><i class="fa fa-pencil-square-o"></i> <span>Editar Cadastro</span></a>

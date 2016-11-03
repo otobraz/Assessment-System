@@ -35,14 +35,14 @@
                      <div class="form-group">
                         <label for="first_name">Nome:</label>
                         <input class="form-control input-xlarge" type="text" name="first_name" id="first_name"
-                        placeholder="Nome" value="{{$admin->first_name}}" autofocus required
+                        placeholder="Nome" value="{{$admin->nome}}" autofocus required
                         oninvalid="setCustomValidity('Informe o nome.')"
                         oninput="setCustomValidity('')">
                      </div>
                      <div class="form-group">
                         <label for="last_name">Sobrenome:</label>
                         <input class="form-control input-xlarge " type="text" name="last_name" id="last_name"
-                        placeholder="Sobrenome" value="{{$admin->last_name}}" required
+                        placeholder="Sobrenome" value="{{$admin->sobrenome}}" required
                         oninvalid="setCustomValidity('Informe o sobrenome.')"
                         oninput="setCustomValidity('')"
                         >
@@ -58,7 +58,7 @@
                      <div class="form-group">
                         <label for="username">Usuário</label>
                         <input class="form-control input-xlarge" type="text" name="username" id="username"
-                        placeholder="Usuário" value="{{$admin->username}}" required
+                        placeholder="Usuário" value="{{$admin->usuario}}" required
                         oninvalid="setCustomValidity('Informe o nome de usuário.')"
                         oninput="setCustomValidity('')"
                         >

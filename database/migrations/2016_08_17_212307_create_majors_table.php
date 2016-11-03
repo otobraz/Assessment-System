@@ -12,10 +12,11 @@ class CreateMajorsTable extends Migration
    */
    public function up()
    {
-      Schema::create('majors', function (Blueprint $table) {
+      Schema::create('cursos', function (Blueprint $table) {
          $table->increments('id');
-         $table->string('major', 30);
-         $table->string('initials', 10);
+         $table->string('cod_curso', 10);
+         $table->string('curso', 30);
+
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();
@@ -29,6 +30,6 @@ class CreateMajorsTable extends Migration
    */
    public function down()
    {
-      Schema::drop('majors');
+      Schema::drop('cursos');
    }
 }

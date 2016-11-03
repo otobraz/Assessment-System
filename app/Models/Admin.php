@@ -15,11 +15,11 @@ class Admin extends Model
     * @var array
     */
    protected $fillable = [
-      'username',
-      'first_name',
-      'last_name',
+      'usuario',
+      'nome',
+      'sobrenome',
       'email',
-      'password'
+      'senha'
    ];
 
    /**
@@ -28,7 +28,7 @@ class Admin extends Model
     * @var array
     */
    protected $hidden = [
-      'password'
+      'senha'
    ];
 
 }

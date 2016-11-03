@@ -12,12 +12,12 @@ class CreateChoicesTable extends Migration
    */
    public function up()
    {
-      Schema::create('choices', function (Blueprint $table) {
+      Schema::create('opcoes', function (Blueprint $table) {
          $table->increments('id');
-         $table->string('choice');
-         $table->integer('question_id')->unsigned();
+         $table->string('opcao');
+         $table->integer('pergunta_id')->unsigned();
 
-         $table->foreign('question_id')->references('id')->on('questions');
+         $table->foreign('pergunta_id')->references('id')->on('perguntas');
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();
@@ -31,6 +31,6 @@ class CreateChoicesTable extends Migration
    */
    public function down()
    {
-      Schema::drop('choices');
+      Schema::drop('opcoes');
    }
 }

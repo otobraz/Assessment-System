@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
-use App\Models\Section;
+use App\Models\Turma;
 
 class SectionController extends Controller
 {
@@ -16,7 +16,7 @@ class SectionController extends Controller
    */
    public function index()
    {
-      $sections = Section::all();
+      $sections = Turma::all();
       return  view ('section.index', compact('sections'));
    }
 
@@ -60,7 +60,7 @@ class SectionController extends Controller
    */
    public function destroy($id)
    {
-      Section::find(decrypt($id))->delete();
+      Turma::find(decrypt($id))->delete();
       return redirect()->route('questionType.index')->with('successMessage', 'Registro deletado com sucesso.');
    }
 }

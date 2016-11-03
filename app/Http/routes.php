@@ -67,6 +67,9 @@ Route::group(['middleware' => ['auth.student']], function () {
 // Routes that can be accessed iff the user is a professor
 Route::group(['middleware' => ['auth.professor']], function () {
 
+   Route::get('professor/editar', ['as' => 'professor.edit', 'uses' => 'ProfessorController@edit']);
+   Route::get('professor/{id}', ['as' => 'professor.show', 'uses' => 'ProfessorController@show']);
+
    // Survey Routes
    // Route::get('questionario/criar', ['as' => 'survey.create', 'uses' => 'SurveyController@create']);
    // Route::post('questionario/criar', ['as' => 'survey.store', 'uses' => 'SurveyController@store']);
@@ -112,10 +115,14 @@ Route::group(['middleware' => ['auth.admin']], function () {
 
    // Student
    Route::get('alunos', ['as' => 'student.index', 'uses' => 'StudentController@index']);
+   Route::get('alunos/importar', ['as' => 'student.import', 'uses' => 'StudentController@import']);
+   Route::post('alunos/importar', ['as' => 'student.storeFromCsv', 'uses' => 'StudentController@storeFromCsv']);
    Route::delete('aluno/{id}', ['as' => 'student.delete', 'uses' => 'StudentController@destroy']);
 
    // Professor
    Route::get('professores', ['as' => 'professor.index', 'uses' => 'ProfessorController@index']);
+   Route::get('professores/importar', ['as' => 'professor.import', 'uses' => 'ProfessorController@import']);
+   Route::post('professores/importar', ['as' => 'professor.storeFromCsv', 'uses' => 'ProfessorController@storeFromCsv']);
    Route::delete('professor/{id}', ['as' => 'professor.delete', 'uses' => 'ProfessorController@destroy']);
 
    //Question Types

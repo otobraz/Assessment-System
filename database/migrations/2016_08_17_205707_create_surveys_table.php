@@ -12,10 +12,10 @@ class CreateSurveysTable extends Migration
    */
    public function up()
    {
-      Schema::create('surveys', function (Blueprint $table) {
+      Schema::create('questionarios', function (Blueprint $table) {
          $table->increments('id');
-         $table->string('name', 30);
-         $table->text('description');
+         $table->string('titulo', 30);
+         $table->text('descricao');
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();
@@ -29,6 +29,6 @@ class CreateSurveysTable extends Migration
    */
    public function down()
    {
-      Schema::drop('surveys');
+      Schema::drop('questionarios');
    }
 }

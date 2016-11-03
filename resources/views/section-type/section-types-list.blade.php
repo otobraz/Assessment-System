@@ -14,7 +14,7 @@
       @foreach($sectionTypes as $sectionType)
          <tr>
             <td>{{$sectionType->id}}</td>
-            <td>{{$sectionType->type}}</td>
+            <td>{{$sectionType->tipo}}</td>
             <td>
                <a href="{{route('sectionType.edit', encrypt($sectionType->id))}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
             </td>

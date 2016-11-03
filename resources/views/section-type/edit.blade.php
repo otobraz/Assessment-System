@@ -30,7 +30,7 @@
                      <div class="form-group">
                         <label for="sectionType">Tipo:</label>
                         <input class="form-control input-xlarge" type="text" name="type" id="type"
-                        placeholder="Nome do tipo" value="{{$sectionType->type}}" autofocus required
+                        placeholder="Nome do tipo" value="{{$sectionType->tipo}}" autofocus required
                         oninvalid="setCustomValidity('Informe o tipo.')"
                         oninput="setCustomValidity('')"
                         >

@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Survey extends Model
+class Questionario extends Model
 {
 
-   protected $table = 'surveys';
+   protected $table = 'questionarios';
 
    /**
     * The attributes that are mass assignable.
@@ -15,8 +15,9 @@ class Survey extends Model
     * @var array
     */
    protected $fillable = [
-      'name',
-      'description'
+      'titulo',
+      'descricao',
+      'professor_id'
    ];
 
    /**
@@ -28,12 +29,12 @@ class Survey extends Model
 
    ];
 
-   public function section(){
-      return $this->belongsTo('App\Models\Section');
+   public function turmas(){
+      return $this->belongsToMany('App\Models\Turma');
    }
 
-   public function questions(){
-      return $this->belongsToMany('App\Models\Question');
+   public function perguntas(){
+      return $this->belongsToMany('App\Models\Pergunta');
    }
 
    public function professor(){

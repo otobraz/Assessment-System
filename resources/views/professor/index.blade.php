@@ -13,8 +13,10 @@
 
    <div class="container">
       <div class="panel panel-default">
-         <div class="panel-heading">
-            <p class="panel-title pull-left">PROFESSORES</p>
+         <div class="panel-heading contains-buttons">
+            <a class="btn btn-primary pull-right" role="button"
+            style="color: white" href="{{route('professor.import')}}">Importar Professores</a>
+            <p class="panel-title contains-buttons pull-left">Professores</p>
             <span class="clearfix"></span>
          </div>
          <div class="panel-body">

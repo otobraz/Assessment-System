@@ -16,9 +16,9 @@
       @foreach($admins as $admin)
          <tr>
             <td>{{$admin->id}}</td>
-            <td>{{$admin->username}}</td>
-            <td>{{$admin->first_name}}</td>
-            <td>{{$admin->last_name}}</td>
+            <td>{{$admin->usuario}}</td>
+            <td>{{$admin->nome}}</td>
+            <td>{{$admin->sobrenome}}</td>
             <td>{{$admin->email}}</td>
             <td>
                <a href="{{route('admin.edit', encrypt($admin->id))}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>

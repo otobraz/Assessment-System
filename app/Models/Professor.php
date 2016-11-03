@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Professor extends Model
 {
 
-   protected $table = 'professors';
+   protected $table = 'professores';
 
    protected $fillable = [
-      'username',
-      'first_name',
-      'last_name',
+      'usuario',
+      'nome',
+      'sobrenome',
       'email',
-      'department_id'
+      'senha',
+      'departamento_id'
    ];
 
    /**
@@ -26,16 +27,20 @@ class Professor extends Model
 
    ];
 
-   public function department(){
-      return $this->belongsTo('App\Models\Department');
+   public function departamento(){
+      return $this->belongsTo('App\Models\Departamento');
    }
 
-   public function sections(){
-      return $this->belongsToMany('App\Models\Section');
+   public function turmas(){
+      return $this->belongsToMany('App\Models\Turma');
    }
 
    public function areas(){
       return $this->belongsToMany('App\Models\Area');
+   }
+
+   public function perguntas(){
+      return $this->hasMany('App\Models\Pergunta');
    }
 
 }

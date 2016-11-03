@@ -1,4 +1,4 @@
-@extends('layout.student.base')
+@extends('layout.admin.base')
 
 @section('title')
    Gerenciar | Alunos
@@ -13,11 +13,16 @@
 
    <div class="container">
       <div class="panel panel-default">
-         <div class="panel-heading">
-            <p class="panel-title">Alunos</p>
+         <div class="panel-heading contains-buttons">
+            <a class="btn btn-primary pull-right" role="button"
+            style="color: white" href="{{route('student.import')}}">Importar Alunos</a>
+            <p class="panel-title contains-buttons pull-left">Alunos</p>
+            <span class="clearfix"></span>
          </div>
          <div class="panel-body">
-            @include('student.students_list')
+            @include('alert-message.success')
+            @include('alert-message.error')
+            @include('student.students-list')
          </div>
       </div>
    </div>

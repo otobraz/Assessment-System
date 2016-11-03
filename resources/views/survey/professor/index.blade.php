@@ -22,7 +22,7 @@
          <div class="panel-body">
             @include('alert-message.success')
             @include('alert-message.error')
-            @include('survey.surveys-list')
+            @include('survey.professor.surveys-list')
          </div>
       </div>
    </div>

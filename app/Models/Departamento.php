@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Departamento extends Model
 {
 
-   protected $table = 'departments';
+   protected $table = 'departamentos';
 
    protected $fillable = [
-      'department',
-      'initials'
+      'cod_departamento',
+      'descricao'
    ];
 
    /**
@@ -23,7 +23,7 @@ class Department extends Model
 
    ];
 
-   public function professors(){
+   public function professores(){
       return $this->hasMany('App\Models\Professor');
    }
 }

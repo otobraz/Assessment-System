@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-use App\Models\SectionType;
+use App\Models\TipoTurma;
 
 class SectionTypeController extends Controller
 {
@@ -17,7 +17,7 @@ class SectionTypeController extends Controller
    */
    public function index()
    {
-      $sectionTypes = SectionType::all();
+      $sectionTypes = TipoTurma::all();
       return view ('section-type.index', compact('sectionTypes'));
    }
 
@@ -39,7 +39,8 @@ class SectionTypeController extends Controller
    */
    public function store(Request $request)
    {
-      $sectionType = new SectionType($request->all());
+      $sectionType = new TipoTurma();
+      $sectionType->tipo = $request->type;
       $sectionType->save();
       return redirect()->route('sectionType.index');
    }
@@ -63,7 +64,7 @@ class SectionTypeController extends Controller
    */
    public function edit($id)
    {
-      $sectionType = SectionType::find(decrypt($id));
+      $sectionType = TipoTurma::find(decrypt($id));
       return view('section-type.edit', compact('sectionType'));
    }
 
@@ -76,8 +77,8 @@ class SectionTypeController extends Controller
    */
    public function update(Request $request, $id)
    {
-      $sectionType = SectionType::find(decrypt($id));
-      $sectionType->type = $request->type;
+      $sectionType = TipoTurma::find(decrypt($id));
+      $sectionType->tipo = $request->type;
       $sectionType->save();
       return redirect()->route('sectionType.index')->with('updateSuccess', 'Informações alteradas com sucesso.');
    }

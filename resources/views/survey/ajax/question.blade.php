@@ -1,24 +1,24 @@
 <div name="question" class="form-group">
-   @if ($question->type->id == 2)
+   @if ($question->tipo->id == 2)
       {{-- <label for="question-{{$question->id}}-radio">{{$question->question}}</label> --}}
-      @foreach ($question->choices as $choice)
+      @foreach ($question->opcoes as $choice)
          <div class="radio">
             <label>
                <input type="radio" name="question-{{$question->id}}-radio"
                id="question-{{$question->id}}-radio" value="{{$choice->id}}" disabled>
-               {{$choice->choice}}
+               {{$choice->opcao}}
             </label>
          </div>
       @endforeach
 
-   @elseif ($question->type->id == 3)
+   @elseif ($question->tipo->id == 3)
 
       {{-- <label for="question-{{$question->id}}-checkbox">{{$question->question}}</label> --}}
-      @foreach ($question->choices as $choice)
+      @foreach ($question->opcoes as $choice)
          <div class="checkbox">
             <label>
                <input type="checkbox" name="question-{{$question->id}}-checkbox[]" value="{{$choice->id}}" disabled>
-               {{$choice->choice}}
+               {{$choice->opcao}}
             </label>
          </div>
       @endforeach

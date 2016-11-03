@@ -31,7 +31,7 @@
                         <div class="form-group">
                            <label for="department">Nome do departamento:</label>
                            <input class="form-control input-xlarge" type="text" name="department" id="department"
-                           placeholder="Nome do curso" value="{{$department->department}}" autofocus required
+                           placeholder="Nome do curso" value="{{$department->departamento}}" autofocus required
                            oninvalid="setCustomValidity('Informe o nome do curso.')"
                            oninput="setCustomValidity('')"
                            >
@@ -39,7 +39,7 @@
                         <div class="form-group">
                            <label for="initials">Sigla:</label>
                            <input class="form-control input-xlarge " type="text" name="initials" id="initials"
-                           placeholder="Sigla" value="{{$department->initials}}" required
+                           placeholder="Sigla" value="{{$departamento->cod_departamen}}" required
                            oninvalid="setCustomValidity('Informe a sigla do curso.')"
                            oninput="setCustomValidity('')"
                            >

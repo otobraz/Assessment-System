@@ -12,14 +12,14 @@ class CreateChoiceMultipleChoiceResponseTable extends Migration
    */
    public function up()
    {
-      Schema::create('choice_multiple_choice_response', function (Blueprint $table) {
-         $table->integer('choice_id')->unsigned();
-         $table->integer('mc_response_id')->unsigned();
+      Schema::create('opcao_resposta_multipla_escolha', function (Blueprint $table) {
+         $table->integer('opcao_id')->unsigned();
+         $table->integer('resposta_me_id')->unsigned();
 
-         $table->primary(['choice_id', 'mc_response_id']);
+         $table->primary(['resposta_me_id', 'opcao_id']);
 
-         $table->foreign('choice_id')->references('id')->on('choices');
-         $table->foreign('mc_response_id')->references('id')->on('multiple_choice_responses');
+         $table->foreign('opcao_id')->references('id')->on('opcoes');
+         $table->foreign('resposta_me_id')->references('id')->on('respostas_multipla_escolha');
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();
@@ -33,6 +33,6 @@ class CreateChoiceMultipleChoiceResponseTable extends Migration
    */
    public function down()
    {
-      Schema::drop('choice_multiple_choice_response');
+      Schema::drop('opcao_resposta_multipla_escolha');
    }
 }

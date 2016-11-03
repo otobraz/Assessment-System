@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-use App\Models\QuestionType;
+use App\Models\TipoPergunta;
 
 class QuestionTypeController extends Controller
 {
@@ -18,7 +18,7 @@ class QuestionTypeController extends Controller
   */
   public function index()
   {
-     $questionTypes = QuestionType::all();
+     $questionTypes = TipoPergunta::all();
      return view ('question-type.index', compact('questionTypes'));
   }
 
@@ -40,7 +40,8 @@ class QuestionTypeController extends Controller
   */
   public function store(Request $request)
   {
-     $questionType = new QuestionType($request->all());
+     $questionType = new TipoPergunta();
+     $questionType->type = $request->type;
      $questionType->save();
      return redirect()->route('questionType.index');
   }
@@ -64,7 +65,7 @@ class QuestionTypeController extends Controller
   */
   public function edit($id)
   {
-     $questionType = QuestionType::find(decrypt($id));
+     $questionType = TipoPergunta::find(decrypt($id));
      return view('question-type.edit', compact('questionType'));
   }
 
@@ -77,7 +78,7 @@ class QuestionTypeController extends Controller
   */
   public function update(Request $request, $id)
   {
-     $questionType = QuestionType::find(decrypt($id));
+     $questionType = TipoPergunta::find(decrypt($id));
      $questionType->type = $request->type;
      $questionType->save();
      return redirect()->route('questionType.index')->with('successMessage', 'Informações alteradas com sucesso.');
@@ -91,7 +92,7 @@ class QuestionTypeController extends Controller
   */
   public function destroy($id)
   {
-     QuestionType::find(decrypt($id))->delete();
+     TipoPergunta::find(decrypt($id))->delete();
      return redirect()->route('questionType.index')->with('successMessage', 'Registro excluído com sucesso.');
   }
 

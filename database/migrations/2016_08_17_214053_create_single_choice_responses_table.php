@@ -12,17 +12,17 @@ class CreateSingleChoiceResponsesTable extends Migration
    */
    public function up()
    {
-      Schema::create('single_choice_responses', function (Blueprint $table) {
+      Schema::create('respostas_unica_escolha', function (Blueprint $table) {
          $table->increments('id');
-         $table->integer('choice_id')->unsigned();
-         $table->integer('response_id')->unsigned();
-         $table->integer('question_id')->unsigned();
+         $table->integer('opcao_id')->unsigned();
+         $table->integer('resposta_id')->unsigned();
+         $table->integer('pergunta_id')->unsigned();
 
-         $table->unique(['response_id', 'question_id']);
+         $table->unique(['pergunta_id', 'resposta_id']);
 
-         $table->foreign('choice_id')->references('id')->on('choices');
-         $table->foreign('response_id')->references('id')->on('responses');
-         $table->foreign('question_id')->references('id')->on('questions');
+         $table->foreign('opcao_id')->references('id')->on('opcoes');
+         $table->foreign('resposta_id')->references('id')->on('respostas');
+         $table->foreign('pergunta_id')->references('id')->on('perguntas');
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();
@@ -36,6 +36,6 @@ class CreateSingleChoiceResponsesTable extends Migration
    */
    public function down()
    {
-      Schema::drop('single_choice_responses');
+      Schema::drop('respostas_unica_escolha');
    }
 }

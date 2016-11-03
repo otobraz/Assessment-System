@@ -14,11 +14,11 @@ class CreateAdminsTable extends Migration
    {
       Schema::create('admins', function (Blueprint $table) {
          $table->increments('id');
-         $table->string('username', 10)->unique();
-         $table->string('first_name', 20);
-         $table->string('last_name', 50);
+         $table->string('usuario', 10)->unique();
+         $table->string('nome', 20);
+         $table->string('sobrenome', 50);
          $table->string('email', 50)->unique();
-         $table->string('password', 64);
+         $table->string('senha', 64);
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();

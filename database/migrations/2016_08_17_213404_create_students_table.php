@@ -12,15 +12,16 @@ class CreateStudentsTable extends Migration
    */
    public function up()
    {
-      Schema::create('students', function (Blueprint $table) {
+      Schema::create('alunos', function (Blueprint $table) {
          $table->increments('id');
-         $table->string('username', 11)->unique();
-         $table->string('first_name', 20);
-         $table->string('last_name', 50);
-         $table->string('email', 50)->unique();
-         $table->integer('major_id')->unsigned();
+         $table->string('matricula', 9)->unique();
+         $table->string('usuario', 11)->unique();
+         $table->string('nome', 20)->nullable();
+         $table->string('sobrenome', 50)->nullable();
+         $table->string('email', 50)->unique()->nullable();
+         $table->integer('curso_id')->unsigned();
 
-         $table->foreign('major_id')->references('id')->on('majors');
+         $table->foreign('curso_id')->references('id')->on('cursos');
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();
@@ -34,6 +35,6 @@ class CreateStudentsTable extends Migration
    */
    public function down()
    {
-      Schema::drop('students');
+      Schema::drop('alunos');
    }
 }

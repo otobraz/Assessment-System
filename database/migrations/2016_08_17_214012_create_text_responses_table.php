@@ -12,16 +12,16 @@ class CreateTextResponsesTable extends Migration
    */
    public function up()
    {
-      Schema::create('text_responses', function (Blueprint $table) {
+      Schema::create('respostas_abertas', function (Blueprint $table) {
          $table->increments('id');
-         $table->text('response');
-         $table->integer('response_id')->unsigned();
-         $table->integer('question_id')->unsigned();
+         $table->text('resposta');
+         $table->integer('pergunta_id')->unsigned();
+         $table->integer('resposta_id')->unsigned();
 
-         $table->unique( ['response_id','question_id']);
+         $table->unique( ['pergunta_id', 'resposta_id']);
 
-         $table->foreign('response_id')->references('id')->on('responses');
-         $table->foreign('question_id')->references('id')->on('questions');
+         $table->foreign('resposta_id')->references('id')->on('respostas');
+         $table->foreign('pergunta_id')->references('id')->on('perguntas');
 
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();
@@ -35,6 +35,6 @@ class CreateTextResponsesTable extends Migration
    */
    public function down()
    {
-      Schema::drop('text_responses');
+      Schema::drop('respostas_abertas');
    }
 }

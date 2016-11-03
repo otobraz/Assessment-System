@@ -13,8 +13,8 @@
       @foreach($majors as $major)
          <tr>
             <td>{{$major->id}}</td>
-            <td>{{$major->major}}</td>
-            <td>{{$major->initials}}</td>
+            <td>{{$major->curso}}</td>
+            <td>{{$major->cod_curso}}</td>
             <td>
                <a class="btn btn-primary btn-xs" role="button" href="{{route('major.edit', encrypt($major->id))}}"><i class="fa fa-lg fa-pencil-square-o"></i> Editar</a>
                <a class="btn btn-primary btn-xs" data-toggle="modal" href="#deleteModal" data-action="curso/{{encrypt($major->id)}}"><i class="fa fa-lg fa-trash-o"></i> Excluir</a>

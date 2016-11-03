@@ -11,9 +11,9 @@
 
 @section('content')
 
-   @include('student.students-list')
+   {{-- @include('student.students-list')
    @include('major.majors-list')
    @include('department.departments-list')
-   @include('admin.admins-list')
+   @include('admin.admins-list') --}}
 
 @endsection

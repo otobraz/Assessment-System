@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
-use App\Models\Response;
-use App\Models\MultipleChoiceResponse;
-use App\Models\TextResponse;
-use App\Models\Survey;
-use App\Models\SingleChoiceResponse;
+use App\Models\Resposta;
+use App\Models\RespostaMultiplaEscolha;
+use App\Models\RespostaAberta;
+use App\Models\Questionario;
+use App\Models\RespostaUnicaEscolha;
+use App\Models\Aluno;
 
 class ResponseController extends Controller
 {
@@ -30,11 +31,19 @@ class ResponseController extends Controller
    */
    public function create($id)
    {
-      $survey = Survey::find(decrypt($id));
-      $questions = $survey->questions;
-      if(session()->get('role') === 'Administrador'){
+      $student = Aluno::where('usuario', session()->get('username'))->first();
+      $sections = $student->turmas;
+      $survey = Questionario::find(decrypt($id));
+      
+      // Verifies whether or not the user belongs to one of the classes which the survey was assigned to
+      if($sections->intersect($survey->turmas)->isEmpty()){
+         return redirect()->route('survey.index');
+      }
+
+      $questions = $survey->perguntas;
+      if(session()->get('role') == '0'){
          return view('response.admin.create', compact('survey', 'questions'));
-      }else if(session()->get('role') === 'Aluno'){
+      }else if(session()->get('role') == '1'){
          return view('response.student.create', compact('survey', 'questions'));
       }
    }
@@ -47,47 +56,48 @@ class ResponseController extends Controller
    */
    public function store(Request $request)
    {
-      $survey = Survey::find(decrypt($request->survey_id));
+      $survey = Questionario::find(decrypt($request->survey_id));
 
-      $response = new Response([
-         'survey_id' => $survey->id,
-         'student_id' => session()->get('id')
+      $response = new Resposta([
+         'questionario_id' => $survey->id,
+         'aluno_id' => session()->get('id')
       ]);
       $response->save();
 
       $inputs = $request->all();
 
-      foreach($survey->questions as $question){
-         switch ($question->type->id) {
+      foreach($survey->perguntas as $question){
+         switch ($question->tipo->id) {
             case 1: # it's a text input
-               $textResponse = new TextResponse([
-                  'response' => $inputs["question-" . $question->id . "-text"],
-                  'response_id' =>  $response->id,
-                  'question_id' => $question->id
+               $textResponse = new RespostaAberta([
+                  'resposta' => $inputs["question-" . $question->id . "-text"],
+                  'resposta_id' =>  $response->id,
+                  'pergunta_id' => $question->id
                ]);
                $textResponse->save();
                break;
 
             case 2: # it's a radio input
-               $singleChoiceResponse = new SingleChoiceResponse([
-                  'choice_id' => $inputs["question-" . $question->id . "-radio"],
-                  'response_id' => $response->id,
-                  'question_id' => $question->id
+               $singleChoiceResponse = new RespostaUnicaEscolha([
+                  'opcao_id' => $inputs["question-" . $question->id . "-radio"],
+                  'resposta_id' => $response->id,
+                  'pergunta_id' => $question->id
                ]);
                $singleChoiceResponse->save();
                break;
 
             case 3: # it's a checkbox input
-               $multipleChoiceResponse = new MultipleChoiceResponse([
-                  'response_id' => $response->id,
-                  'question_id' => $question->id
+               $multipleChoiceResponse = new RespostaMultiplaEscolha([
+                  'resposta_id' => $response->id,
+                  'pergunta_id' => $question->id
                ]);
                $multipleChoiceResponse->save();
                foreach ($inputs["question-" . $question->id . "-checkbox"] as $choice) {
-                  $multipleChoiceResponse->choices()->attach($choice);
+                  $multipleChoiceResponse->opcoes()->attach($choice);
                }
                break;
          }
+         return view('survey.index')->with('succesMessage', 'Questionário respondido com sucesso');
       }
 
    }

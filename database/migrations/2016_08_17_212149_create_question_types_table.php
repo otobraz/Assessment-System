@@ -12,9 +12,9 @@ class CreateQuestionTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('question_types', function (Blueprint $table) {
+        Schema::create('tipos_pergunta', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type', 30);
+            $table->string('tipo', 30);
 
             $table->timestamp('updated_at');
             $table->timestamp('created_at')->useCurrent();
@@ -28,6 +28,6 @@ class CreateQuestionTypesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('question_types');
+        Schema::drop('tipos_pergunta');
     }
 }

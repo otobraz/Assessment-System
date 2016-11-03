@@ -15,9 +15,9 @@
       @foreach($sections as $section)
          <tr>
             <td>{{$section->id}}</td>
-            <td>{{$section->year}}</td>
-            <td>{{$section->semester}}</td>
-            <td>{{$section->course->course}}</td>
+            <td>{{$section->ano}}</td>
+            <td>{{$section->semestre}}</td>
+            <td>{{$section->disciplina->disciplina}}</td>
             <td>
                <a data-toggle="modal" href="#deleteModal" data-action="tipo/{{encrypt($section->id)}}"><i class="fa fa-lg fa-trash-o"></i></a>
             </td>

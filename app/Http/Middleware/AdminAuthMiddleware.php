@@ -15,7 +15,7 @@ class AdminAuthMiddleware
    */
    public function handle($request, Closure $next)
    {
-      if ($request->session()->get('role') != 'Administrador') {
+      if ($request->session()->get('role') != '0') {
          if ($request->ajax() || $request->wantsJson()) {
             return response('Unauthorized.', 401);
          } else{

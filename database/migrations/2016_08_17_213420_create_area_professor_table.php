@@ -19,7 +19,7 @@ class CreateAreaProfessorTable extends Migration
             $table->primary(['area_id', 'professor_id']);
 
             $table->foreign('area_id')->references('id')->on('areas');
-            $table->foreign('professor_id')->references('id')->on('professors');
+            $table->foreign('professor_id')->references('id')->on('professores');
 
             $table->timestamp('updated_at');
             $table->timestamp('created_at')->useCurrent();
