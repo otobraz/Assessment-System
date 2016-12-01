@@ -3,9 +3,11 @@
    <thead>
       <tr>
          <th>Id</th>
+         <th>Disciplina</th>
+         <th>Cód. Turma</th>
+         <th>Departamento</th>
          <th>Ano</th>
          <th>Semestre</th>
-         <th>Curso</th>
          <th></th>
       </tr>
    </thead>
@@ -15,9 +17,11 @@
       @foreach($sections as $section)
          <tr>
             <td>{{$section->id}}</td>
+            <td>{{$section->disciplina->disciplina}}</td>
+            <td>{{$section->cod_turma}}</td>
+            <td>{{$section->disciplina->departamento->cod_departamento}}</td>
             <td>{{$section->ano}}</td>
             <td>{{$section->semestre}}</td>
-            <td>{{$section->disciplina->disciplina}}</td>
             <td>
                <a data-toggle="modal" href="#deleteModal" data-action="tipo/{{encrypt($section->id)}}"><i class="fa fa-lg fa-trash-o"></i></a>
             </td>
@@ -27,4 +31,4 @@
 
 </table>
 
-@include('section.delete_modal')
+@include('section.admin.delete_modal')

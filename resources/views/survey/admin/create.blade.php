@@ -25,13 +25,13 @@
                         <div class="panel-body">
 
                            <div class="form-group">
-                             <label for="name">Título:</label>
-                             <input type="text" name="name" class="form-control" id="name" placeholder="Informe o título do questionário">
+                              <label for="name">Título:</label>
+                              <input type="text" name="name" class="form-control" id="name" placeholder="Informe o título do questionário">
                            </div>
 
                            <div class="form-group">
-                             <label for="description">Descrição:</label>
-                             <textarea class="form-control" name="description" id="description" placeholder="Detalhe o questionário, objetivos, etc."></textarea>
+                              <label for="description">Descrição:</label>
+                              <textarea class="form-control" name="description" id="description" placeholder="Detalhe o questionário, objetivos, etc."></textarea>
                            </div>
 
                            <div class="form-group">

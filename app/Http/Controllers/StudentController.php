@@ -10,6 +10,28 @@ use App\Models\Curso;
 
 class StudentController extends Controller
 {
+
+   public function getLdapUser($ldapData = null, $username = null){
+      $ds = ldap_connect($ldapData['server']); // your ldap server
+      try{
+         $bind = ldap_bind($ds, $ldapData['cn'] . "," . $ldapData['domain'], base64_decode($ldapData['password']));
+         $filter = "(" . $ldapData['id_field'] . "=" . $username . ")"; // this command requires some filter
+         $justThese = array(
+            $ldapData['given_name_field'],
+            $ldapData['last_name_field'],
+            $ldapData['email_field']
+         ); // the attributes to pull, which is much more efficient than pulling all attributes if you don't do this
+         $sr = ldap_search($ds, $ldapData['domain'], $filter, $justThese);
+         $entry = ldap_get_entries($ds, $sr);
+         if ($entry['count'] > 0) {
+            return $entry;
+         }
+         return null;
+      }catch(\Exception $e){
+         abort(503);
+      }
+   }
+
    /**
    * Display a listing of the resource.
    *
@@ -17,8 +39,22 @@ class StudentController extends Controller
    */
    public function index()
    {
-      $students = Aluno::all();
-      return view ('student.index', compact('students'));
+      switch (session()->get('role')) {
+         case '0':
+         $students = Aluno::all();
+         return view ('student.admin.index', compact('students'));
+         break;
+
+         case '2':
+         $students = Aluno::all();
+         return view ('student.professor.index', compact('students'));
+         break;
+
+         default:
+            return redirect('/');
+         break;
+      }
+
    }
 
    /**
@@ -66,7 +102,7 @@ class StudentController extends Controller
    // }
 
    public function import(){
-      return view('student.import');
+      return view('student.admin.import');
    }
 
    public function storeFromCsv(Request $request){
@@ -117,6 +153,7 @@ class StudentController extends Controller
          if($header == array_shift($studentsCsv)){
             $students = Aluno::all();
             $sections = Curso::all();
+            $ldapData = config('my_config.ldapData');
             foreach ($studentsData as $key => $student){
                $username = preg_replace('/[^0-9]+/', '', $student[0]);
                $major = $sections->where('cod_curso', $student[1])->first();
@@ -125,15 +162,17 @@ class StudentController extends Controller
                   $studentModel->curso_id = $major->id;
                   $studentModel->save();
                }else{
-                  $newStudent = new Aluno([
-                     'usuario' => $username,
-                     'matricula' => $key,
-                     'nome' => NULL,
-                     'sobrenome' => NULL,
-                     'email' => NULL,
-                     'curso_id' => $major->id
-                  ]);
-                  $newStudent->save();
+                  if($ldapUser = $this->getLdapUser($ldapData, $username)){
+                     $newStudent = new Aluno([
+                        'usuario' => $username,
+                        'matricula' => $key,
+                        'nome' => $ldapUser[0][$ldapData['given_name_field']][0],
+                        'sobrenome' => $ldapUser[0][$ldapData['last_name_field']][0],
+                        'email' => (array_key_exists($ldapData['email_field'], $ldapUser[0]) ? $ldapUser[0][$ldapData['email_field']][0] : NULL),
+                        'curso_id' => $major->id
+                     ]);
+                     $newStudent->save();
+                  }
                }
             }
             return redirect()->route('student.index')->with('successMessage', 'Importação realizada com sucesso');

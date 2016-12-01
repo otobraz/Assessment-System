@@ -12,8 +12,10 @@ use App\Models\Pergunta;
 use App\Models\TipoPergunta;
 use App\Models\Turma;
 use App\Models\Opcao;
+use App\Models\Resposta;
 use App\Models\RespostaUnicaEscolha;
 use App\Models\RespostaMultiplaEscolha;
+use DB;
 
 class SurveyController extends Controller
 {
@@ -26,23 +28,23 @@ class SurveyController extends Controller
    {
       switch (session()->get('role')) {
          case '0':
-            $sections = Turma::all();
-            return view ('survey.admin.index', compact('sections'));
-            break;
+         $sections = Turma::orderBy('ano', 'desc')->orderBy('semestre', 'desc')->get();
+         return view ('survey.admin.index', compact('sections'));
+         break;
 
          case '1':
-            $student = Aluno::find(session()->get('id'));
-            $sections = $student->turmas;
-            return view ('survey.student.index', compact('sections'))->with('successMessage', session()->get('successMessage'));
-            break;
+         $student = Aluno::find(session()->get('id'));
+         $sections = $student->turmas;
+         return view ('survey.student.index', compact('sections'))->with('successMessage', session()->get('successMessage'));
+         break;
 
          case '2':
-            $professor = Professor::find(session()->get('id'));
-            $surveys = Questionario::where('professor_id', $professor->id)->get();
-            return view ('survey.professor.index', compact('surveys'));
-            break;
+         $professor = Professor::find(session()->get('id'));
+         $surveys = $professor->questionarios;
+         return view ('survey.professor.index', compact('surveys'));
+         break;
          default:
-            break;
+         break;
       }
    }
 
@@ -54,9 +56,8 @@ class SurveyController extends Controller
    public function create()
    {
       $sections = Professor::find(session()->get('id'))->turmas;
-      $questions = Pergunta::all();
       if(session()->get('role') === '0'){
-         return view('survey.admin.create', compact('sections', 'questions'));
+         return view('survey.admin.create', compact('sections'));
       }else if(session()->get('role') === '2'){
          return view('survey.professor.create', compact('sections'));
       }
@@ -80,7 +81,7 @@ class SurveyController extends Controller
       $survey->save();
 
       foreach (array_shift($inputs) as $input){
-         $section = Turma::find($input);
+         // $section = Turma::find($input);
          $survey->turmas()->attach($input);
       }
 
@@ -118,9 +119,13 @@ class SurveyController extends Controller
    */
    public function show($id)
    {
+
       $survey = Questionario::find(decrypt($id));
       $questions = $survey->perguntas;
-      return view('survey.show', compact('survey', 'questions'));
+
+      return view('survey.professor.show', compact('survey', 'questions'));
+
+
    }
 
    /**
@@ -131,7 +136,7 @@ class SurveyController extends Controller
    */
    public function edit($id)
    {
-      //
+      return redirect()->route('survey.index');
    }
 
    /**
@@ -143,7 +148,7 @@ class SurveyController extends Controller
    */
    public function update(Request $request, $id)
    {
-      //
+      return redirect()->route('survey.index');
    }
 
    /**
@@ -156,6 +161,246 @@ class SurveyController extends Controller
    {
       //
    }
+
+   public function showSections($id){
+
+      $survey = Questionario::find(decrypt($id));
+      $sections = $survey->turmas;
+      // $data = array();
+      // foreach ($sections as $key => $value) {
+      //    $data[] = $value;
+      // }
+      // dd($data);
+      return view('survey.professor.show-sections', compact('sections', 'survey'));
+
+   }
+
+   public function getClassAnswers($survey, $section, $questions){
+
+      $surveySection = DB::table('questionario_turma')->where('questionario_id', $survey->id)->where('turma_id', $section->id)->get();
+
+      $answers = array();
+      foreach ($surveySection as $sS) {
+         $responses = Resposta::where('questionario_turma_id', $sS->id)->get();
+         $questionAnswers = array();
+         foreach ($questions as $question) {
+            $questionAnswers[$question->id] = array();
+            foreach ($question->opcoes as $choice) {
+               $questionAnswers[$question->id][$choice->id] = 0;
+            }
+         }
+         foreach ($responses as $response){
+            $resp = RespostaUnicaEscolha::where('resposta_id', $response->id)->get();
+            $respM = RespostaMultiplaEscolha::where('resposta_id', $response->id)->get();
+            foreach ($questions as $question){
+               switch ($question->tipo_id) {
+                  case 2:
+                  $choice = $resp->where('pergunta_id', $question->id)->first();
+                  $questionAnswers[$question->id][$choice->opcao_id]++;
+                  break;
+
+                  case 3:
+                  $choice = $respM->where('pergunta_id', $question->id)->first();
+                  $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
+                  foreach ($choices as $choice){
+                     $questionAnswers[$question->id][$choice->opcao_id]++;
+                  }
+                  break;
+               }
+
+            }
+         }
+         foreach ($questionAnswers as $key => $value) {
+            $questionAnswers[$key] = array_values($questionAnswers[$key]);
+         }
+      }
+      return $questionAnswers;
+   }
+
+   public function postResults(Request $request){
+
+      $sections = $request->input('sections');
+      $survey = Questionario::find($request->input('surveyId'));
+      $questions = $survey->perguntas()->where('tipo_id', '!=', '1')->get();
+      $answers = array();
+      foreach ($sections as $section) {
+         $answers[] = $this->getClassAnswers($survey, Turma::find($section), $questions);
+      }
+      return view('survey.professor.results-compared', compact('survey', 'questions', 'answers'));
+   }
+
+   public function classResults($surveyId, $sectionId){
+
+      $survey = Questionario::find(decrypt($surveyId));
+      $questions = $survey->perguntas()->where('tipo_id', '!=', '1')->get();
+      $section = Turma::find(decrypt($sectionId));
+      $surveySection = DB::table('questionario_turma')->where('questionario_id', $survey->id)->where('turma_id', $section->id)->get();
+
+      $answers = array();
+      foreach ($surveySection as $sS) {
+         $responses = Resposta::where('questionario_turma_id', $sS->id)->get();
+         $questionAnswers = array();
+         foreach ($questions as $question) {
+            $questionAnswers[$question->id] = array();
+            foreach ($question->opcoes as $choice) {
+               $questionAnswers[$question->id][$choice->id] = 0;
+            }
+         }
+         foreach ($responses as $response){
+            $resp = RespostaUnicaEscolha::where('resposta_id', $response->id)->get();
+            $respM = RespostaMultiplaEscolha::where('resposta_id', $response->id)->get();
+            foreach ($questions as $question){
+               switch ($question->tipo_id) {
+                  case 2:
+                  $choice = $resp->where('pergunta_id', $question->id)->first();
+                  $questionAnswers[$question->id][$choice->opcao_id]++;
+                  break;
+
+                  case 3:
+                  $choice = $respM->where('pergunta_id', $question->id)->first();
+                  $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
+                  foreach ($choices as $choice){
+                     $questionAnswers[$question->id][$choice->opcao_id]++;
+                  }
+                  break;
+               }
+
+            }
+         }
+         foreach ($questionAnswers as $key => $value) {
+            $questionAnswers[$key] = array_values($questionAnswers[$key]);
+         }
+
+         $answers[] = $questionAnswers;
+
+      }
+
+      // $answers = array();
+      // foreach ($surveySection as $sS) {
+      //    $responses = Resposta::where('questionario_turma_id', $sS->id)->get();
+      //    $questionAnswers = array();
+      //    foreach ($questions as $question){
+      //       switch ($question->tipo_id){
+      //          case 2:
+      //          $data = array();
+      //          foreach($question->opcoes as $opcao){
+      //             $responseData = RespostaUnicaEscolha::where('opcao_id', $opcao->id)->get();
+      //             $data[] = $responseData->filter(function($rData) use ($responses){
+      //                return $responses->contains('id', $rData->resposta_id);
+      //             })->count();
+      //          }
+      //          $questionAnswers[] = $data;
+      //          break;
+      //
+      //          case 3:
+      //          $data = array();
+      //          $multipleChoiceResponses = RespostaMultiplaEscolha::where('pergunta_id', $question->id)->get();
+      //          $multipleChoiceResponses = $multipleChoiceResponses->filter(function($mCR) use ($responses){
+      //             return $responses->contains('id', $mCR->resposta_id);
+      //          });
+      //          // dd($multipleChoiceResponses);
+      //          foreach($question->opcoes as $opcao){
+      //             $responseData = DB::table('opcao_resposta_multipla_escolha')->where('opcao_id', $opcao->id)->get();
+      //             $r = array_where($responseData, function($v, $rData) use ($multipleChoiceResponses){
+      //                return $multipleChoiceResponses->contains('id', $rData->resposta_me_id);
+      //             });
+      //             $data[] = count($r);
+      //          }
+      //          $questionAnswers[] = $data;
+      //          break;
+      //       }
+      //    }
+      //    // dd($questionAnswers);
+      //    $answers[] = $questionAnswers;
+      // }
+      // $answers[] = $questionAnswers;
+      // $responses = Resposta::where('questionario_turma_id', $surveySection->id)->get();
+      // dd($answers);
+
+      // dd($responses);
+
+      return view('survey.professor.class-results', compact('survey', 'section', 'questions', 'answers'));
+
+   }
+
+   public function getResults($surveyId){
+
+      $survey = Questionario::find(decrypt($surveyId));
+      $questions = $survey->perguntas()->where('tipo_id', '!=', '1')->get();
+      $responses = Resposta::where('questionario_id', $survey->id)->get();
+      $questionAnswers = array();
+
+      foreach ($questions as $question) {
+         $questionAnswers[$question->id] = array();
+         foreach ($question->opcoes as $choice) {
+            $questionAnswers[$question->id][$choice->id] = 0;
+         }
+      }
+
+      foreach ($responses as $response){
+         $resp = RespostaUnicaEscolha::where('resposta_id', $response->id)->get();
+         $respM = RespostaMultiplaEscolha::where('resposta_id', $response->id)->get();
+         foreach ($questions as $question){
+            switch ($question->tipo_id) {
+               case 2:
+               $choice = $resp->where('pergunta_id', $question->id)->first();
+               $questionAnswers[$question->id][$choice->opcao_id]++;
+               break;
+
+               case 3:
+               $choice = $respM->where('pergunta_id', $question->id)->first();
+               $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
+               foreach ($choices as $choice){
+                  $questionAnswers[$question->id][$choice->opcao_id]++;
+               }
+               break;
+            }
+
+         }
+      }
+      foreach ($questionAnswers as $key => $value) {
+         $questionAnswers[$key] = array_values($questionAnswers[$key]);
+      }
+
+      // foreach ($questions as $question){
+      //    switch ($question->tipo_id) {
+      //       case 2:
+      //       $data = array();
+      //       foreach($question->opcoes as $opcao){
+      //          $responseData = RespostaUnicaEscolha::where('opcao_id', $opcao->id)->get();
+      //          $data[] = $responseData->filter(function($rData) use ($responses){
+      //             return $responses->contains('id', $rData->resposta_id);
+      //          })->count();
+      //       }
+      //       $questionAnswers[] = $data;
+      //       break;
+      //
+      //       case 3:
+      //       $data = array();
+      //       $multipleChoiceResponses = RespostaMultiplaEscolha::where('pergunta_id', $question->id)->get();
+      //       $multipleChoiceResponses = $multipleChoiceResponses->filter(function($mCR) use ($responses){
+      //          return $responses->contains('id', $mCR->resposta_id);
+      //       });
+      //       // dd($multipleChoiceResponses);
+      //       foreach($question->opcoes as $opcao){
+      //          $responseData = DB::table('opcao_resposta_multipla_escolha')->where('opcao_id', $opcao->id)->get();
+      //          $r = array_where($responseData, function($v, $rData) use ($multipleChoiceResponses){
+      //             return $multipleChoiceResponses->contains('id', $rData->resposta_me_id);
+      //          });
+      //          $data[] = count($r);
+      //       }
+      //       $questionAnswers[] = $data;
+      //       break;
+      //    }
+      // }
+
+
+      return view('survey.professor.results', compact('survey', 'questions', 'questionAnswers'));
+   }
+
+
+
+   // Ajax functions
 
    public function ajaxShowQuestion($id){
       $question = Pergunta::find($id);

@@ -26,4 +26,7 @@ class Departamento extends Model
    public function professores(){
       return $this->hasMany('App\Models\Professor');
    }
+   public function disciplinas(){
+      return $this->hasMany('App\Models\Disciplina');
+   }
 }

@@ -11,16 +11,14 @@
 
 @section('content')
 
-   <div class="container">
-      <div class="panel panel-default">
-         <div class="panel-heading">
-            <p class="panel-title">QUESTIONÁRIOS</p>
-         </div>
-         <div class="panel-body">
-            @include('alert-message.success')
-            @include('alert-message.error')
-            @include('survey.surveys-list')
-         </div>
+   <div class="panel panel-default">
+      <div class="panel-heading">
+         <p class="panel-title">QUESTIONÁRIOS</p>
+      </div>
+      <div class="panel-body">
+         @include('alert-message.success')
+         @include('alert-message.error')
+         @include('survey.surveys-list')
       </div>
    </div>
 

@@ -11,22 +11,20 @@
 
 @section('content')
 
-   <div class="container">
-      <div class="panel panel-default">
-         <div class="panel-heading contains-buttons">
-            <a class="btn btn-primary pull-right" role="button"
-            style="color: white" href="{{route('department.create')}}">Novo Departamento</a>
-            <p class="panel-title contains-buttons pull-left">DEPARTAMENTOS</p>
-            <span class="clearfix"></span>
-         </div>
-         <div class="panel-body">
-            @include('alert-message.success')
-            @include('alert-message.error')
-            @include('department.departments-list')
-         </div>
+   <div class="panel panel-default">
+      <div class="panel-heading contains-buttons">
+         <a class="btn btn-primary pull-right" role="button"
+         style="color: white" href="{{route('department.create')}}">Novo Departamento</a>
+         <p class="panel-title contains-buttons pull-left">DEPARTAMENTOS</p>
+         <span class="clearfix"></span>
+      </div>
+      <div class="panel-body">
+         @include('alert-message.success')
+         @include('alert-message.error')
+         @include('department.departments-list')
       </div>
    </div>
-
+   
 @endsection
 
 @section('myScripts')

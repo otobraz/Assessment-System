@@ -5,6 +5,7 @@
          <th>Curso</th>
          <th>Sigla</th>
          <th></th>
+         <th></th>
       </tr>
 
    </thead>
@@ -16,8 +17,10 @@
             <td>{{$major->curso}}</td>
             <td>{{$major->cod_curso}}</td>
             <td>
-               <a class="btn btn-primary btn-xs" role="button" href="{{route('major.edit', encrypt($major->id))}}"><i class="fa fa-lg fa-pencil-square-o"></i> Editar</a>
-               <a class="btn btn-primary btn-xs" data-toggle="modal" href="#deleteModal" data-action="curso/{{encrypt($major->id)}}"><i class="fa fa-lg fa-trash-o"></i> Excluir</a>
+               <a href="{{route('major.edit', encrypt($major->id))}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
+            </td>
+            <td>
+               <a data-toggle="modal" href="#deleteModal" data-action="curso/{{encrypt($major->id)}}"><i class="fa fa-lg fa-trash-o"></i></a>
             </td>
          </tr>
       @endforeach

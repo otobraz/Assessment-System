@@ -1,31 +1,30 @@
 @extends('layout.admin.base')
 
 @section('title')
-   Gerenciar | Professores
+   Gerenciar | Alunos
 @endsection
 
 @section('content-header')
-   <h1>Gerenciar Professores</h1>
+   <h1>Gerenciar Alunos</h1>
    <hr class="hr-ufop">
 @endsection
 
 @section('content')
 
-   <div class="container">
+   <div class="container-fluid">
       <div class="panel panel-default">
          <div class="panel-heading contains-buttons">
             <a class="btn btn-primary pull-right" role="button"
-            style="color: white" href="{{route('professor.import')}}">Importar Professores</a>
-            <p class="panel-title contains-buttons pull-left">Professores</p>
+            style="color: white" href="{{route('student.import')}}">Importar Alunos</a>
+            <p class="panel-title contains-buttons pull-left">Alunos</p>
             <span class="clearfix"></span>
          </div>
          <div class="panel-body">
             @include('alert-message.success')
             @include('alert-message.error')
-            @include('professor.professors-list')
+            @include('student.admin.students-list')
          </div>
       </div>
    </div>
-
 
 @endsection

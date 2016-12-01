@@ -1,4 +1,4 @@
-<table class="table table-ufop table-hover">
+<table id="index-table" class="table table-striped table-bordered table-ufop table-hover">
 
    <thead>
       <tr>

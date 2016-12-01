@@ -16,9 +16,11 @@ class CreateQuestionsTable extends Migration
          $table->increments('id');
          $table->string('pergunta');
          $table->integer('tipo_id')->unsigned();
+         $table->integer('professor_id')->unsigned()->nullable();
 
          $table->foreign('tipo_id')->references('id')->on('tipos_pergunta');
-
+         $table->foreign('professor_id')->references('id')->on('professores');
+         
          $table->timestamp('updated_at');
          $table->timestamp('created_at')->useCurrent();
       });

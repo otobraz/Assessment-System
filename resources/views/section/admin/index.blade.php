@@ -11,14 +11,18 @@
 
 @section('content')
 
-   <div class="container">
+   <div class="container-fluid">
       <div class="panel panel-default">
-         <div class="panel-heading">
-            <p class="panel-title">CLASSES</p>
+         <div class="panel-heading contains-buttons">
+            <a class="btn btn-primary pull-right" role="button"
+            style="color: white" href="{{route('section.import')}}">Importar Turmas</a>
+            <p class="panel-title contains-buttons pull-left">TURMAS</p>
+            <span class="clearfix"></span>
          </div>
          <div class="panel-body">
             @include('alert-message.success')
-            @include('section.sections-list')
+            @include('alert-message.error')
+            @include('section.admin.sections-list')
          </div>
       </div>
    </div>

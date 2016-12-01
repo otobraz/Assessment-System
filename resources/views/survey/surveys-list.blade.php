@@ -17,6 +17,7 @@
             <tr>
                <td>{{$survey->titulo}}</td>
                <td>{{$section->disciplina->disciplina}}</td>
+               <td>{{$section->cod_turma}}</td>
                <td>{{$section->ano . "/" . $section->semestre}}</td>
                <td>{{$survey->professor->nome . " " . $survey->professor->sobrenome}}</td>
                <td>

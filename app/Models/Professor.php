@@ -15,7 +15,8 @@ class Professor extends Model
       'sobrenome',
       'email',
       'senha',
-      'departamento_id'
+      'departamento_id',
+      'areas_interesse'
    ];
 
    /**
@@ -26,6 +27,10 @@ class Professor extends Model
    protected $hidden = [
 
    ];
+
+   public function getNomeCompletoAttribute(){
+      return $this->nome . " " . $this->sobrenome;
+   }
 
    public function departamento(){
       return $this->belongsTo('App\Models\Departamento');
@@ -41,6 +46,10 @@ class Professor extends Model
 
    public function perguntas(){
       return $this->hasMany('App\Models\Pergunta');
+   }
+
+   public function questionarios(){
+      return $this->hasMany('App\Models\Questionario');
    }
 
 }

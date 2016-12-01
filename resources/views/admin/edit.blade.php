@@ -11,7 +11,6 @@
 
 @section('content')
 
-   <div class="container">
       <div class="col-md-offset-3 col-md-6">
          <div class="panel panel-default">
             <div class="panel-body">
@@ -26,7 +25,7 @@
 
                   <input type="hidden" name="id" value="{{encrypt($admin->id)}}">
 
-                  <fildset>
+                  <fieldset>
 
                      <!-- fake fields are a workaround for browser autofill getting the wrong fields -->
                      <input style="display:none" type="text" name="fakeusernameremembered"/>
@@ -69,7 +68,7 @@
                         <button class="btn btn-default" type="button" onclick="history.go(-1)"> Cancelar</button>
                         <button class="btn btn-primary" type="submit"><i class="fa fa-pencil-square-o"></i> Salvar</button>
                      </div>
-                  </fildset>
+                  </fieldset>
                </form>
             </div>
             <div class="panel-footer">
@@ -78,7 +77,6 @@
             </div>
          </div>
       </div>
-   </div>
 
    @include('admin.delete-modal')
 

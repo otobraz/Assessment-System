@@ -25,31 +25,27 @@
 // Routes that can be accessed iff the user is authenticated
 Route::group(['middleware' => ['auth.user']], function () {
 
-   // User's home page
+   // Home page
    Route::get('home', ['as' => 'home', 'uses' => 'HomeController@getUsersHome']);
 
    // Logout
    Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
 
+   // Sections
+   Route::get('turmas', ['as' => 'section.index', 'uses' => 'SectionController@index']);
+   Route::get('turma/{id}', ['as' => 'section.show', 'uses' => 'SectionController@show']);
+
    // Survey Routes
    Route::get('questionarios', ['as' => 'survey.index', 'uses' => 'SurveyController@index']);
-   Route::get('questionario/criar', ['as' => 'survey.create', 'uses' => 'SurveyController@create']);
-   Route::post('questionario/criar', ['as' => 'survey.store', 'uses' => 'SurveyController@store']);
 
-   // Ajax
-   Route::get('questionario/ajax/escolher-questao/{count}', ['as' => 'ajax.selectQuestion', 'uses' => 'SurveyController@ajaxSelectQuestion']);
-   Route::get('questionario/ajax/questao/{id}', ['as' => 'ajax.showQuestion', 'uses' => 'SurveyController@ajaxShowQuestion']);
+   // Students
+   Route::get('alunos', ['as' => 'student.index', 'uses' => 'StudentController@index']);
 
-   Route::get('questionario/ajax/nova-questao/{count}', ['as' => 'ajax.createQuestion', 'uses' => 'SurveyController@ajaxCreateQuestion']);
-   Route::get('questionario/ajax/novo-input/{name}/{questionType}', ['as' => 'ajax.createInput', 'uses' => 'SurveyController@ajaxCreateInput']);
-
-   // Route::get('questionario/ajax/questao/criar', ['as' => 'ajax.createQuestion', 'uses' => 'SurveyController@ajaxCreateQuestion']);
-
-
-   Route::get('resposta/{id}/criar', ['as' => 'response.create', 'uses' => 'ResponseController@create']);
-   Route::post('resposta/criar', ['as' => 'response.store', 'uses' => 'ResponseController@store']);
+   // Professors
+   Route::get('professores', ['as' => 'professor.index', 'uses' => 'ProfessorController@index']);
 
 });
+
 
 // Routes that can be accessed iff the user is a student
 Route::group(['middleware' => ['auth.student']], function () {
@@ -59,25 +55,41 @@ Route::group(['middleware' => ['auth.student']], function () {
    Route::get('aluno/{id}', ['as' => 'student.show', 'uses' => 'StudentController@show']);
 
    // Response Routes
-   // Route::get('resposta/{id}/criar', ['as' => 'response.create', 'uses' => 'ResponseController@create']);
-   // Route::post('resposta/criar', ['as' => 'response.store', 'uses' => 'ResponseController@store']);
+   Route::get('resposta/{id}/criar', ['as' => 'response.create', 'uses' => 'ResponseController@create']);
+   Route::post('resposta/criar', ['as' => 'response.store', 'uses' => 'ResponseController@store']);
 
 });
 
 // Routes that can be accessed iff the user is a professor
 Route::group(['middleware' => ['auth.professor']], function () {
 
+   // Professor's route
    Route::get('professor/editar', ['as' => 'professor.edit', 'uses' => 'ProfessorController@edit']);
    Route::get('professor/{id}', ['as' => 'professor.show', 'uses' => 'ProfessorController@show']);
 
-   // Survey Routes
-   // Route::get('questionario/criar', ['as' => 'survey.create', 'uses' => 'SurveyController@create']);
-   // Route::post('questionario/criar', ['as' => 'survey.store', 'uses' => 'SurveyController@store']);
+   // Survey routes
+   Route::get('questionario/criar', ['as' => 'survey.create', 'uses' => 'SurveyController@create']);
+   Route::post('questionario/criar', ['as' => 'survey.store', 'uses' => 'SurveyController@store']);
+   Route::get('questionario/{id}/editar', ['as' => 'survey.edit', 'uses' => 'SurveyController@edit']);
+   Route::put('questionario/{id}', ['as' => 'survey.update', 'uses' => 'SurveyController@update']);
+   Route::get('questionario/{id}', ['as' => 'survey.show', 'uses' => 'SurveyController@show']);
+   Route::get('questionario/turmas/{id}', ['as' => 'survey.showSections', 'uses' => 'SurveyController@showSections']);
+   Route::get('questionario/resultados/{surveyId}', ['as' => 'survey.results', 'uses' => 'SurveyController@getResults']);
+   Route::get('questionario/resultado/turma/{surveyId}/{sectionId}', ['as' => 'survey.classResults', 'uses' => 'SurveyController@classResults']);
+   Route::post('questionario/resultados-comparados', ['as' => 'survey.postResults', 'uses' => 'SurveyController@postResults']);
+
+   // Ajax
+   Route::get('questionario/ajax/escolher-questao/{count}', ['as' => 'ajax.selectQuestion', 'uses' => 'SurveyController@ajaxSelectQuestion']);
+   Route::get('questionario/ajax/questao/{id}', ['as' => 'ajax.showQuestion', 'uses' => 'SurveyController@ajaxShowQuestion']);
+   Route::get('questionario/ajax/nova-questao/{count}', ['as' => 'ajax.createQuestion', 'uses' => 'SurveyController@ajaxCreateQuestion']);
+   Route::get('questionario/ajax/novo-input/{name}/{questionType}', ['as' => 'ajax.createInput', 'uses' => 'SurveyController@ajaxCreateInput']);
 
 });
 
 // Routes that can be accessed iff the user is an admin
 Route::group(['middleware' => ['auth.admin']], function () {
+
+   // Route::get('questionario/criar', ['as' => 'survey.create', 'uses' => 'SurveyController@create']);
 
    // Major
    Route::get('cursos', ['as' => 'major.index', 'uses' => 'MajorController@index']);
@@ -105,22 +117,29 @@ Route::group(['middleware' => ['auth.admin']], function () {
    Route::put('departamento/{id}', ['as' => 'department.update', 'uses' => 'DepartmentController@update']);
    Route::delete('departamento/{id}', ['as' => 'department.delete', 'uses' => 'DepartmentController@destroy']);
 
+   // Courses
+   Route::get('disciplinas', ['as' => 'course.index', 'uses' => 'CourseController@index']);
+   Route::get('disciplina/criar', ['as' => 'course.create', 'uses' => 'CourseController@create']);
+   Route::post('disciplina/criar', ['as' => 'course.store', 'uses' => 'CourseController@store']);
+   Route::get('disciplina/{id}/editar', ['as' => 'course.edit', 'uses' => 'CourseController@edit']);
+   Route::put('disciplina/{id}', ['as' => 'course.update', 'uses' => 'CourseController@update']);
+   Route::delete('disciplina/{id}', ['as' => 'course.delete', 'uses' => 'CourseController@destroy']);
+
    // Sections
-   Route::get('turmas', ['as' => 'section.index', 'uses' => 'SectionController@index']);
    Route::get('turma/criar', ['as' => 'section.create', 'uses' => 'SectionController@create']);
    Route::post('turma/criar', ['as' => 'section.store', 'uses' => 'SectionController@store']);
    // Route::get('turma/{id}/editar', ['as' => 'section.edit', 'uses' => 'SectionController@edit']);
    // Route::put('turma/{id}', ['as' => 'section.update', 'uses' => 'SectionController@update']);
    Route::delete('turma/{id}', ['as' => 'section.delete', 'uses' => 'SectionController@destroy']);
+   Route::get('turmas/importar', ['as' => 'section.import', 'uses' => 'SectionController@import']);
+   Route::post('turmas/importar', ['as' => 'section.storeFromCsv', 'uses' => 'SectionController@storeFromCsv']);
 
    // Student
-   Route::get('alunos', ['as' => 'student.index', 'uses' => 'StudentController@index']);
    Route::get('alunos/importar', ['as' => 'student.import', 'uses' => 'StudentController@import']);
    Route::post('alunos/importar', ['as' => 'student.storeFromCsv', 'uses' => 'StudentController@storeFromCsv']);
    Route::delete('aluno/{id}', ['as' => 'student.delete', 'uses' => 'StudentController@destroy']);
 
    // Professor
-   Route::get('professores', ['as' => 'professor.index', 'uses' => 'ProfessorController@index']);
    Route::get('professores/importar', ['as' => 'professor.import', 'uses' => 'ProfessorController@import']);
    Route::post('professores/importar', ['as' => 'professor.storeFromCsv', 'uses' => 'ProfessorController@storeFromCsv']);
    Route::delete('professor/{id}', ['as' => 'professor.delete', 'uses' => 'ProfessorController@destroy']);
@@ -134,12 +153,12 @@ Route::group(['middleware' => ['auth.admin']], function () {
    Route::delete('perguntas/tipo/{id}', ['as' => 'questionType.delete', 'uses' => 'QuestionTypeController@destroy']);
 
    //Section Types
-   Route::get('classes/tipos', ['as' => 'sectionType.index', 'uses' => 'SectionTypeController@index']);
-   Route::get('classes/tipo/criar', ['as' => 'sectionType.create', 'uses' => 'SectionTypeController@create']);
-   Route::post('classes/tipo/criar', ['as' => 'sectionType.store', 'uses' => 'SectionTypeController@store']);
-   Route::get('classes/tipo/{id}/editar', ['as' => 'sectionType.edit', 'uses' => 'SectionTypeController@edit']);
-   Route::put('classes/tipo/{id}', ['as' => 'sectionType.update', 'uses' => 'SectionTypeController@update']);
-   Route::delete('classes/tipo/{id}', ['as' => 'sectionType.delete', 'uses' => 'SectionTypeController@destroy']);
+   // Route::get('classes/tipos', ['as' => 'sectionType.index', 'uses' => 'SectionTypeController@index']);
+   // Route::get('classes/tipo/criar', ['as' => 'sectionType.create', 'uses' => 'SectionTypeController@create']);
+   // Route::post('classes/tipo/criar', ['as' => 'sectionType.store', 'uses' => 'SectionTypeController@store']);
+   // Route::get('classes/tipo/{id}/editar', ['as' => 'sectionType.edit', 'uses' => 'SectionTypeController@edit']);
+   // Route::put('classes/tipo/{id}', ['as' => 'sectionType.update', 'uses' => 'SectionTypeController@update']);
+   // Route::delete('classes/tipo/{id}', ['as' => 'sectionType.delete', 'uses' => 'SectionTypeController@destroy']);
 
 });
 

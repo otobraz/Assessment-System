@@ -7,7 +7,6 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "adldap2/adldap2-laravel": "2.0.*",
         "barryvdh/laravel-debugbar": "^2.2",
         "doctrine/dbal": "~2.3"
     },

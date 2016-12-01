@@ -155,7 +155,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Adldap\Laravel\AdldapServiceProvider::class,
+      //   Adldap\Laravel\AdldapServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 
     ],

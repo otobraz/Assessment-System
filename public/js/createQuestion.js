@@ -8,9 +8,10 @@ $("button[name='btn-blank-question']").on("click", function(){
       "<div class='question-spot' name='question-spot'><div name='select-question-spot' class='select-question-spot'></div><div name='input-spot'></div></div>"
    );
 
-   var selectDiv = $("div[name='select-question-spot']").last();
-   selectDiv.load("ajax/nova-questao/" + count);
-   selectDiv.next().load("ajax/novo-input/question-" + count + "/2");
+   var selectDiv = $("div[name='select-question-spot']").last()
+      .append("<div class='text-center'><i class='fa fa-2x fa-refresh fa-spin'></i></div>")
+      .load("ajax/nova-questao/" + count)
+      .next().load("ajax/novo-input/question-" + count + "/2");
 
 });
 
@@ -32,15 +33,15 @@ $("#survey-preview-panel > .panel-body").on("click", ".select-question-type", fu
 
    }else if (questionTypeId == 2) {
 
-      var oldName = id + "-checkboxes"
-      var newName = id + "-radios"
+      var oldName = id + "-checkboxes";
+      var newName = id + "-radios";
       $("input[name='" + oldName + "']").attr("type", "radio");
       $("input[name='" + oldName + "']").attr("name", newName);
 
    }else if (questionTypeId == 3){
 
-      var oldName = id + "-radios"
-      var newName = id + "-checkboxes"
+      var oldName = id + "-radios";
+      var newName = id + "-checkboxes";
       $("input[name='" + oldName + "']").attr("type", "checkbox");
       $("input[name='" + oldName + "']").attr("name", newName);
 

@@ -12,7 +12,8 @@ class Turma extends Model
    protected $fillable = [
       'ano',
       'semestre',
-      'disciplina_id'
+      'disciplina_id',
+      'cod_turma'
    ];
 
    /**
@@ -37,6 +38,7 @@ class Turma extends Model
    }
 
    public function questionarios(){
-      return $this->belongsToMany('App\Models\Questionario');
+      return $this->belongsToMany('App\Models\Questionario')->withPivot('id', 'aberto')->withTimestamps();
    }
+
 }

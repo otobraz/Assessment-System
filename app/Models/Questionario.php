@@ -30,7 +30,11 @@ class Questionario extends Model
    ];
 
    public function turmas(){
-      return $this->belongsToMany('App\Models\Turma');
+      return $this->belongsToMany('App\Models\Turma')->withPivot('id', 'aberto')->withTimestamps();
+   }
+
+   public function turmasQuestionariosAbertos(){
+      return $this->belongsToMany('App\Models\Turma')->withPivot('id', 'aberto')->withTimestamps()->wherePivot('aberto', 1);
    }
 
    public function perguntas(){

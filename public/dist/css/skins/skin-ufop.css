@@ -130,6 +130,10 @@
    border-bottom-left-radius: 0;
 }
 
-.skin-ufop .box .box-primary-ufop {
+/*.skin-ufop .box .box-primary-ufop {
+   border-top-color: #962038;
+}*/
+
+.box-primary-ufop {
    border-top-color: #962038;
 }

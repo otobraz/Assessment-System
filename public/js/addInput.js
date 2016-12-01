@@ -21,7 +21,9 @@ $(document).on('click', '.btn-add', function(e)
 
 $(document).on('click', '.remove-question', function(e){
 
-   $(this).parents('.question-spot:first').remove();
+   $(this).parents('.question-spot:first').fadeOut(150, function(){
+      remove();
+   });
 
    return false;
 

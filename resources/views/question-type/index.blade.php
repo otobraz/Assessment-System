@@ -11,21 +11,21 @@
 
 @section('content')
 
-   <div class="container">
-      <div class="panel panel-default">
-         <div class="panel-heading contains-button">
-            <a class="btn btn-primary pull-right" role="button"
-            style="color: white" href="{{route('questionType.create')}}">Novo Curso</a>
-            <p class="panel-title contains-buttons pull-left">TIPOS DE PERGUNTAS</p>
-            <span class="clearfix"></span>
-         </div>
-         <div class="panel-body">
-            @include('alert-message.success')
-            @include('alert-message.error')
-            @include('question-type.question-types-list')
-         </div>
+
+   <div class="panel panel-default">
+      <div class="panel-heading contains-button">
+         <a class="btn btn-primary pull-right" role="button"
+         style="color: white" href="{{route('questionType.create')}}">Novo Curso</a>
+         <p class="panel-title contains-buttons pull-left">TIPOS DE PERGUNTAS</p>
+         <span class="clearfix"></span>
+      </div>
+      <div class="panel-body">
+         @include('alert-message.success')
+         @include('alert-message.error')
+         @include('question-type.question-types-list')
       </div>
    </div>
+
 
 @endsection
 

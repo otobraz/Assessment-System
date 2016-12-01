@@ -10,42 +10,41 @@
 @endsection
 
 @section('content')
-   <div class="container">
-      <div class="col-md-offset-3 col-md-6">
-         <div class="panel panel-default">
-            <div class="panel-body">
 
-               @include('alert-message.success')
-               @include('alert-message.error')
+   <div class="col-md-offset-3 col-md-6">
+      <div class="panel panel-default">
+         <div class="panel-body">
 
-               <form class="form-signin" method="POST" action="{{action('QuestionTypeController@update', encrypt($questionType->id))}}">
+            @include('alert-message.success')
+            @include('alert-message.error')
 
-                  {{ csrf_field() }}
-                  {{ method_field('PUT') }}
+            <form class="form-signin" method="POST" action="{{action('QuestionTypeController@update', encrypt($questionType->id))}}">
 
-                  <input type="hidden" name="id" value="{{encrypt($questionType->id)}}">
+               {{ csrf_field() }}
+               {{ method_field('PUT') }}
 
-                  <fildset>
+               <input type="hidden" name="id" value="{{encrypt($questionType->id)}}">
 
-                     <div class="form-group">
-                        <label for="questionType">Tipo:</label>
-                        <input class="form-control input-xlarge" type="text" name="type" id="type"
-                        placeholder="Nome do tipo" value="{{$questionType->tipo}}" autofocus required
-                        oninvalid="setCustomValidity('Informe o tipo.')"
-                        oninput="setCustomValidity('')"
-                        >
-                     </div>
+               <fieldset>
 
-                     <button class="btn btn-warning pull-right"  type="button" data-toggle="modal" data-action="http://localhost:8000/perguntas/tipo/{{encrypt($questionType->id)}}" href="#deleteModal"> Excluir</button>
-                     <div class="pull-left">
-                        <button class="btn btn-default" type="button" onclick="history.go(-1)"> Cancelar</button>
-                        <button class="btn btn-primary" type="submit"><i class="fa fa-pencil-square-o"></i> Editar</button>
-                     </div>
+                  <div class="form-group">
+                     <label for="questionType">Tipo:</label>
+                     <input class="form-control input-xlarge" type="text" name="type" id="type"
+                     placeholder="Nome do tipo" value="{{$questionType->tipo}}" autofocus required
+                     oninvalid="setCustomValidity('Informe o tipo.')"
+                     oninput="setCustomValidity('')"
+                     >
+                  </div>
 
-                  </fildset>
-               </form>
+                  <button class="btn btn-warning pull-right"  type="button" data-toggle="modal" data-action="http://localhost:8000/perguntas/tipo/{{encrypt($questionType->id)}}" href="#deleteModal"> Excluir</button>
+                  <div class="pull-left">
+                     <button class="btn btn-default" type="button" onclick="history.go(-1)"> Cancelar</button>
+                     <button class="btn btn-primary" type="submit"><i class="fa fa-pencil-square-o"></i> Editar</button>
+                  </div>
 
-            </div>
+               </fieldset>
+            </form>
+
          </div>
       </div>
    </div>

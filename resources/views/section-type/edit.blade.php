@@ -25,7 +25,7 @@
 
                   <input type="hidden" name="id" value="{{encrypt($sectionType->id)}}">
 
-                  <fildset>
+                  <fieldset>
 
                      <div class="form-group">
                         <label for="sectionType">Tipo:</label>
@@ -42,7 +42,7 @@
                         <button class="btn btn-primary" type="submit"><i class="fa fa-pencil-square-o"></i> Editar</button>
                      </div>
 
-                  </fildset>
+                  </fieldset>
                </form>
             </div>
          </div>

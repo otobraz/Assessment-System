@@ -12,10 +12,10 @@
    <title>Sistema de Avaliação</title>
 
    <!-- Bootstrap Core CSS -->
-   <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
    <!-- Custom CSS -->
-   <link href="agency/css/agency.css" rel="stylesheet">
+   <link href="agency/css/agency.min.css" rel="stylesheet">
    <link href="css/styles.css" rel="stylesheet">
 
    <!-- Custom Fonts -->
@@ -46,7 +46,7 @@
 
    @include('layout.home.how')
 
-   @include('layout.home.contact')
+   {{-- @include('layout.home.contact') --}}
 
    <footer>
       <div class="container">
@@ -71,22 +71,18 @@
    @include('layout.home.modals')
 
    <!-- jQuery -->
-   <script src="jquery/jquery.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
    <!-- Bootstrap Core JavaScript -->
    <script src="bootstrap/js/bootstrap.min.js"></script>
 
    <!-- Plugin JavaScript -->
    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-   <script src="js/classie.js"></script>
-   <script src="js/cbpAnimatedHeader.js"></script>
-
-   <!-- Contact Form JavaScript -->
-   <script src="agency/js/jqBootstrapValidation.js"></script>
-   <script src="agency/js/contact_me.js"></script>
+   {{-- <script src="js/classie.js"></script>
+   <script src="js/cbpAnimatedHeader.js"></script> --}}
 
    <!-- Custom Theme JavaScript -->
-   <script src="agency/js/agency.js"></script>
+   <script src="agency/js/agency.min.js"></script>
 
 </body>
 

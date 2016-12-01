@@ -28,6 +28,10 @@ class Aluno extends Model
 
    ];
 
+   public function getNomeCompletoAttribute(){
+      return $this->nome . " " . $this->sobrenome;
+   }
+
    public function curso(){
       return $this->belongsTo('App\Models\Curso');
    }

@@ -16,7 +16,7 @@
             <div class="panel-body">
                <form class="form-signin" method="POST" action="{{action('SectionTypeController@store')}}">
                   {{ csrf_field() }}
-                  <fildset>
+                  <fieldset>
 
                      <div class="form-group">
                         <label for="sectionType">Nome do tipo:</label>
@@ -29,7 +29,7 @@
 
                      <button class="btn btn-default"  type="reset"><i class="glyphicon glyphicon-erase"></i> Limpar</button>
                      <button class="btn btn-primary" type="submit"><i class="fa fa-check-square-o"></i> Criar</button>
-                  </fildset>
+                  </fieldset>
                </form>
             </div>
          </div>

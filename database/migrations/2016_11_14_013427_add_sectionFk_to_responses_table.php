@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAreasTable extends Migration
+class AddSectionFkToResponsesTable extends Migration
 {
    /**
    * Run the migrations.
@@ -12,12 +12,11 @@ class CreateAreasTable extends Migration
    */
    public function up()
    {
-      Schema::create('areas', function (Blueprint $table) {
-         $table->increments('id');
-         $table->string('area');
+      Schema::table('respostas', function (Blueprint $table) {
 
-         $table->timestamp('atualizado_em');
-         $table->timestamp('criado_em')->useCurrent();
+         $table->integer('turma_id')->unsigned();
+         $table->foreign('turma_id')->references('id')->on('turmas');
+
       });
    }
 
@@ -28,6 +27,6 @@ class CreateAreasTable extends Migration
    */
    public function down()
    {
-      Schema::drop('areas');
+      //
    }
 }

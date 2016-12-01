@@ -13,11 +13,12 @@ class CreateSectionSurveyTable extends Migration
    public function up()
    {
       Schema::create('questionario_turma', function (Blueprint $table) {
+         $table->increments('id');
+         $table->tinyInteger('aberto')->default(1);
          $table->integer('questionario_id')->unsigned();
          $table->integer('turma_id')->unsigned();
 
-
-         $table->primary(['questionario_id', 'turma_id']);
+         // $table->unique(['questionario_id', 'turma_id']);
 
          $table->foreign('turma_id')->references('id')->on('turmas');
          $table->foreign('questionario_id')->references('id')->on('questionarios');

@@ -13,14 +13,15 @@ class CreateMultipleChoiceResponsesTable extends Migration
    public function up()
    {
       Schema::create('respostas_multipla_escolha', function (Blueprint $table) {
+
          $table->increments('id');
          $table->integer('pergunta_id')->unsigned();
          $table->integer('resposta_id')->unsigned();
 
 
-         $table->unique(['pergunta_id', 'respostas_id']);
+         $table->unique(['pergunta_id', 'resposta_id']);
 
-         $table->foreign('respostas_id')->references('id')->on('respostas');
+         $table->foreign('resposta_id')->references('id')->on('respostas');
          $table->foreign('pergunta_id')->references('id')->on('perguntas');
 
          $table->timestamp('updated_at');

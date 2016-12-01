@@ -7,9 +7,31 @@ use App\Http\Requests;
 
 use App\Models\Professor;
 use App\Models\Departamento;
+use App\Models\Aluno;
 
 class ProfessorController extends Controller
 {
+
+   public function getLdapUser($ldapData = null, $username = null){
+      $ds = ldap_connect($ldapData['server']); // your ldap server
+      try{
+         $bind = ldap_bind($ds, $ldapData['cn'] . "," . $ldapData['domain'], base64_decode($ldapData['password']));
+         $filter = "(" . $ldapData['id_field'] . "=" . $username . ")"; // this command requires some filter
+         $justThese = array(
+            $ldapData['given_name_field'],
+            $ldapData['last_name_field'],
+         ); // the attributes to pull, which is much more efficient than pulling all attributes if you don't do this
+         $sr = ldap_search($ds, $ldapData['domain'], $filter, $justThese);
+         $entry = ldap_get_entries($ds, $sr);
+         if ($entry['count'] > 0) {
+            return $entry;
+         }
+         return null;
+      }catch(\Exception $e){
+         abort(503);
+      }
+   }
+
    /**
    * Display a listing of the resource.
    *
@@ -17,8 +39,30 @@ class ProfessorController extends Controller
    */
    public function index()
    {
-      $professors = Professor::all();
-      return view ('professor.index', compact('professors'));
+
+      switch (session()->get('role')) {
+
+         case '0':
+         $professors = Professor::all();
+         return view ('professor.admin.index', compact('professors'));
+         break;
+
+         case '1':
+         $professors = Professor::all();
+         $mySections = Aluno::find(session()->get('id'))->turmas;
+         // $myProfessors = array();
+         // foreach ($mySections as $key => $section) {
+         //    $myProfessors = $section->professores;
+         // }
+         //
+         // dd($myProfessors);
+         return view ('professor.student.index', compact('professors', 'mySections'));
+         break;
+
+         default:
+         return redirect('/');
+         break;
+      }
    }
 
    /**
@@ -79,7 +123,7 @@ class ProfessorController extends Controller
    }
 
    public function import(){
-      return view('professor.import');
+      return view('professor.admin.import');
    }
 
    public function storeFromCsv(Request $request){
@@ -108,6 +152,7 @@ class ProfessorController extends Controller
 
          if($header == array_shift($professorsCsv)){
             $professors = Professor::all();
+            $ldapData = config('my_config.ldapData');
             foreach ($professorsData as $professor){
                $username = preg_replace('/[^0-9]+/', '', $professor[6]);
                $department = $departments->where('cod_departamento', preg_replace('/\s\s+/','', $professor[3]))->first();
@@ -116,14 +161,16 @@ class ProfessorController extends Controller
                   $professorModel->email = $professor[7];
                   $professorModel->save();
                }else{
-                  $newProfessor = new Professor([
-                     'usuario' => $username,
-                     'nome' => NULL,
-                     'sobrenome' => NULL,
-                     'email' => $professor[7],
-                     'departamento_id' => $department->id
-                  ]);
-                  $newProfessor->save();
+                  if($ldapUser = $this->getLdapUser($ldapData, $username)){
+                     $newProfessor = new Professor([
+                        'usuario' => $username,
+                        'nome' => $ldapUser[0][$ldapData['given_name_field']][0],
+                        'sobrenome' => $ldapUser[0][$ldapData['last_name_field']][0],
+                        'email' => $professor[7],
+                        'departamento_id' => $department->id
+                     ]);
+                     $newProfessor->save();
+                  }
                }
             }
             return redirect()->route('professor.index')->with('successMessage', 'Importação realizada com sucesso');

@@ -19,7 +19,7 @@
       </div>
 
       <!-- search form (Optional) -->
-      <form action="{{url('search')}}" method="post" class="sidebar-form">
+      {{-- <form action="{{url('search')}}" method="post" class="sidebar-form">
          <input type="hidden" name="_token" value="{{ csrf_token() }}">
          <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Procure..."/>
@@ -27,7 +27,7 @@
                <button type='submit' name='search' class="btn btn-flat"><i class="fa fa-search"></i></button>
             </span>
          </div>
-      </form>
+      </form> --}}
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
@@ -49,13 +49,13 @@
                   <a href="{{route('department.index')}}">Departamentos</a>
                </li>
                <li>
+                  <a href="{{route('course.index')}}">Disciplinas</a>
+               </li>
+               <li>
                   <a href="{{route('section.index')}}">Turmas</a>
                </li>
                <li>
                   <a href="{{route('section.index')}}">Orientações</a>
-               </li>
-               <li>
-                  <a href="{{route('sectionType.index')}}">Tipos de Turmas</a>
                </li>
             </ul>
          </li>
@@ -94,9 +94,6 @@
                </li>
                <li>
                   <a href="{{route('admin.index')}}"><span>Respostas</span></a>
-               </li>
-               <li>
-                  <a href="{{route('admin.index')}}"><span>Professores</span></a>
                </li>
             </ul>
          </li>

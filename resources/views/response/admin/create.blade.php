@@ -18,7 +18,7 @@
 
                <input type="hidden" name="survey_id" value="{{encrypt($survey->id)}}">
 
-               <fildset>
+               <fieldset>
 
                   @foreach ($questions as $question)
                      <div class="form-group">
@@ -64,7 +64,7 @@
                      <button class="btn btn-primary" type="submit"><i class="fa fa-pencil-square-o"></i> Responder</button>
                   </div>
 
-               </fildset>
+               </fieldset>
             </form>
          </div>
       </div>

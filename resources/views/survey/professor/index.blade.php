@@ -4,15 +4,14 @@
    Gerenciar Questionários
 @endsection
 
-@section('content-header')
+{{-- @section('content-header')
    <h1>Meus Questionários</h1>
    <hr class="hr-ufop">
-@endsection
+@endsection --}}
 
 @section('content')
 
-   <div class="container">
-      <div class="panel panel-default">
+      {{-- <div class="panel panel-default">
          <div class="panel-heading contains-buttons">
             <a class="btn btn-primary pull-right" role="button"
             style="color: white" href="{{route('survey.create')}}">Criar questionário</a>
@@ -24,8 +23,9 @@
             @include('alert-message.error')
             @include('survey.professor.surveys-list')
          </div>
-      </div>
-   </div>
+      </div> --}}
+
+      @include('survey.professor.surveys-list')
 
 @endsection
 

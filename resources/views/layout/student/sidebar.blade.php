@@ -17,7 +17,7 @@
       </div>
 
       <!-- search form (Optional) -->
-      <form action="{{url('search')}}" method="post" class="sidebar-form">
+      {{-- <form action="{{url('search')}}" method="post" class="sidebar-form">
          <input type="hidden" name="_token" value="{{ csrf_token() }}">
          <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Procure..."/>
@@ -25,7 +25,7 @@
                <button type='submit' name='search' class="btn btn-flat"><i class="fa fa-search"></i></button>
             </span>
          </div>
-      </form>
+      </form> --}}
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
@@ -36,10 +36,10 @@
             <a href="{{action('SurveyController@index')}}"><i class="fa fa-comments-o"></i> <span>Questionários</span></a>
          </li>
          <li>
-            <a href="#"><i class="fa fa-book"></i> <span>Minhas Classes</span></a>
+            <a href="{{action('SectionController@index')}}"><i class="fa fa-book"></i> <span>Minhas Turmas</span></a>
          </li>
          <li>
-            <a href="#"><i class="fa fa-graduation-cap"></i> <span>Professores</span></a>
+            <a href="{{action('ProfessorController@index')}}"><i class="fa fa-graduation-cap"></i> <span>Professores</span></a>
          </li>
          <li>
             <a href="{{action('StudentController@edit')}}" target="_blank"><i class="fa fa-pencil-square-o"></i> <span>Editar Cadastro</span></a>

@@ -10,7 +10,8 @@ class Disciplina extends Model
 
    protected $fillable = [
       'cod_disciplina',
-      'disciplina'
+      'disciplina',
+      'departamento_id'
    ];
 
    /**
@@ -27,6 +28,6 @@ class Disciplina extends Model
    }
 
    public function departamento(){
-      return $this->belongsToMany('App\Models\Departamento');
+      return $this->belongsTo('App\Models\Departamento');
    }
 }

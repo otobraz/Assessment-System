@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-   <div class="container">
+
       <div class="row">
          <div class="col-md-offset-4 col-md-6">
             <div class="panel panel-default">
@@ -27,7 +27,7 @@
 
                      <input type="hidden" name="id" value="{{encrypt($admin->id)}}">
 
-                     <fildset>
+                     <fieldset>
 
                         <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
                         <input style="display:none" type="text" name="fakeusernameremembered"/>
@@ -96,12 +96,11 @@
                         @endif
                         <button class="btn btn-default" type="button" onclick="history.go(-1)"> Voltar</button>
                         <button class="btn btn-primary" type="submit"><i class="fa fa-pencil-square-o"></i> Salvar</button>
-                     </fildset>
+                     </fieldset>
                   </form>
                </div>
             </div>
          </div>
       </div>
-   </div>
 
 @endsection

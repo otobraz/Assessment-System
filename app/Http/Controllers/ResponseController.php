@@ -31,21 +31,27 @@ class ResponseController extends Controller
    */
    public function create($id)
    {
+
       $student = Aluno::where('usuario', session()->get('username'))->first();
-      $sections = $student->turmas;
-      $survey = Questionario::find(decrypt($id));
-      
-      // Verifies whether or not the user belongs to one of the classes which the survey was assigned to
-      if($sections->intersect($survey->turmas)->isEmpty()){
-         return redirect()->route('survey.index');
+
+      if(isset($student)){
+         $sections = $student->turmas;
+         $survey = Questionario::find(decrypt($id));
+
+         // Verifies whether or not the user belongs to one of the classes which the survey was assigned to
+         if($sections->intersect($survey->turmas)->isEmpty()){
+            return redirect()->route('survey.index');
+         }
+
+         $questions = $survey->perguntas;
+         return view('response.student.create', compact('survey', 'questions'));
+
+      }else if(session()->get('role') == '0'){
+         $survey = Questionario::find(decrypt($id));
+         $questions = $survey->perguntas;
+         return view('response.admin.create', compact('survey', 'questions'));
       }
 
-      $questions = $survey->perguntas;
-      if(session()->get('role') == '0'){
-         return view('response.admin.create', compact('survey', 'questions'));
-      }else if(session()->get('role') == '1'){
-         return view('response.student.create', compact('survey', 'questions'));
-      }
    }
 
    /**
@@ -69,33 +75,33 @@ class ResponseController extends Controller
       foreach($survey->perguntas as $question){
          switch ($question->tipo->id) {
             case 1: # it's a text input
-               $textResponse = new RespostaAberta([
-                  'resposta' => $inputs["question-" . $question->id . "-text"],
-                  'resposta_id' =>  $response->id,
-                  'pergunta_id' => $question->id
-               ]);
-               $textResponse->save();
-               break;
+            $textResponse = new RespostaAberta([
+               'resposta' => $inputs["question-" . $question->id . "-text"],
+               'resposta_id' =>  $response->id,
+               'pergunta_id' => $question->id
+            ]);
+            $textResponse->save();
+            break;
 
             case 2: # it's a radio input
-               $singleChoiceResponse = new RespostaUnicaEscolha([
-                  'opcao_id' => $inputs["question-" . $question->id . "-radio"],
-                  'resposta_id' => $response->id,
-                  'pergunta_id' => $question->id
-               ]);
-               $singleChoiceResponse->save();
-               break;
+            $singleChoiceResponse = new RespostaUnicaEscolha([
+               'opcao_id' => $inputs["question-" . $question->id . "-radio"],
+               'resposta_id' => $response->id,
+               'pergunta_id' => $question->id
+            ]);
+            $singleChoiceResponse->save();
+            break;
 
             case 3: # it's a checkbox input
-               $multipleChoiceResponse = new RespostaMultiplaEscolha([
-                  'resposta_id' => $response->id,
-                  'pergunta_id' => $question->id
-               ]);
-               $multipleChoiceResponse->save();
-               foreach ($inputs["question-" . $question->id . "-checkbox"] as $choice) {
-                  $multipleChoiceResponse->opcoes()->attach($choice);
-               }
-               break;
+            $multipleChoiceResponse = new RespostaMultiplaEscolha([
+               'resposta_id' => $response->id,
+               'pergunta_id' => $question->id
+            ]);
+            $multipleChoiceResponse->save();
+            foreach ($inputs["question-" . $question->id . "-checkbox"] as $choice) {
+               $multipleChoiceResponse->opcoes()->attach($choice);
+            }
+            break;
          }
          return view('survey.index')->with('succesMessage', 'Questionário respondido com sucesso');
       }
