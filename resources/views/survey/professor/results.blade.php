@@ -13,7 +13,7 @@
 
    @foreach ($questions as $question)
 
-      <div class="col-md-offset-2 col-md-8">
+      <div class="col-md-12">
          <div class="box box-primary-ufop">
             <div class="box-header with-border">
                <h3 class="box-title">{{$question->pergunta}}</h3>
@@ -24,7 +24,7 @@
                </div>
             </div>
             <div class="box-body">
-               <div class="chart">
+               <div id="chart-area{{$question->id}}" class="chart chart-area">
                   <canvas id="barChart{{$question->id}}"></canvas>
                </div>
             </div>
@@ -36,37 +36,38 @@
 
 @endsection
 
-{{-- @section('content')
-
-   @foreach ($questions as $question)
-
-      <div class="col-md-offset-2 col-md-8">
-         <div class="box box-primary-ufop">
-            <div class="box-header with-border">
-               <h3 class="box-title">{{$question->pergunta}}</h3>
-               <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
-               </div>
-            </div>
-            <div class="box-body">
-               <div class="chart">
-                  <canvas id="barChart{{$question->id}}"></canvas>
-               </div>
-            </div>
-            <!-- /.box-body -->
-         </div>
-      </div>
-
-   @endforeach
-
-@endsection --}}
-
 @section('myScripts')
 
-   <script src="{{asset('plugins/chartjs/Chart.min.js')}}"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
    <script>
+
+   function getRandomColor() {
+      var color = 'rgba(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',';
+      return color;
+   }
+
+   function showBarValues(){
+      var chartInstance = this.chart;
+      var ctx = chartInstance.ctx;
+      ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, 'bold', Chart.defaults.global.defaultFontFamily);
+      ctx.fillStyle = this.chart.config.options.defaultFontColor;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      this.data.datasets.forEach(function (dataset, i) {
+         var meta = chartInstance.controller.getDatasetMeta(i);
+         if(meta.hidden === null){
+            var total = 0;
+            meta.data.forEach(function (bar, index) {
+               total += dataset.data[index];
+            });
+            meta.data.forEach(function (bar, index) {
+               var data = (dataset.data[index] * 100 / total).toFixed(2);
+               ctx.fillText(data + "%", bar._model.x, bar._model.y + 15);
+            });
+         }
+      });
+   }
 
    $(function () {
       /* ChartJS
@@ -77,6 +78,7 @@
       //--------------
       //- AREA CHART -
       //--------------
+      var color = getRandomColor();
 
       @foreach ($questions as $question)
 
@@ -84,56 +86,52 @@
          labels: {!! $question->opcoes->pluck('opcao') !!},
          datasets: [
             {
-               fillColor: "rgba(60,141,188,0.2)",
-               strokeColor: "rgba(60,141,188,0.8)",
-               pointColor: "#3b8bba",
-               pointStrokeColor: "rgba(60,141,188,1)",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(60,141,188,1)",
-               data: {{ json_encode($questionAnswers[$question->id]) }},
-            }
+               backgroundColor: color + '0.2)',
+               borderColor: color + '1.0)',
+               hoverBackgroundColor: color + '0.3)',
+               borderWidth: 1,
+               data: {{ json_encode($answers[$question->id]) }}
+            },
          ]
       };
 
       //-------------
       //- BAR CHART -
       //-------------
-      var barChart{{$question->id}}Canvas = $("#barChart{{$question->id}}").get(0).getContext("2d");
-      var barChart{{$question->id}} = new Chart(barChart{{$question->id}}Canvas);
+      var barChart{{$question->id}}Canvas = $("#barChart{{$question->id}}");
       var barChart{{$question->id}}Data = data{{$question->id}};
-      // barChartData.datasets[1].fillColor = "#00a65a";
-      // barChartData.datasets[1].strokeColor = "#00a65a";
-      // barChartData.datasets[1].pointColor = "#00a65a";
       var barChart{{$question->id}}Options = {
-         //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-         scaleBeginAtZero: true,
-         //Boolean - Whether grid lines are shown across the chart
-         scaleShowGridLines: true,
-         //String - Colour of the grid lines
-         scaleGridLineColor: "rgba(0,0,0,.05)",
-         //Number - Width of the grid lines
-         scaleGridLineWidth: 1,
-         //Boolean - Whether to show horizontal lines (except X axis)
-         scaleShowHorizontalLines: true,
-         //Boolean - Whether to show vertical lines (except Y axis)
-         scaleShowVerticalLines: true,
-         //Boolean - If there is a stroke on each bar
-         barShowStroke: true,
-         //Number - Pixel width of the bar stroke
-         barStrokeWidth: 2,
-         //Number - Spacing between each of the X value sets
-         barValueSpacing: 5,
-         //Number - Spacing between data sets within X values
-         barDatasetSpacing: 1,
-         //String - A legend template
-         legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-         //Boolean - whether to make the chart responsive
+         scales: {
+            yAxes: [{
+               ticks: {
+                  beginAtZero: true,
+                  stepSize: 1
+               },
+               scalelabel: {
+                  display: true
+               }
+            }]
+         },
+         tooltips: {
+            enabled: true
+         },
+         hover: {
+            animationDuration: 0
+         },
+         animation: {
+            onComplete: showBarValues
+         },
+         legend: {
+            display: false
+         },
          responsive: true,
-         maintainAspectRatio: true
       };
 
-      barChart{{$question->id}}Options.datasetFill = false;
-      barChart{{$question->id}}.Bar(barChart{{$question->id}}Data, barChart{{$question->id}}Options);
+      var barChart{{$question->id}} = new Chart(barChart{{$question->id}}Canvas, {
+         type: 'bar',
+         data: barChart{{$question->id}}Data,
+         options: barChart{{$question->id}}Options
+      });
 
       @endforeach
 

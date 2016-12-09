@@ -95,12 +95,12 @@ class SurveyController extends Controller
             $question->save();
             $question->questionarios()->attach($survey->id);
             if($question->tipo_id != 1){
-               foreach ($input as $option){
-                  $option = new Opcao([
-                     'opcao' => $option,
+               foreach ($input as $choice){
+                  $choice = new Opcao([
+                     'opcao' => $choice,
                      'pergunta_id' => $question->id
                   ]);
-                  $option->save();
+                  $choice->save();
                }
             }
          }else{
@@ -194,8 +194,10 @@ class SurveyController extends Controller
             $respM = RespostaMultiplaEscolha::where('resposta_id', $response->id)->get();
             foreach ($questions as $question){
                switch ($question->tipo_id) {
+
                   case 2:
                   $choice = $resp->where('pergunta_id', $question->id)->first();
+                  // dd($resp);
                   $questionAnswers[$question->id][$choice->opcao_id]++;
                   break;
 
@@ -219,14 +221,17 @@ class SurveyController extends Controller
 
    public function postResults(Request $request){
 
-      $sections = $request->input('sections');
+      $sectionsInput = $request->input('sections');
       $survey = Questionario::find($request->input('surveyId'));
       $questions = $survey->perguntas()->where('tipo_id', '!=', '1')->get();
-      $answers = array();
-      foreach ($sections as $section) {
+      // $answers = array();
+      // $labels = array();
+      foreach ($sectionsInput as $section) {
          $answers[] = $this->getClassAnswers($survey, Turma::find($section), $questions);
+         $section = Turma::find($section);
+         $labels[] = "Turma " . $section->cod_turma . " - " . $section->disciplina->disciplina . " - " . $section->ano . "/" . $section->semestre;
       }
-      return view('survey.professor.results-compared', compact('survey', 'questions', 'answers'));
+      return view('survey.professor.results-compared', compact('survey', 'questions', 'answers', 'labels'));
    }
 
    public function classResults($surveyId, $sectionId){
@@ -236,12 +241,12 @@ class SurveyController extends Controller
       $section = Turma::find(decrypt($sectionId));
       $surveySection = DB::table('questionario_turma')->where('questionario_id', $survey->id)->where('turma_id', $section->id)->get();
 
-      $answers = array();
+      // $answers = array();
       foreach ($surveySection as $sS) {
          $responses = Resposta::where('questionario_turma_id', $sS->id)->get();
-         $questionAnswers = array();
+         // $questionAnswers = array();
          foreach ($questions as $question) {
-            $questionAnswers[$question->id] = array();
+            // $questionAnswers[$question->id] = array();
             foreach ($question->opcoes as $choice) {
                $questionAnswers[$question->id][$choice->id] = 0;
             }
@@ -270,9 +275,8 @@ class SurveyController extends Controller
          foreach ($questionAnswers as $key => $value) {
             $questionAnswers[$key] = array_values($questionAnswers[$key]);
          }
-
          $answers[] = $questionAnswers;
-
+         $labels[] = "Turma " . $section->cod_turma . " - " . $section->disciplina->disciplina . " - " . $section->ano . "/" . $section->semestre . " - Data: " . date("d/m/y", strtotime($sS->created_at));
       }
 
       // $answers = array();
@@ -319,7 +323,7 @@ class SurveyController extends Controller
 
       // dd($responses);
 
-      return view('survey.professor.class-results', compact('survey', 'section', 'questions', 'answers'));
+      return view('survey.professor.class-results', compact('survey', 'section', 'questions', 'answers', 'labels'));
 
    }
 
@@ -328,10 +332,8 @@ class SurveyController extends Controller
       $survey = Questionario::find(decrypt($surveyId));
       $questions = $survey->perguntas()->where('tipo_id', '!=', '1')->get();
       $responses = Resposta::where('questionario_id', $survey->id)->get();
-      $questionAnswers = array();
 
       foreach ($questions as $question) {
-         $questionAnswers[$question->id] = array();
          foreach ($question->opcoes as $choice) {
             $questionAnswers[$question->id][$choice->id] = 0;
          }
@@ -359,7 +361,7 @@ class SurveyController extends Controller
          }
       }
       foreach ($questionAnswers as $key => $value) {
-         $questionAnswers[$key] = array_values($questionAnswers[$key]);
+         $answers[$key] = array_values($questionAnswers[$key]);
       }
 
       // foreach ($questions as $question){
@@ -393,9 +395,7 @@ class SurveyController extends Controller
       //       break;
       //    }
       // }
-
-
-      return view('survey.professor.results', compact('survey', 'questions', 'questionAnswers'));
+      return view('survey.professor.results', compact('survey', 'questions', 'answers'));
    }
 
 

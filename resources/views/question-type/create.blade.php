@@ -1,4 +1,4 @@
-@extends('dashboard.dashboard_base')
+@extends('layout.admin.base')
 
 @section('title')
    Criar Tipo de Pergunta

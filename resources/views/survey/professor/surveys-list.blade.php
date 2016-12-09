@@ -1,7 +1,4 @@
-
 @foreach ($surveys as $survey)
-
-
 
    <form class="form-signin" method="POST" autocomplete="off" action="{{action('SurveyController@postResults')}}">
       <div class="box box-primary-ufop">

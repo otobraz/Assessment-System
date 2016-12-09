@@ -90,6 +90,9 @@
                   <a href="{{route('survey.index')}}"><span>Questionários</span></a>
                </li>
                <li>
+                  <a href="{{route('question.index')}}"><span>Perguntas</span></a>
+               </li>
+               <li>
                   <a href="{{route('questionType.index')}}"><span>Tipos de Pergunta</span></a>
                </li>
                <li>

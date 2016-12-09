@@ -151,7 +151,6 @@ class AuthController extends Controller{
          'department_id' => "2",
          'role' => '2'
       );
-
       $request->session()->put($authenticatedUser);
       return redirect()->route('home');
 

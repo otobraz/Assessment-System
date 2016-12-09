@@ -23,13 +23,5 @@
          @endforeach
       @endforeach
    </tbody>
-   <tfoot>
-      <tr>
-         <th>Nome</th>
-         <th>E-mail</th>
-         <th>Departamento</th>
-         <th>Disciplina</th>
-      </tr>
-   </tfoot>
 
 </table>

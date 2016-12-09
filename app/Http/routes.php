@@ -133,6 +133,8 @@ Route::group(['middleware' => ['auth.admin']], function () {
    Route::delete('turma/{id}', ['as' => 'section.delete', 'uses' => 'SectionController@destroy']);
    Route::get('turmas/importar', ['as' => 'section.import', 'uses' => 'SectionController@import']);
    Route::post('turmas/importar', ['as' => 'section.storeFromCsv', 'uses' => 'SectionController@storeFromCsv']);
+   Route::get('turmas/importar-ajustes', ['as' => 'section.importRegistrations', 'uses' => 'SectionController@importRegistrations']);
+   Route::post('turmas/importar-ajustes', ['as' => 'section.storeRegistrationsFromCsv', 'uses' => 'SectionController@storeRegistrationsFromCsv']);
 
    // Student
    Route::get('alunos/importar', ['as' => 'student.import', 'uses' => 'StudentController@import']);
@@ -143,6 +145,18 @@ Route::group(['middleware' => ['auth.admin']], function () {
    Route::get('professores/importar', ['as' => 'professor.import', 'uses' => 'ProfessorController@import']);
    Route::post('professores/importar', ['as' => 'professor.storeFromCsv', 'uses' => 'ProfessorController@storeFromCsv']);
    Route::delete('professor/{id}', ['as' => 'professor.delete', 'uses' => 'ProfessorController@destroy']);
+
+   //Question
+   Route::get('perguntas', ['as' => 'question.index', 'uses' => 'QuestionController@index']);
+   Route::get('pergunta/criar', ['as' => 'question.create', 'uses' => 'QuestionController@create']);
+   Route::post('pergunta/criar', ['as' => 'question.store', 'uses' => 'QuestionController@store']);
+   Route::get('pergunta/{id}/editar', ['as' => 'question.edit', 'uses' => 'QuestionController@edit']);
+   Route::put('pergunta/{id}', ['as' => 'question.update', 'uses' => 'QuestionController@update']);
+   Route::delete('pergunta/{id}', ['as' => 'question.delete', 'uses' => 'QuestionController@destroy']);
+
+   // Choice
+   Route::put('opcao/{id}', ['as' => 'choice.update', 'uses' => 'ChoiceController@update']);
+   Route::delete('opcao/{id}', ['as' => 'choice.delete', 'uses' => 'ChoiceController@destroy']);
 
    //Question Types
    Route::get('perguntas/tipos', ['as' => 'questionType.index', 'uses' => 'QuestionTypeController@index']);
@@ -160,6 +174,8 @@ Route::group(['middleware' => ['auth.admin']], function () {
    // Route::put('classes/tipo/{id}', ['as' => 'sectionType.update', 'uses' => 'SectionTypeController@update']);
    // Route::delete('classes/tipo/{id}', ['as' => 'sectionType.delete', 'uses' => 'SectionTypeController@destroy']);
 
+   // Question Ajax
+   Route::get('pergunta/ajax/novo-input/{questionType}', ['as' => 'ajax.createInput', 'uses' => 'QuestionController@ajaxCreateInput']);
 });
 
 // System home

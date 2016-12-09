@@ -9,6 +9,7 @@ use App\Models\Turma;
 use App\Models\Professor;
 use App\Models\Aluno;
 use App\Models\Disciplina;
+use DB;
 
 class SectionController extends Controller
 {
@@ -28,8 +29,10 @@ class SectionController extends Controller
 
          case '1':
          $student = Aluno::find(session()->get('id'));
-         $sections = $student->turmas()->orderBy('ano', 'desc')->get();
-         return view ('section.student.index', compact('sections'));;
+         $sectionsGroup = $student->turmas->groupBy('ano')->transform(function($item, $k) {
+            return $item->groupBy('semestre');
+         });
+         return view ('section.student.index', compact('sectionsGroup'));;
          break;
 
          case '2':
@@ -103,6 +106,71 @@ class SectionController extends Controller
    {
       Turma::find(decrypt($id))->delete();
       return redirect()->route('questionType.index')->with('successMessage', 'Registro deletado com sucesso.');
+   }
+
+   public function importRegistrations(){
+      return view('section.admin.import-registrations');
+   }
+
+   public function storeRegistrationsFromCsv(Request $request){
+
+      if($request->file('registrations-csv')->isValid()){
+
+         $registrationsCsv = (array_map('str_getcsv', file($request->file('registrations-csv'))));
+
+         $header = [
+            "MATRICULA",
+            "NOME",
+            "ANO",
+            "SEMESTRE",
+            "COD CURSO",
+            "CURSO",
+            "COD DISCIPLINA",
+            "DISCIPLINA",
+            "COD TURMA",
+            "CARATER",
+            "DATA DE GRAVACAO"
+         ];
+
+         if($header == array_shift($registrationsCsv)){
+            $alunos = Aluno::all()->lists('id', 'matricula');
+            foreach ($registrationsCsv as $registrationCsv){
+
+               $registration = [
+                  'matricula' => $registrationCsv[0],
+                  'ano' => $registrationCsv[2],
+                  'semestre' => $registrationCsv[3],
+                  'cod_disciplina' => $registrationCsv[6],
+                  'cod_turma' => $registrationCsv[8]
+               ];
+
+               $course = Disciplina::where('cod_disciplina', $registration['cod_disciplina'])->first();
+
+               if($alunos->has($registration['matricula']) && isset($course->id)){
+
+                  $section = Turma::where('ano', $registration['ano'])
+                  ->where('semestre', $registration['semestre'])
+                  ->where('cod_turma', $registration['cod_turma'])
+                  ->where('disciplina_id', $course->id)->first();
+
+                  if(isset($section)){
+                     $sectionStudent = DB::table('aluno_turma')
+                     ->where('aluno_id', $alunos[$registration['matricula']])
+                     ->where('turma_id', $section->id)->first();
+                     if(!isset($sectionStudent)){
+                        $section->alunos()->attach($alunos->get($registration['matricula']));
+                     }
+
+                  }
+               }
+            }
+            return redirect()->route('section.index')->with('successMessage', 'Importação realizada com sucesso');
+         }else{
+            return redirect()->back()->with('errorMessage', 'Arquivo inválido');
+         }
+      }else{
+         return redirect()->back()->with('errorMessage', 'Erro ao importar CSV');
+      }
    }
 
    public function import(){

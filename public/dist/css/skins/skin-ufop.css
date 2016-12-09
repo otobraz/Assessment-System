@@ -137,3 +137,9 @@
 .box-primary-ufop {
    border-top-color: #962038;
 }
+
+.box-solid-ufop > .box-header{
+	color: #fff;
+	background: #962038;
+	background-color: #962038;
+}

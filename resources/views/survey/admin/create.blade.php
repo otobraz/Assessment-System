@@ -84,10 +84,10 @@
 
 @section('myScripts')
 
-   <script src="{{URL::asset('/js/createQuestion.js')}}"></script>
+   <script src="{{asset('/js/surveyCreateQuestion.js')}}"></script>
 
-   <script src="{{URL::asset('/js/selectQuestion.js')}}"></script>
+   <script src="{{asset('/js/selectQuestion.js')}}"></script>
 
-   <script src="{{URL::asset('/js/addInput.js')}}"></script>
+   <script src="{{:asset('/js/addInput.js')}}"></script>
 
 @endsection

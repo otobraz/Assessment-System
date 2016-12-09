@@ -1,17 +1,17 @@
-@extends('layout.student.base')
+@extends('layout.admin.base')
 
 @section('title')
-   Gerenciar | Turmas
+   Gerenciar | Perguntas
 @endsection
 
 {{-- @section('content-header')
-   <h1>Minhas Turmas</h1>
-   <hr class="hr-ufop">
+<h1>Tipos de Pergunta</h1>
+<hr class="hr-ufop">
 @endsection --}}
 
 @section('content')
 
-   @include('section.student.sections-list')
+   @include('question.admin.question-list')
 
 @endsection
 

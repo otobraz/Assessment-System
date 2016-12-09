@@ -60,19 +60,19 @@ class DatabaseSeeder extends Seeder
       // }
 
       // Professors
-      $professors = Professor::all();
-      foreach ($professors as $professor) {
-         // DB::table('professores')->insert([
-         //    'usuario' => $faker->userName,
-         //    'siape' => $faker->randomNumber(9),
-         //    'nome' => $faker->firstName,
-         //    'sobrenome' => $faker->lastName,
-         //    'email' => $faker->email,
-         //    'departamento_id' => $faker->numberBetween(1,4)
-         // ]);
-         $professor->areas_interesse = $faker->word . ", " . $faker->word . ", " . $faker->word;
-         $professor->save();
-      }
+      // $professors = Professor::all();
+      // foreach ($professors as $professor) {
+      // DB::table('professores')->insert([
+      //    'usuario' => $faker->userName,
+      //    'siape' => $faker->randomNumber(9),
+      //    'nome' => $faker->firstName,
+      //    'sobrenome' => $faker->lastName,
+      //    'email' => $faker->email,
+      //    'departamento_id' => $faker->numberBetween(1,4)
+      // ]);
+      //    $professor->areas_interesse = $faker->word . ", " . $faker->word . ", " . $faker->word;
+      //    $professor->save();
+      // }
 
       // Disciplinas
       // foreach(range(1,50) as $index){
@@ -112,12 +112,14 @@ class DatabaseSeeder extends Seeder
       // Questionarios
       // $turmas = Turma::all();
       // foreach($turmas as $turma){
-      //    foreach ($turma->professores as $professor) {
-      //       $questionario = Questionario::create([
-      //          'titulo' => $faker->sentence(3, true),
-      //          'descricao' => $faker->paragraph(10, true),
-      //          'professor_id' => $professor->id
-      //       ]);
+      // $professors = Professor::all();
+      // foreach ($professors as $professor) {
+      //    $questionario = Questionario::create([
+      //       'titulo' => 'Pesquisa de Desenvolvimento de Disciplinas da Graduação da UFOP',
+      //       'descricao' => 'A Pesquisa de Desenvolvimento de Disciplinas da Graduação da UFOP é um sistema de avaliação e acompanhamento semestral das disciplinas.',
+      //       'professor_id' => $professor->id
+      //    ]);
+      //    foreach ($professor->turmas as $turma) {
       //       $questionario->turmas()->attach($turma->id);
       //    }
       // }
@@ -198,21 +200,20 @@ class DatabaseSeeder extends Seeder
       //    }
       // }
 
-      // $respostas = Resposta::all();
-      // foreach ($respostas as $resposta){
-      //    $qSId = DB::table('questionario_turma')->where('questionario_id', $resposta->questionario_id)->where('turma_id', $resposta->turma_id)->first();
-      //    $resposta->questionario_turma_id = $qSId->id;
-      //    $resposta->save();
-      //  }
-      // dd($respostas);
+      $respostas = Resposta::where('questionario_turma_id', 0)->get();
+      foreach ($respostas as $resposta){
+         $qSId = DB::table('questionario_turma')->where('questionario_id', $resposta->questionario_id)->where('turma_id', $resposta->turma_id)->first();
+         $resposta->questionario_turma_id = $qSId->id;
+         $resposta->save();
+       }
 
-      //Pergunta_Questionario
-      // $surveys = Questionario::all()->pluck('id')->all();
+      // Pergunta_Questionario
+      // $surveys = Questionario::where('id', '>', '305')->pluck('id')->all();
       // foreach($surveys as $survey){
-      //    $questions = Pergunta::inRandomOrder()->pluck('id')->all();
-      //    foreach(range(0,9) as $index){
+      //    $questions = Pergunta::where('updated_at', '>', '2016-12-07')->get();
+      //    foreach($questions as $question){
       //       DB::table('pergunta_questionario')->insert([
-      //          'pergunta_id' => $questions[$index],
+      //          'pergunta_id' => $question->id,
       //          'questionario_id' => $survey
       //       ]);
       //    }
@@ -275,6 +276,54 @@ class DatabaseSeeder extends Seeder
       //                }
       //                break;
       //             }
+      //          }
+      //       }
+      //    }
+      // }
+
+      // Respostas
+      // $surveys = Questionario::where('id', '>', '305')->get();
+      // foreach($surveys as $survey){
+      //    foreach ($survey->turmas as $section) {
+      //       foreach ($section->alunos as $student){
+      //          $response = Resposta::create([
+      //             'questionario_id' => $survey->id,
+      //             'aluno_id' => $student->id,
+      //             'turma_id' => $section->id
+      //          ]);
+      //          foreach ($survey->perguntas as $question) {
+      //             // switch ($question->tipo->id) {
+      //             //    case 1: # it's a text input
+      //             //    DB::table('respostas_abertas')->insert([
+      //             //       'resposta' => $faker->sentence(10, true),
+      //             //       'resposta_id' =>  $response->id,
+      //             //       'pergunta_id' => $question->id
+      //             //    ]);
+      //             //    break;
+      //             //
+      //             //    case 2: # it's a radio input
+      //             $choices = $question->opcoes()->pluck('id')->all();
+      //             DB::table('respostas_unica_escolha')->insert([
+      //                'opcao_id' => $faker->randomElement($choices),
+      //                'resposta_id' =>  $response->id,
+      //                'pergunta_id' => $question->id
+      //             ]);
+      //             // break;
+      //
+      //             // case 3: # it's a checkbox input
+      //             // $choices = $question->opcoes()->inRandomOrder()->pluck('id')->all();
+      //             // $multipleChoiceResponse = RespostaMultiplaEscolha::create([
+      //             //    'resposta_id' =>  $response->id,
+      //             //    'pergunta_id' => $question->id
+      //             // ]);
+      //             // $n = rand(0,4);
+      //             // for ($i=0; $i < $n; $i++) {
+      //             //    $multipleChoiceResponse->opcoes()->attach(array_shift($choices));
+      //             // }
+      //             // if($n == 0){
+      //             //    $multipleChoiceResponse->opcoes()->attach($faker->randomElement($choices));
+      //             // }
+      //             // break;
       //          }
       //       }
       //    }

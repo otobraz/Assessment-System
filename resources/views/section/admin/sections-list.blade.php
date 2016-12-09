@@ -1,4 +1,4 @@
-<table class="table table-ufop table-responsive">
+<table id="index-table" class="table table-ufop table-striped table-responsive">
 
    <thead>
       <tr>
@@ -8,7 +8,7 @@
          <th>Departamento</th>
          <th>Ano</th>
          <th>Semestre</th>
-         <th></th>
+         <th>Excluir</th>
       </tr>
    </thead>
 
