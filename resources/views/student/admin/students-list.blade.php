@@ -1,4 +1,4 @@
-<table class="table table-responsive">
+<table id="index-table" class="table table-hover table-col-condensed table-ufop table-responsive">
 
    <thead>
       <tr>
@@ -9,7 +9,7 @@
          <th>CPF</th>
          <th>E-mail</th>
          <th>Curso</th>
-         <th></th>
+         <th>Ações</th>
       </tr>
    </thead>
 
@@ -24,7 +24,7 @@
             <td>{{$student->email}}</td>
             <td>{{$student->curso->curso}}</td>
             <td>
-               <a data-toggle="modal" href="#deleteModal" data-action="aluno/{{encrypt($student->id)}}"><i class="fa fa-lg fa-trash-o"></i></a>
+               <a type="button" class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal" data-action="aluno/{{encrypt($student->id)}}">Excluir</a>
             </td>
          </tr>
 

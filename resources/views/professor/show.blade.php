@@ -36,7 +36,7 @@
                </tbody>
 
             </table>
-            <a class="btn btn-primary btn-block" target="_blank" style="color: white" type="button" data-toggle="modal" href="{{action('ProfessorController@edit')}}"> Editar Cadastro
+            <a class="btn btn-primary-ufop btn-block" target="_blank" style="color: white" type="button" data-toggle="modal" href="{{action('ProfessorController@edit')}}"> Editar Cadastro
             </a>
 
          </div>

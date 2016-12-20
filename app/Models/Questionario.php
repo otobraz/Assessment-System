@@ -10,10 +10,10 @@ class Questionario extends Model
    protected $table = 'questionarios';
 
    /**
-    * The attributes that are mass assignable.
-    *
-    * @var array
-    */
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
    protected $fillable = [
       'titulo',
       'descricao',
@@ -21,10 +21,10 @@ class Questionario extends Model
    ];
 
    /**
-    * The attributes excluded from the model's JSON form.
-    *
-    * @var array
-    */
+   * The attributes excluded from the model's JSON form.
+   *
+   * @var array
+   */
    protected $hidden = [
 
    ];
@@ -44,4 +44,12 @@ class Questionario extends Model
    public function professor(){
       return $this->belongsTo('App\Models\Professor');
    }
+
+   // public function turmasOrderedByDisciplina()
+   // {
+   //    return $this->turmas()->join('disciplinas', 'turmas.disciplina_id', '=', 'disciplinas.id')
+   //    ->orderBy("disciplinas.disciplina", "asc")
+   //    ->get();
+   // }
+
 }

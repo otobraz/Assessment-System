@@ -1,7 +1,7 @@
 @extends('layout.student.base')
 
 @section('title')
-   Gerenciar | Turmas
+   Minhas turmas
 @endsection
 
 {{-- @section('content-header')

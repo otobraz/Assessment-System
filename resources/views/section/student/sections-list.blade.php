@@ -10,7 +10,7 @@
             </div><!-- /.box-tools -->
          </div><!-- /.box-header -->
          <div class="box-body">
-            <table class="table table-ufop table-striped table-responsive">
+            <table class="table table-ufop table-col-condensed table-striped table-responsive">
 
                <thead>
                   <tr>
@@ -34,7 +34,7 @@
                         <td>{{$section->disciplina->departamento->cod_departamento}}</td>
                         <td>{{$section->ano}}</td>
                         <td>{{$section->semestre}}</td>
-                        <td><a class="btn btn-primary btn-xs" role="button"
+                        <td><a class="btn btn-primary-ufop btn-xs" role="button"
                            style="color: white" href="{{route('section.show', encrypt($section->id))}}">Detalhes</a>
                         </td>
                      </tr>

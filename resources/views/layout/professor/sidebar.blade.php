@@ -31,12 +31,16 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
          <li class="header">MENU</li>
-         <!-- Optionally, you can add icons to the links -->
+
          <li>
-            <a href="{{action('SurveyController@index')}}"><i class="fa fa-comments-o"></i> <span>Meus Questionários</span></a>
+            <a href="{{action('SurveyController@index')}}"><i class="fa fa-comments"></i> <span>Meus Questionários</span></a>
          </li>
+
          <li>
             <a href="{{action('SectionController@index')}}"><i class="fa fa-book"></i> <span>Minhas Turmas</span></a>
+         </li>
+         <li>
+            <a href="{{action('GuidanceController@index')}}"><i class="fa fa-cubes"></i> <span>Minhas Orientações</span></a>
          </li>
          <li>
             <a href="{{action('StudentController@index')}}"><i class="fa fa-graduation-cap"></i> <span>Alunos</span></a>

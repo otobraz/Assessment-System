@@ -1,5 +1,9 @@
 @extends('layout.professor.base')
 
+@section('title')
+   Questionário | Detalhes
+@endsection
+
 @section('content-header')
    <h1>{{$survey->titulo}}</h1>
    <br/>
@@ -61,7 +65,7 @@
          <div class="pull-left">
             <button class="btn btn-default" type="button"
             onclick="history.go(-1)"> Voltar</button>
-            <a class="btn btn-primary" role="button" style="color: white" href="{{action('SurveyController@edit', encrypt($survey->id))}}"><i class="fa fa-lg fa-edit"></i> Editar</a>
+            <a class="btn btn-primary-ufop" role="button" style="color: white" href="{{action('SurveyController@edit', encrypt($survey->id))}}"><i class="fa fa-lg fa-edit"></i> Editar</a>
 
          </div>
 

@@ -1,4 +1,4 @@
-@extends('layout.professor.base')
+{{-- @extends('layout.professor.base')
 
 @section('content-header')
    <h1>Respostas</h1>
@@ -9,8 +9,8 @@
 
    <div class="panel panel-default">
       <div class="panel-heading contains-buttons">
-         <a class="btn btn-primary pull-right" role="button"
-         style="color: white" href="{{route('survey.results', encrypt($survey->id))}}">Resultado Geral</a>
+         <a class="btn btn-primary-ufop pull-right" role="button"
+         style="color: white" href="{{route('survey.results', encrypt($survey->id))}}"><i class="fa fa-bar-chart"></i> Resultado Geral</a>
          <p class="panel-title contains-buttons pull-left">TURMAS</p>
          <span class="clearfix"></span>
       </div>
@@ -44,7 +44,7 @@
                      <td>{{$section->semestre}}</td>
                      <td>{{date("d/m/y - H:i:s", strtotime($section->pivot->created_at))}}</td>
                      <td>
-                        <a href="{{route('survey.classResults', [encrypt($survey->id), encrypt($section->id)])}}"><i class="fa fa-lg fa-eye"></i></a>
+                        <a href="{{route('survey.classResults', [encrypt($survey->id), encrypt($section->id)])}}"><i class="fa fa-bar-chart"></i> Resultado</a>
                      </td>
                   </tr>
                @endforeach
@@ -55,4 +55,4 @@
       </div>
    </div>
 
-@endsection
+@endsection --}}

@@ -1,4 +1,4 @@
-<table class="table table-ufop table-responsive">
+<table id="table-index" class="table table-col-condensed table-hover table-striped table-ufop table-responsive">
 
    <thead>
       <tr>
@@ -7,8 +7,7 @@
          <th>Nome</th>
          <th>Sobrenome</th>
          <th>E-mail</th>
-         <th></th>
-         <th></th>
+         <th>Ações</th>
       </tr>
    </thead>
 
@@ -21,10 +20,8 @@
             <td>{{$admin->sobrenome}}</td>
             <td>{{$admin->email}}</td>
             <td>
-               <a href="{{route('admin.edit', encrypt($admin->id))}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
-            </td>
-            <td>
-               <a data-toggle="modal" href="#deleteModal" data-action="admin/{{encrypt($admin->id)}}"><i class="fa fa-lg fa-trash-o"></i></a>
+               <a type="button" class="btn btn-success btn-xs" href="{{route('admin.edit', encrypt($admin->id))}}"> <i class="fa fa-edit"></i> Editar</a>
+               <a type="button" class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal" data-action="admin/{{encrypt($admin->id)}}"><i class="fa fa-trash-o"></i> Excluir</a>
             </td>
          </tr>
       @endforeach

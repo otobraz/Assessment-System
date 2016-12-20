@@ -30,4 +30,8 @@ class RespostaUnicaEscolha extends Model
    public function pergunta(){
       return $this->belongsTo('App\Models\Pergunta');
    }
+
+   public function opcao(){
+      return $this->belongsTo('App\Models\Opcao');
+   }
 }

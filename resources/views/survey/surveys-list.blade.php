@@ -21,8 +21,8 @@
                <td>{{$section->ano . "/" . $section->semestre}}</td>
                <td>{{$survey->professor->nome . " " . $survey->professor->sobrenome}}</td>
                <td>
-                  <a class="btn btn-primary" role="button"
-                  style="color: white" href="{{action('ResponseController@create', encrypt($survey->id))}}">Responder</a>
+                  <a class="btn btn-primary-ufop" role="button"
+                  style="color: white" href="{{action('ResponseController@create', [encrypt($survey->id), encrypt($section->id)])}}">Responder</a>
                </td>
             </tr>
          @endforeach

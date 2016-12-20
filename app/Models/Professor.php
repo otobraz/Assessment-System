@@ -52,4 +52,8 @@ class Professor extends Model
       return $this->hasMany('App\Models\Questionario');
    }
 
+   public function orientacoes(){
+      return $this->hasMany('App\Models\Orientacao');
+   }
+
 }

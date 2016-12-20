@@ -14,7 +14,7 @@
    <div class="container">
       <div class="panel panel-default">
          <div class="panel-heading contains-buttons">
-            <a class="btn btn-primary pull-right" role="button"
+            <a class="btn btn-primary-ufop pull-right" role="button"
             style="color: white" href="{{route('sectionType.create')}}">Novo tipo de classe</a>
             <p class="panel-title contains-buttons pull-left">TIPOS DE CLASSES</p>
             <span class="clearfix"></span>

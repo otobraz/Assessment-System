@@ -1,4 +1,4 @@
-<table id="index-table" class="table table-striped table-bordered table-responsive">
+<table id="index-table" class="table table-striped table-col-condensed table-bordered table-responsive">
 
    <thead>
       <tr>
@@ -18,7 +18,7 @@
             <td>{{$student->email}}</td>
             <td>
                   {{$student->curso->curso}}
-                  <a class="pull-right btn btn-primary btn-sm" role="button" style="color: white" href="#">Orientar</a>
+                  <a class="pull-right btn btn-primary-ufop btn-xs" role="button" style="color: white" href="{{route('guidance.create', encrypt($student->id))}}">Orientar</a>
             </td>
          </tr>
 

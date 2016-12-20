@@ -58,7 +58,7 @@
                         </div>
                      </div>
 
-                     <button class="btn btn-primary" type="submit"><i class="fa fa-check-square-o"></i> Criar</button>
+                     <button class="btn btn-primary-ufop" type="submit"><i class="fa fa-check-square-o"></i> Criar</button>
 
                   </fieldset>
                </form>
@@ -70,9 +70,9 @@
       <div class="col-md-2">
          <div class="panel panel-default fixed">
             <div class="panel-body">
-               <button type="button" class="btn btn-block btn-primary" name="btn-blank-question">Nova Questão</button>
+               <button type="button" class="btn btn-block btn-primary-ufop" name="btn-blank-question">Nova Questão</button>
                <hr class="hr-ufop">
-               <button type="button" class="btn btn-block btn-primary" name="btn-select-question">Selecionar Questão</button>
+               <button type="button" class="btn btn-block btn-primary-ufop" name="btn-select-question">Selecionar Questão</button>
             </div>
 
          </div>

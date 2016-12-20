@@ -62,7 +62,7 @@
                   @endif
 
                   <button class="btn btn-default"  type="reset"><i class="glyphicon glyphicon-erase"></i> Limpar</button>
-                  <button class="btn btn-primary" type="submit"><i class="fa fa-check-square-o"></i> Criar</button>
+                  <button class="btn btn-primary-ufop" type="submit"><i class="fa fa-check-square-o"></i> Criar</button>
                </fieldset>
             </form>
          </div>

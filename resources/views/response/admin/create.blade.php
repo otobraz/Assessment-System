@@ -61,7 +61,7 @@
                   <div class="pull-left">
                      <button class="btn btn-default" type="button"
                      onclick="history.go(-1)"> Cancelar</button>
-                     <button class="btn btn-primary" type="submit"><i class="fa fa-pencil-square-o"></i> Responder</button>
+                     <button class="btn btn-primary-ufop" type="submit"><i class="fa fa-pencil-square-o"></i> Responder</button>
                   </div>
 
                </fieldset>

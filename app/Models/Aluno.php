@@ -40,4 +40,8 @@ class Aluno extends Model
       return $this->belongsToMany('App\Models\Turma');
    }
 
+   public function orientacoes(){
+      return $this->hasMany('App\Models\Orientacao');
+   }
+
 }

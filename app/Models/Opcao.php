@@ -35,4 +35,5 @@ class Opcao extends Model
    public function RespostasMultiplaEscolha(){
       return $this->belongsToMany('App\Models\RespotasMultiplaEscolha', 'opcao_resposta_multipla_escolha', 'opcao_id', 'resposta_me_id');
    }
+
 }

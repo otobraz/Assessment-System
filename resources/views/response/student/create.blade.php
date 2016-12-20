@@ -1,5 +1,9 @@
 @extends('layout.student.base')
 
+@section('title')
+   Responder Questionário
+@endsection
+
 @section('content-header')
    <h1>{{$survey->titulo}}</h1>
    <br/>
@@ -15,7 +19,7 @@
 
             {{ csrf_field() }}
 
-            <input type="hidden" name="survey_id" value="{{encrypt($survey->id)}}">
+            <input type="hidden" name="survey-section-id" value="{{$surveySectionId}}">
 
             <fieldset>
 
@@ -60,7 +64,7 @@
                <div class="pull-left">
                   <button class="btn btn-default" type="button"
                   onclick="history.go(-1)"> Cancelar</button>
-                  <button class="btn btn-primary" type="submit"><i class="fa fa-pencil-square-o"></i> Responder</button>
+                  <button class="btn btn-primary-ufop" type="submit"><i class="fa fa-pencil-square-o"></i> Responder</button>
                </div>
 
             </fieldset>

@@ -63,16 +63,16 @@
                         >
                      </div>
 
-                     <button class="btn btn-warning pull-left"  type="button" data-toggle="modal" data-action="http://localhost:8000/admin/{{encrypt($admin->id)}}" href="#deleteModal"> Excluir</button>
+                     <button class="btn btn-danger pull-left"  type="button" data-toggle="modal" data-action="http://localhost:8000/admin/{{encrypt($admin->id)}}" href="#deleteModal"> Excluir</button>
                      <div class="pull-right">
                         <button class="btn btn-default" type="button" onclick="history.go(-1)"> Cancelar</button>
-                        <button class="btn btn-primary" type="submit"><i class="fa fa-pencil-square-o"></i> Salvar</button>
+                        <button class="btn btn-primary-ufop" type="submit"><i class="fa fa-pencil-square-o"></i> Salvar</button>
                      </div>
                   </fieldset>
                </form>
             </div>
             <div class="panel-footer">
-               <a class="btn btn-primary btn-block" style="color: white" type="button" data-toggle="modal" href="{{action('AdminController@editPassword', encrypt($admin->id))}}"> Mudar Senha
+               <a class="btn btn-primary-ufop btn-block" style="color: white" type="button" data-toggle="modal" href="{{action('AdminController@editPassword', encrypt($admin->id))}}"> Mudar Senha
                </a>
             </div>
          </div>

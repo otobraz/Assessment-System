@@ -65,7 +65,11 @@
             });
             meta.data.forEach(function (bar, index) {
                var data = (dataset.data[index] * 100 / total).toFixed(2);
-               ctx.fillText(data + "%", bar._model.x, bar._model.y + 15);
+               if(isNaN(data)){
+                     ctx.fillText("0.00%", bar._model.x, bar._model.y);
+               }else{
+                  ctx.fillText(data + "%", bar._model.x, bar._model.y + 15);
+               }
             });
          }
       });

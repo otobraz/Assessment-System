@@ -22,31 +22,6 @@
 |
 */
 
-// Routes that can be accessed iff the user is authenticated
-Route::group(['middleware' => ['auth.user']], function () {
-
-   // Home page
-   Route::get('home', ['as' => 'home', 'uses' => 'HomeController@getUsersHome']);
-
-   // Logout
-   Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
-
-   // Sections
-   Route::get('turmas', ['as' => 'section.index', 'uses' => 'SectionController@index']);
-   Route::get('turma/{id}', ['as' => 'section.show', 'uses' => 'SectionController@show']);
-
-   // Survey Routes
-   Route::get('questionarios', ['as' => 'survey.index', 'uses' => 'SurveyController@index']);
-
-   // Students
-   Route::get('alunos', ['as' => 'student.index', 'uses' => 'StudentController@index']);
-
-   // Professors
-   Route::get('professores', ['as' => 'professor.index', 'uses' => 'ProfessorController@index']);
-
-});
-
-
 // Routes that can be accessed iff the user is a student
 Route::group(['middleware' => ['auth.student']], function () {
 
@@ -55,8 +30,9 @@ Route::group(['middleware' => ['auth.student']], function () {
    Route::get('aluno/{id}', ['as' => 'student.show', 'uses' => 'StudentController@show']);
 
    // Response Routes
-   Route::get('resposta/{id}/criar', ['as' => 'response.create', 'uses' => 'ResponseController@create']);
+   Route::get('resposta/{surveySectionId}/criar', ['as' => 'response.create', 'uses' => 'ResponseController@create']);
    Route::post('resposta/criar', ['as' => 'response.store', 'uses' => 'ResponseController@store']);
+   Route::get('resposta/{id}', ['as' => 'response.show', 'uses' => 'ResponseController@show']);
 
 });
 
@@ -65,18 +41,27 @@ Route::group(['middleware' => ['auth.professor']], function () {
 
    // Professor's route
    Route::get('professor/editar', ['as' => 'professor.edit', 'uses' => 'ProfessorController@edit']);
-   Route::get('professor/{id}', ['as' => 'professor.show', 'uses' => 'ProfessorController@show']);
+
+   // Guidance routes
+   Route::get('orientacao/{studentId}/criar', ['as' => 'guidance.create', 'uses' => 'GuidanceController@create']);
+   Route::post('orientacao/criar', ['as' => 'guidance.store', 'uses' => 'GuidanceController@store']);
+   Route::get('orientacao/{id}/editar', ['as' => 'guidance.edit', 'uses' => 'GuidanceController@edit']);
+   Route::put('orientacao/{id}', ['as' => 'guidance.update', 'uses' => 'GuidanceController@update']);
+   Route::get('orientacao/{id}/finalizar', ['as' => 'guidance.finish', 'uses' => 'GuidanceController@finish']);
+   Route::get('orientacao/{id}/recomecar', ['as' => 'guidance.restart', 'uses' => 'GuidanceController@restart']);
+   Route::get('orientacao/{id}/disponibilizar-questionario/', ['as' => 'guidance.provideSurvey', 'uses' => 'GuidanceController@provideSurvey']);
+   Route::get('orientacao/{id}/cancelar-questionario/', ['as' => 'guidance.cancelSurvey', 'uses' => 'GuidanceController@cancelSurvey']);
 
    // Survey routes
    Route::get('questionario/criar', ['as' => 'survey.create', 'uses' => 'SurveyController@create']);
    Route::post('questionario/criar', ['as' => 'survey.store', 'uses' => 'SurveyController@store']);
    Route::get('questionario/{id}/editar', ['as' => 'survey.edit', 'uses' => 'SurveyController@edit']);
    Route::put('questionario/{id}', ['as' => 'survey.update', 'uses' => 'SurveyController@update']);
-   Route::get('questionario/{id}', ['as' => 'survey.show', 'uses' => 'SurveyController@show']);
+   Route::get('questionario/{id}/fechar', ['as' => 'survey.close', 'uses' => 'SurveyController@close']);
+   Route::get('questionario/{id}/abrir', ['as' => 'survey.open', 'uses' => 'SurveyController@open']);
+   Route::get('questionario/{id}/disponibilizar', ['as' => 'survey.provide', 'uses' => 'SurveyController@provide']);
+   Route::post('questionario/disponibilizar', ['as' => 'survey.attach', 'uses' => 'SurveyController@attach']);
    Route::get('questionario/turmas/{id}', ['as' => 'survey.showSections', 'uses' => 'SurveyController@showSections']);
-   Route::get('questionario/resultados/{surveyId}', ['as' => 'survey.results', 'uses' => 'SurveyController@getResults']);
-   Route::get('questionario/resultado/turma/{surveyId}/{sectionId}', ['as' => 'survey.classResults', 'uses' => 'SurveyController@classResults']);
-   Route::post('questionario/resultados-comparados', ['as' => 'survey.postResults', 'uses' => 'SurveyController@postResults']);
 
    // Ajax
    Route::get('questionario/ajax/escolher-questao/{count}', ['as' => 'ajax.selectQuestion', 'uses' => 'SurveyController@ajaxSelectQuestion']);
@@ -166,6 +151,14 @@ Route::group(['middleware' => ['auth.admin']], function () {
    Route::put('perguntas/tipo/{id}', ['as' => 'questionType.update', 'uses' => 'QuestionTypeController@update']);
    Route::delete('perguntas/tipo/{id}', ['as' => 'questionType.delete', 'uses' => 'QuestionTypeController@destroy']);
 
+   //Guidance Types
+   Route::get('orientacoes/tipos', ['as' => 'guidanceType.index', 'uses' => 'GuidanceTypeController@index']);
+   Route::get('orientacoes/tipo/criar', ['as' => 'guidanceType.create', 'uses' => 'GuidanceTypeController@create']);
+   Route::post('orientacoes/tipo/criar', ['as' => 'guidanceType.store', 'uses' => 'GuidanceTypeController@store']);
+   Route::get('orientacoes/tipo/{id}/editar', ['as' => 'guidanceType.edit', 'uses' => 'GuidanceTypeController@edit']);
+   Route::put('orientacoes/tipo/{id}', ['as' => 'guidanceType.update', 'uses' => 'GuidanceTypeController@update']);
+   Route::delete('orientacoes/tipo/{id}', ['as' => 'guidanceType.delete', 'uses' => 'GuidanceTypeController@destroy']);
+
    //Section Types
    // Route::get('classes/tipos', ['as' => 'sectionType.index', 'uses' => 'SectionTypeController@index']);
    // Route::get('classes/tipo/criar', ['as' => 'sectionType.create', 'uses' => 'SectionTypeController@create']);
@@ -176,6 +169,42 @@ Route::group(['middleware' => ['auth.admin']], function () {
 
    // Question Ajax
    Route::get('pergunta/ajax/novo-input/{questionType}', ['as' => 'ajax.createInput', 'uses' => 'QuestionController@ajaxCreateInput']);
+});
+
+// Routes that can be accessed iff the user is authenticated
+Route::group(['middleware' => ['auth.user']], function () {
+
+   // Home page
+   Route::get('home', ['as' => 'home', 'uses' => 'HomeController@getUsersHome']);
+
+   // Logout
+   Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
+
+   // Sections
+   Route::get('turmas', ['as' => 'section.index', 'uses' => 'SectionController@index']);
+   Route::get('turma/{id}', ['as' => 'section.show', 'uses' => 'SectionController@show']);
+
+   // Survey Routes
+   Route::get('questionarios', ['as' => 'survey.index', 'uses' => 'SurveyController@index']);
+   Route::get('questionario/{id}', ['as' => 'survey.show', 'uses' => 'SurveyController@show']);
+   Route::get('questionario/resultados/{surveyId}', ['as' => 'survey.results', 'uses' => 'SurveyController@getResults']);
+   Route::get('questionario/resultado/turma/{surveySectionId}', ['as' => 'survey.classResults', 'uses' => 'SurveyController@classResults']);
+   Route::post('questionario/resultados-comparados', ['as' => 'survey.postResults', 'uses' => 'SurveyController@postResults']);
+
+   // Students
+   Route::get('alunos', ['as' => 'student.index', 'uses' => 'StudentController@index']);
+
+   // Professors
+   Route::get('professores', ['as' => 'professor.index', 'uses' => 'ProfessorController@index']);
+   Route::get('professor/{id}', ['as' => 'professor.show', 'uses' => 'ProfessorController@show']);
+   Route::get('professor/{id}/questionarios', ['as' => 'professor.showSurveys', 'uses' => 'ProfessorController@showSurveys']);
+
+   // Guidances
+   Route::get('orientacoes', ['as' => 'guidance.index', 'uses' => 'GuidanceController@index']);
+   Route::get('orientacao/{id}', ['as' => 'guidance.show', 'uses' => 'GuidanceController@show']);
+   Route::get('orientacao/questionario/resposta/{guidanceId}', ['as' => 'guidance.response', 'uses' => 'GuidanceController@showResponse']);
+   Route::get('orientacao/resultados/', ['as' => 'guidance.results', 'uses' => 'GuidanceController@getResults']);
+
 });
 
 // System home

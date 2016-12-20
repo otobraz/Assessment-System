@@ -4,27 +4,23 @@
    Gerenciar | Administradores
 @endsection
 
-@section('content-header')
-   <h1>
-      Gerenciar Administradores
-   </h1>
-   <hr>
-@endsection
-
 @section('content')
 
-   <div class="panel panel-default">
-      <div class="panel-heading contains-buttons">
-         <a class="btn btn-primary pull-right" role="button"
-         style="color: white" href="{{route('admin.create')}}">Novo Administrador</a>
-         <p class="panel-title contains-buttons pull-left">Administradores</p>
-         <span class="clearfix"></span>
+   <div class="box box-primary-ufop">
+      <div class="box-header with-border">
+         <h3 class="box-title">ADMINISTRADORES</h3>
+         <div class="box-tools pull-right">
+            <a class="btn btn-primary-ufop btn-sm" role="button"
+            style="color: white" href="{{route('admin.create')}}"><i class="fa fa-user-plus" aria-hidden="true"></i> Admin</a>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+         </div>
       </div>
-      <div class="panel-body">
+      <div class="box-body">
          @include('alert-message.success')
          @include('alert-message.error')
          @include('admin.admins-list')
-      </div>
+      </div><!-- /.box-body -->
    </div>
 
 @endsection

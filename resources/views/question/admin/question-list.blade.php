@@ -10,7 +10,7 @@
       <span> Aberta </span>
    </div> --}}
    <div class="box-tools pull-right">
-      <a class="btn btn-primary btn-sm" role="button"
+      <a class="btn btn-primary-ufop btn-sm" role="button"
       href="{{route('question.create')}}">Criar questão</a>
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
    </div><!-- /.box-tools -->
@@ -37,7 +37,7 @@
 
                <div class="box-body">
                   <div class="pull-right">
-                     <a class="btn btn-primary btn-xs" role="button"
+                     <a class="btn btn-primary-ufop btn-xs" role="button"
                      style="color: white" href="{{action('QuestionController@edit', encrypt($question->id))}}"><i class="fa fa-edit"></i> Editar</a>
                      <a class="btn btn-danger btn-xs" role="button"
                      style="color: white" data-toggle="modal" href="#deleteModal" data-action="pergunta/{{encrypt($question->id)}}"><i class="fa fa-trash-o"></i> Excluir</a>
@@ -79,7 +79,7 @@
                <div class="box-body">
 
                   <div class="pull-right">
-                     <a class="btn btn-primary btn-xs" role="button"
+                     <a class="btn btn-primary-ufop btn-xs" role="button"
                      style="color: white" href="{{action('QuestionController@edit', encrypt($question->id))}}"><i class="fa fa-edit"></i> Editar</a>
                      <a class="btn btn-danger btn-xs" role="button"
                      style="color: white" data-toggle="modal" href="#deleteModal" data-action="pergunta/{{encrypt($question->id)}}"><i class="fa fa-trash-o"></i> Excluir</a>
@@ -120,7 +120,7 @@
                <div class="box-body">
 
                   <div class="pull-right">
-                     <a class="btn btn-primary btn-xs" role="button"
+                     <a class="btn btn-primary-ufop btn-xs" role="button"
                      style="color: white" href="{{action('QuestionController@edit', encrypt($question->id))}}"><i class="fa fa-edit"></i> Editar</a>
                      <a class="btn btn-danger btn-xs" role="button"
                      style="color: white" data-toggle="modal" href="#deleteModal" data-action="pergunta/{{encrypt($question->id)}}"><i class="fa fa-trash-o"></i> Excluir</a>
@@ -164,9 +164,9 @@
 <div class="box-header with-border">
 <h3 class="box-title">{{$question->pergunta}}</h3>
 <div class="box-tools pull-right">
-<a class="btn btn-primary btn-xs" role="button"
+<a class="btn btn-primary-ufop btn-xs" role="button"
 style="color: white" href="#"><i class="fa fa-edit"></i> Editar</a>
-<a class="btn btn-primary btn-xs" role="button"
+<a class="btn btn-primary-ufop btn-xs" role="button"
 style="color: white" href="#"><i class="fa fa-trash-o"></i> Excluir</a>
 </div><!-- /.box-tools -->
 </div><!-- /.box-header -->
@@ -208,9 +208,9 @@ style="color: white" href="#"><i class="fa fa-trash-o"></i> Excluir</a>
 <div class="box-header with-border">
 <h3 class="box-title">{{$question->pergunta}}</h3>
 <div class="box-tools pull-right">
-<a class="btn btn-primary btn-xs" role="button"
+<a class="btn btn-primary-ufop btn-xs" role="button"
 style="color: white" href="#"><i class="fa fa-edit"></i> Editar</a>
-<a class="btn btn-primary btn-xs" role="button"
+<a class="btn btn-primary-ufop btn-xs" role="button"
 style="color: white" href="#"><i class="fa fa-trash-o"></i> Excluir</a>
 </div><!-- /.box-tools -->
 </div><!-- /.box-header -->

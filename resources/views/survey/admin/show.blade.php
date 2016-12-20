@@ -61,7 +61,7 @@
          <div class="pull-left">
             <button class="btn btn-default" type="button"
             onclick="history.go(-1)"> Voltar</button>
-            <a class="btn btn-primary" role="button" style="color: white" href="{{action('SurveyController@edit', encrypt($survey->id))}}"> Editar</a>
+            <a class="btn btn-primary-ufop" role="button" style="color: white" href="{{action('SurveyController@edit', encrypt($survey->id))}}"> Editar</a>
 
          </div>
 

@@ -36,7 +36,7 @@
             </thead>
 
             <tbody>
-               @foreach($section->alunos as $student)
+               @foreach($students as $student)
                   <tr>
                      <td>{{$student->nome_completo}}</td>
                      <td>{{$student->matricula}}</td>
@@ -44,7 +44,6 @@
                      <td>{{$student->email}}</td>
                      <td>{{$student->curso->curso}}</td>
                   </tr>
-
                @endforeach
 
             </tbody>

@@ -13,7 +13,7 @@
 
    <div class="panel panel-default">
       <div class="panel-heading contains-buttons">
-         <a class="btn btn-primary pull-right" role="button"
+         <a class="btn btn-primary-ufop pull-right" role="button"
          style="color: white" href="{{route('major.create')}}">Novo Curso</a>
          <p class="panel-title contains-buttons pull-left">CURSOS</p>
          <span class="clearfix"></span>

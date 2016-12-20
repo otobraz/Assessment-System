@@ -19,9 +19,9 @@
       <div class="box-header with-border">
          <h3 class="box-title">TURMAS</h3>
          <div class="box-tools pull-right">
-            <a class="btn btn-primary btn-sm" role="button"
+            <a class="btn btn-primary-ufop btn-sm" role="button"
             style="color: white" href="{{action('SectionController@import')}}">Importar Turmas</a>
-            <a class="btn btn-primary btn-sm" role="button"
+            <a class="btn btn-primary-ufop btn-sm" role="button"
             style="color: white" href="{{action('SectionController@importRegistrations')}}">Importar Ajustes</a>
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
          </div><!-- /.box-tools -->

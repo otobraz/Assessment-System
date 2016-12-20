@@ -41,4 +41,9 @@ class Turma extends Model
       return $this->belongsToMany('App\Models\Questionario')->withPivot('id', 'aberto')->withTimestamps();
    }
 
+   public function scopeOrderByDisciplina($query){
+      return $query->join('disciplinas','disciplina_id', '=', 'disciplinas.id')
+      ->orderBy("disciplinas.disciplina", "asc");
+   }
+
 }

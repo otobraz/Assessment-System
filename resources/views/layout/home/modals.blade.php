@@ -31,7 +31,7 @@
             </div>
 
             <div class="modal-footer">
-               <button type="submit" class="btn modal-btn btn-primary">Entrar</button>
+               <button type="submit" class="btn modal-btn btn-primary-ufop">Entrar</button>
                <button type="reset" class="btn modal-btn btn-default">Limpar</button>
             </div>
          </form>

@@ -4,28 +4,26 @@
    Gerenciar Questionários
 @endsection
 
-{{-- @section('content-header')
-   <h1>Meus Questionários</h1>
-   <hr class="hr-ufop">
-@endsection --}}
-
 @section('content')
 
-      {{-- <div class="panel panel-default">
-         <div class="panel-heading contains-buttons">
-            <a class="btn btn-primary pull-right" role="button"
-            style="color: white" href="{{route('survey.create')}}">Criar questionário</a>
-            <p class="panel-title contains-buttons pull-left">QUESTIONÁRIOS</p>
-            <span class="clearfix"></span>
-         </div>
-         <div class="panel-body">
-            @include('alert-message.success')
-            @include('alert-message.error')
-            @include('survey.professor.surveys-list')
-         </div>
-      </div> --}}
+   <div class="box box-primary-ufop">
+      <div class="box-header with-border">
+         <h3 class="box-title">QUESTIONÁRIOS</h3>
+         <div class="box-tools pull-right">
+            <a class="btn btn-primary-ufop btn-sm" role="button"
+            style="color: white" href="{{action('SurveyController@create')}}"><i class="fa fa-file"> </i> Criar Questionário</a>
+            {{-- <a class="btn btn-primary-ufop btn-sm" role="button"
+            style="color: white" href="{{action('SurveyController@getResults', encrypt($survey->id))}}"><i class="fa fa-bar-chart"></i> Resultado Geral</a> --}}
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+         </div><!-- /.box-tools -->
+      </div><!-- /.box-header -->
 
-      @include('survey.professor.surveys-list')
+      <div class="box-body">
+         @include('alert-message.success')
+         @include('alert-message.error')
+         @include('survey.professor.surveys-list')
+      </div>
+   </div>
 
 @endsection
 

@@ -1,4 +1,4 @@
-<table id="index-table" class="table table-ufop table-striped table-responsive">
+<table id="index-table" class="table table-ufop table-col-condensed table-striped table-responsive">
 
    <thead>
       <tr>
@@ -23,7 +23,7 @@
             <td>{{$section->ano}}</td>
             <td>{{$section->semestre}}</td>
             <td>
-               <a data-toggle="modal" href="#deleteModal" data-action="tipo/{{encrypt($section->id)}}"><i class="fa fa-lg fa-trash-o"></i></a>
+               <a  role="button" class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal" data-action="tipo/{{encrypt($section->id)}}">Excluir</a>
             </td>
          </tr>
       @endforeach

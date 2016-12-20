@@ -12,21 +12,8 @@
          <div class="pull-left info">
             <p></p>
             <p>{{Session::get('first_name')}}</p>
-
          </div>
       </div>
-
-      <!-- search form (Optional) -->
-      {{-- <form action="{{url('search')}}" method="post" class="sidebar-form">
-         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-         <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Procure..."/>
-            <span class="input-group-btn">
-               <button type='submit' name='search' class="btn btn-flat"><i class="fa fa-search"></i></button>
-            </span>
-         </div>
-      </form> --}}
-      <!-- /.search form -->
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
@@ -37,6 +24,9 @@
          </li>
          <li>
             <a href="{{action('SectionController@index')}}"><i class="fa fa-book"></i> <span>Minhas Turmas</span></a>
+         </li>
+         <li>
+            <a href="{{action('GuidanceController@index')}}"><i class="fa fa-cubes"></i> <span>Minhas Orientações</span></a>
          </li>
          <li>
             <a href="{{action('ProfessorController@index')}}"><i class="fa fa-graduation-cap"></i> <span>Professores</span></a>

@@ -46,7 +46,7 @@
 
             <div class="col-lg-9">
                <br/>
-               <button type="submit" class="btn btn-primary">Entrar</button>
+               <button type="submit" class="btn btn-primary-ufop">Entrar</button>
                <button type="reset" class="btn btn-default">Limpar</button>
             </div>
          </fildset>

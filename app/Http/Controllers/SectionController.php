@@ -37,7 +37,7 @@ class SectionController extends Controller
 
          case '2':
          $professor = Professor::find(session()->get('id'));
-         $sectionsGroup = $professor->turmas->groupBy('ano')->transform(function($item, $k) {
+         $sectionsGroup = $professor->turmas()->OrderByDisciplina()->get()->groupBy('ano')->transform(function($item, $k) {
             return $item->groupBy('semestre');
          });
          return view ('section.professor.index', compact('sectionsGroup'));

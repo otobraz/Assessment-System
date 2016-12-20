@@ -95,7 +95,7 @@
                            </div>
                         @endif
                         <button class="btn btn-default" type="button" onclick="history.go(-1)"> Voltar</button>
-                        <button class="btn btn-primary" type="submit"><i class="fa fa-pencil-square-o"></i> Salvar</button>
+                        <button class="btn btn-primary-ufop" type="submit"><i class="fa fa-pencil-square-o"></i> Salvar</button>
                      </fieldset>
                   </form>
                </div>

@@ -12,23 +12,8 @@
          <div class="pull-left info">
             <p></p>
             <p>{{session()->get('first_name')}}</p>
-
-            <!-- Status -->
-            <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
          </div>
       </div>
-
-      <!-- search form (Optional) -->
-      {{-- <form action="{{url('search')}}" method="post" class="sidebar-form">
-         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-         <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Procure..."/>
-            <span class="input-group-btn">
-               <button type='submit' name='search' class="btn btn-flat"><i class="fa fa-search"></i></button>
-            </span>
-         </div>
-      </form> --}}
-      <!-- /.search form -->
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
@@ -36,77 +21,83 @@
          <!-- Optionally, you can add icons to the links -->
 
          <li class="treeview">
-            <a href="#"><i class="fa fa-university"></i> <span>ICEA</span>
+            <a href="#"><i class="fa fa-university"></i>ICEA
                <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
-               </span>
+
             </a>
             <ul class="treeview-menu">
                <li>
-                  <a href="{{route('major.index')}}">Cursos</a>
+                  <a href="{{route('major.index')}}"><i class="fa fa-circle-o"></i>Cursos</a>
                </li>
                <li>
-                  <a href="{{route('department.index')}}">Departamentos</a>
+                  <a href="{{route('department.index')}}"><i class="fa fa-circle-o"></i>Departamentos</a>
                </li>
                <li>
-                  <a href="{{route('course.index')}}">Disciplinas</a>
+                  <a href="{{route('course.index')}}"><i class="fa fa-circle-o"></i>Disciplinas</a>
                </li>
                <li>
-                  <a href="{{route('section.index')}}">Turmas</a>
+                  <a href="{{route('section.index')}}"><i class="fa fa-circle-o"></i>Turmas</a>
                </li>
                <li>
-                  <a href="{{route('section.index')}}">Orientações</a>
+                  <a href="{{route('guidance.index')}}"><i class="fa fa-circle-o"></i>Orientações</a>
                </li>
             </ul>
          </li>
 
          <li class="treeview">
-            <a href="#"><i class="fa fa-users"></i> <span>Usuários</span>
+            <a href="#"><i class="fa fa-users"></i>Usuários
                <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
-               </span>
+
             </a>
             <ul class="treeview-menu">
                <li>
-                  <a href="{{route('admin.index')}}"><span>Administradores</span></a>
+                  <a href="{{route('admin.index')}}"><i class="fa fa-circle-o"></i>Administradores</a>
                </li>
                <li>
-                  <a href="{{route('student.index')}}"><span>Alunos</span></a>
+                  <a href="{{route('student.index')}}"><i class="fa fa-circle-o"></i>Alunos</a>
                </li>
                <li>
-                  <a href="{{route('professor.index')}}"><span>Professores</span></a>
+                  <a href="{{route('professor.index')}}"><i class="fa fa-circle-o"></i>Professores</a>
                </li>
             </ul>
          </li>
 
          <li class="treeview">
-            <a href="#"><i class="fa fa-comments-o"></i> <span>Questionários</span>
+            <a href="#"><i class="fa fa-comments-o"></i>Questionários
                <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
-               </span>
+
             </a>
             <ul class="treeview-menu">
                <li>
-                  <a href="{{route('survey.index')}}"><span>Questionários</span></a>
+                  <a href="{{route('survey.index')}}"><i class="fa fa-circle-o"></i>Turmas</a>
                </li>
                <li>
-                  <a href="{{route('question.index')}}"><span>Perguntas</span></a>
+                  <a href="{{route('guidance.index')}}"><i class="fa fa-circle-o"></i>Orientações</a>
                </li>
                <li>
-                  <a href="{{route('questionType.index')}}"><span>Tipos de Pergunta</span></a>
+                  <a href="{{route('guidanceType.index')}}"><i class="fa fa-circle-o"></i>Tipos de Orientações</a>
                </li>
                <li>
-                  <a href="{{route('admin.index')}}"><span>Respostas</span></a>
+                  <a href="{{route('question.index')}}"><i class="fa fa-circle-o"></i>Perguntas</a>
+               </li>
+               <li>
+                  <a href="{{route('questionType.index')}}"><i class="fa fa-circle-o"></i>Tipos de Pergunta</a>
+               </li>
+               <li>
+                  <a href="{{route('admin.index')}}"><i class="fa fa-circle-o"></i>Respostas</a>
                </li>
             </ul>
          </li>
 
          <li>
-            <a href="{{route('admin.edit', encrypt(session()->get('id')))}}"><i class="fa fa-pencil-square-o"></i> <span>Editar Cadastro</span></a>
+            <a href="{{route('admin.edit', encrypt(session()->get('id')))}}"><i class="fa fa-pencil-square-o"></i>Editar Cadastro</a>
          </li>
 
          <li>
-            <a href="{{action('AuthController@logout')}}"><i class="fa fa-sign-out"></i> <span>Sair</span></a>
+            <a href="{{action('AuthController@logout')}}"><i class="fa fa-sign-out"></i>Sair</a>
          </li>
       </ul><!-- /.sidebar-menu -->
    </section>

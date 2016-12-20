@@ -8,10 +8,10 @@
    <link href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
-@section('content-header')
+{{-- @section('content-header')
    <h1>Alunos</h1>
    <hr class="hr-ufop">
-@endsection
+@endsection --}}
 
 @section('content')
 
@@ -51,6 +51,7 @@
                "previous": "Anterior"
             }
          },
+         "order": [],
          "autoWidth": true,
          "aLengthMenu": [[25, 50, 100, 200, 300, -1], [25, 50, 100, 200, 300, "Tudo"]]
       });

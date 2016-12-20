@@ -73,8 +73,58 @@ class ProfessorController extends Controller
    */
    public function show($id)
    {
-      $professor = Professor::find(decrypt($id));
-      return view('professor.show', compact('professor'));
+
+      switch (session()->get('role')) {
+
+         case '0':
+            $professors = Professor::all();
+            return view ('professor.admin.index', compact('professors'));
+            break;
+
+         case '1':
+            $professor = Professor::find(decrypt($id));
+            $surveys = $professor->questionarios;
+            $sectionsGroup = $professor->turmas->groupBy('ano')->transform(function($item, $k) {
+               return $item->groupBy('semestre');
+            });
+            $guidances = $professor->orientacoes   ;
+            return view ('professor.student.show', compact('professor', 'surveys', 'sectionsGroup', 'guidances'));
+            break;
+
+         case '2':
+            $professor = Professor::find(decrypt($id));
+            return view('professor.show', compact('professor'));
+            break;
+
+         default:
+            return redirect('/');
+            break;
+      }
+
+   }
+
+   public function showSurveys($id){
+
+      switch (session()->get('role')) {
+         case '0':
+         $professors = Professor::all();
+         return view ('professor.admin.index', compact('professors'));
+         break;
+
+         case '1':
+         $professor = Professor::find(decrypt($id));
+         $surveys = $professor->questionarios;
+         return view ('professor.student.show-surveys', compact('professor', 'surveys'));
+         break;
+
+         case '2':
+         $professor = Professor::find(decrypt($id));
+         return view('professor.show', compact('professor'));
+         break;
+         default:
+         return redirect('/');
+         break;
+      }
    }
 
    /**

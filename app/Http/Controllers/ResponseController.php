@@ -11,9 +11,13 @@ use App\Models\RespostaAberta;
 use App\Models\Questionario;
 use App\Models\RespostaUnicaEscolha;
 use App\Models\Aluno;
+use App\Models\Turma;
+
+use DB;
 
 class ResponseController extends Controller
 {
+
    /**
    * Display a listing of the resource.
    *
@@ -25,53 +29,65 @@ class ResponseController extends Controller
    }
 
    /**
-   * Show the form for creating a new resource.
-   *
+   * Show the form for answering the survey
    * @return \Illuminate\Http\Response
    */
-   public function create($id)
+   public function create($surveySectionId)
    {
 
-      $student = Aluno::where('usuario', session()->get('username'))->first();
+      $surveySection = DB::table('questionario_turma')->where('id', decrypt($surveySectionId))->first();
 
-      if(isset($student)){
-         $sections = $student->turmas;
-         $survey = Questionario::find(decrypt($id));
+      $response = Resposta::where('questionario_turma_id', $surveySection->id)
+      ->where('aluno_id', session()->get('id'))->first();
+      if(!isset($response)){
+         if($surveySection->aberto){
+            $student = Aluno::where('usuario', session()->get('username'))->first();
+            if(isset($student)){
+               $studentSections = $student->turmas;
+               $section = $studentSections->where('id', $surveySection->turma_id)->first();
 
-         // Verifies whether or not the user belongs to one of the classes which the survey was assigned to
-         if($sections->intersect($survey->turmas)->isEmpty()){
-            return redirect()->route('survey.index');
+               // Verifies whether or not the user belongs to one of the classes which the survey was assigned to
+               if(isset($section)){
+                  $survey = Questionario::find($surveySection->questionario_id);
+                  $questions = $survey->perguntas;
+                  return view('response.student.create', compact('survey', 'questions', 'section', 'surveySectionId'));
+               }else{
+                  return redirect()->route('survey.index');
+               }
+            }
+            // else if(session()->get('role') == '0'){
+            //    $survey = Questionario::find(decrypt($id));
+            //    $questions = $survey->perguntas;
+            //    return view('response.admin.create', compact('survey', 'questions'));
+            // }
+         }else{
+            return back()->with('errorMessage', 'Questionário fechado. Não é possível respondê-lo.');
          }
-
-         $questions = $survey->perguntas;
-         return view('response.student.create', compact('survey', 'questions'));
-
-      }else if(session()->get('role') == '0'){
-         $survey = Questionario::find(decrypt($id));
-         $questions = $survey->perguntas;
-         return view('response.admin.create', compact('survey', 'questions'));
+      }else{
+         return back()->with('errorMessage', 'Você já respondeu este questionário.');
       }
-
    }
 
    /**
-   * Store a newly created resource in storage.
+   * Store the Survey Response
    *
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
    public function store(Request $request)
    {
-      $survey = Questionario::find(decrypt($request->survey_id));
 
+      $surveySection = DB::table('questionario_turma')->where('id', decrypt($request->input('survey-section-id')))->first();
       $response = new Resposta([
-         'questionario_id' => $survey->id,
-         'aluno_id' => session()->get('id')
+         'questionario_id' => $surveySection->questionario_id,
+         'aluno_id' => session()->get('id'),
+         'turma_id' => $surveySection->turma_id,
+         'questionario_turma_id' => $surveySection->id
       ]);
+
       $response->save();
-
+      $survey = Questionario::find($response->questionario_id);
       $inputs = $request->all();
-
       foreach($survey->perguntas as $question){
          switch ($question->tipo->id) {
             case 1: # it's a text input
@@ -103,53 +119,51 @@ class ResponseController extends Controller
             }
             break;
          }
-         return view('survey.index')->with('succesMessage', 'Questionário respondido com sucesso');
       }
-
+      return redirect()->route('survey.index')->with('successMessage', 'Questionário respondido com sucesso');
    }
 
    /**
-   * Display the specified resource.
+   * Display the survey answered if the user has answered it
    *
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
    public function show($id)
    {
-      //
-   }
 
-   /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-   public function edit($id)
-   {
-      //
-   }
+      $response = Resposta::find(decrypt($id));
+      $survey = Questionario::find($response->questionario_id);
+      $questions = $survey->perguntas;
 
-   /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-   public function update(Request $request, $id)
-   {
-      //
-   }
+      $resp = RespostaUnicaEscolha::where('resposta_id', $response->id)->get();
+      $respM = RespostaMultiplaEscolha::where('resposta_id', $response->id)->get();
 
-   /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-   public function destroy($id)
-   {
-      //
+      foreach ($questions as $question) {
+         foreach ($question->opcoes as $choice) {
+            $answers[$question->id][$choice->id] = 0;
+         }
+      }
+      foreach ($questions as $key => $question) {
+         switch ($question->tipo_id) {
+            case 1:
+               $answers[$question->id] = RespostaAberta::where('pergunta_id', $question->id)->where('resposta_id', $response->id)->first()->resposta;
+               break;
+            case 2:
+               $choice = $resp->where('pergunta_id', $question->id)->first();
+               $answers[$question->id][$choice->opcao_id]++;
+            break;
+
+            case 3:
+            $choice = $respM->where('pergunta_id', $question->id)->first();
+            $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
+            foreach ($choices as $choice){
+               $answers[$question->id][$choice->opcao_id]++;
+            }
+            break;
+         }
+
+      }
+      return view('response.student.show', compact('response', 'survey', 'questions', 'answers'));
    }
 }
