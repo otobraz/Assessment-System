@@ -1,7 +1,7 @@
 @extends('layout.admin.base')
 
 @section('title')
-   Gerenciar | Turmas
+   Turmas | Gerenciar
 @endsection
 
 {{-- @section('content-header')
@@ -57,7 +57,11 @@
             }
          },
          "autoWidth": true,
-         "aLengthMenu": [[50, 100, 200, 300, -1], [50, 100, 200, 300, "Tudo"]]
+         "aLengthMenu": [[50, 100, 200, 300, -1], [50, 100, 200, 300, "Tudo"]],
+         "columnDefs": [{
+            "orderable": false,
+            "targets": 5
+         }]
       });
    });
    </script>

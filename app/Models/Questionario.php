@@ -45,11 +45,9 @@ class Questionario extends Model
       return $this->belongsTo('App\Models\Professor');
    }
 
-   // public function turmasOrderedByDisciplina()
-   // {
-   //    return $this->turmas()->join('disciplinas', 'turmas.disciplina_id', '=', 'disciplinas.id')
-   //    ->orderBy("disciplinas.disciplina", "asc")
-   //    ->get();
-   // }
+   public function scopeOrderByProfessor($query){
+      return $query->join('professores','professor_id', '=', 'professores.id')
+      ->orderBy("nome", "asc")->orderBy("sobrenome", "asc")->select('questionarios.*');
+   }
 
 }

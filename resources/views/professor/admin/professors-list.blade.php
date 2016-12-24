@@ -1,4 +1,4 @@
-<table id="index-table" class="table table-striped table-bordered table-ufop table-hover">
+<table id="index-table" class="table table-striped table-bordered table-col-condensed table-ufop table-hover">
 
    <thead>
       <tr>
@@ -7,19 +7,19 @@
          <th>CPF</th>
          <th>E-mail</th>
          <th>Departamento</th>
-         <th>Ações</th>
+         <th>Excluir</th>
       </tr>
    </thead>
 
    <tbody>
       @foreach($professors as $professor)
          <tr>
-            <td>{{$professor->id}}</td>
+            <td align="center">{{$professor->id}}</td>
             <td>{{$professor->nome_completo}}</td>
-            <td>{{$professor->usuario}}</td>
+            <td align="center">{{$professor->usuario}}</td>
             <td>{{$professor->email}}</td>
-            <td>{{$professor->departamento->cod_departamento}}</td>
-            <td>
+            <td align="center">{{$professor->departamento->cod_departamento}}</td>
+            <td align="center">
                <a type="button" class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal" data-action="professor/{{encrypt($professor->id)}}">Excluir</a>
             </td>
          </tr>

@@ -43,7 +43,7 @@ class Turma extends Model
 
    public function scopeOrderByDisciplina($query){
       return $query->join('disciplinas','disciplina_id', '=', 'disciplinas.id')
-      ->orderBy("disciplinas.disciplina", "asc");
+      ->orderBy("disciplinas.disciplina", "asc")->orderBy("cod_turma", "asc")->select('turmas.*');
    }
 
 }

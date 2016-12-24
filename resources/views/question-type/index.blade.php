@@ -1,31 +1,26 @@
 @extends('layout.admin.base')
 
 @section('title')
-   Gerenciar | Tipos de Pergunta
-@endsection
-
-@section('content-header')
-   <h1>Tipos de Pergunta</h1>
-   <hr class="hr-ufop">
+   Tipos de Pergunta | Gerenciar
 @endsection
 
 @section('content')
 
+   <div class="box box-primary-ufop">
+      <div class="box-header with-border">
+         <h3 class="box-title">TIPOS DE PERGUNTAS</h3>
+         <div class="box-tools pull-right">
+            <a class="btn btn-primary-ufop btn-sm" role="button"
+            style="color: white" href="{{route('questionType.create')}}">Novo Tipo de Pergunta</a>
+         </div><!-- /.box-tools -->
+      </div><!-- /.box-header -->
 
-   <div class="panel panel-default">
-      <div class="panel-heading contains-button">
-         <a class="btn btn-primary-ufop pull-right" role="button"
-         style="color: white" href="{{route('questionType.create')}}">Novo Curso</a>
-         <p class="panel-title contains-buttons pull-left">TIPOS DE PERGUNTAS</p>
-         <span class="clearfix"></span>
-      </div>
-      <div class="panel-body">
+      <div class="box-body">
          @include('alert-message.success')
          @include('alert-message.error')
          @include('question-type.question-types-list')
       </div>
    </div>
-
 
 @endsection
 

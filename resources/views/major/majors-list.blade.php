@@ -1,11 +1,11 @@
-<table class="table table-ufop table-responsive">
+<table class="table table-ufop table-striped table-bordered table-col-condensed table-responsive">
    <thead>
       <tr>
          <th>Id</th>
          <th>Curso</th>
          <th>Sigla</th>
-         <th></th>
-         <th></th>
+         <th>Editar</th>
+         <th>Excluir</th>
       </tr>
 
    </thead>
@@ -13,14 +13,14 @@
    <tbody>
       @foreach($majors as $major)
          <tr>
-            <td>{{$major->id}}</td>
+            <td align="center">{{$major->id}}</td>
             <td>{{$major->curso}}</td>
-            <td>{{$major->cod_curso}}</td>
-            <td>
-               <a href="{{route('major.edit', encrypt($major->id))}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
+            <td align="center">{{$major->cod_curso}}</td>
+            <td align="center">
+               <a role="button" class="btn btn-warning btn-xs" href="{{route('major.edit', encrypt($major->id))}}">Editar</a>
             </td>
-            <td>
-               <a data-toggle="modal" href="#deleteModal" data-action="curso/{{encrypt($major->id)}}"><i class="fa fa-lg fa-trash-o"></i></a>
+            <td align="center">
+               <a role="button" class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal" data-action="curso/{{encrypt($major->id)}}">Excluir</a>
             </td>
          </tr>
       @endforeach

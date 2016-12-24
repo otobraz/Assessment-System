@@ -15,7 +15,7 @@
       <div class="box-header with-border">
          <h3 class="box-title">CRIAR TIPO DE ORIENTAÇÃO</h3>
          <div class="box-tolls pull-right">
-            <a class="btn btn-primary-ufop pull-right" role="button"
+            <a class="btn btn-primary-ufop pull-right btn-sm" role="button"
             style="color: white" href="{{route('guidanceType.create')}}">Novo Tipo de Orientação</a>
          </div>
       </div>

@@ -28,7 +28,7 @@
                <a class="btn btn-info btn-xs" role="button" href="{{route('guidance.show', encrypt($guidance->id))}}"> Detalhes</a>
             </td>
             <td>
-               @if ($guidance->questionario_aberto)
+               @if ($guidance->questionario_liberado)
                   <a class="btn btn-primary-ufop btn-xs" role="button" href="#">Responder</a>
                @else
                   <a class="btn btn-success btn-xs" role="button" href="#" disabled><span class="glyphicon glyphicon-ok" aria-hidden="true">Insdisponível</a>

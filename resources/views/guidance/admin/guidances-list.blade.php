@@ -1,12 +1,10 @@
-<table class="table table-ufop table-col-condensed table-striped table-responsive">
+<table class="table table-ufop table-col-condensed table-striped table-bordered table-responsive">
    <thead>
       <tr>
          <th>Tipo</th>
          <th>Orientando</th>
          <th>Orientador</th>
          <th>Status</th>
-         {{-- <th>Encerrar / Recomeçar</th>
-         <th>Questionário</th> --}}
          <th>Detalhes</th>
          <th>Resposta</th>
       </tr>
@@ -32,7 +30,7 @@
                   @else
                      <a class="btn btn-primary-ufop btn-xs" role="button" href="{{route('guidance.restart', encrypt($guidance->id))}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Recomeçar</a>
                   @endif
-                  @if ($guidance->questionario_aberto)
+                  @if ($guidance->questionario_liberado)
                      <a class="btn btn-primary-ufop btn-xs" role="button" href="{{route('guidance.cancelSurvey', encrypt($guidance->id))}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Disponibilizado</a>
                   @else
                      <a class="btn btn-success btn-xs" role="button" href="{{route('guidance.provideSurvey', encrypt($guidance->id))}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Disponilizar</a>
@@ -50,16 +48,16 @@
                @endif
             </td>
             <td>
-               @if ($guidance->questionario_aberto)
+               @if ($guidance->questionario_liberado)
                   <a class="btn btn-warning btn-xs" role="button" href="{{route('guidance.cancelSurvey', encrypt($guidance->id))}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Indisponibilizar</a>
                @else
                   <a class="btn btn-success btn-xs" role="button" href="{{route('guidance.provideSurvey', encrypt($guidance->id))}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Disponilizar</a>
                @endif
             </td> --}}
-            <td>
+            <td align="center">
                <a class="btn btn-info btn-xs" role="button" href="{{route('guidance.show', encrypt($guidance->id))}}"> Detalhes</a>
             </td>
-            <td>
+            <td align="center">
                <a class="btn btn-primary-ufop btn-xs" role="button" href="{{route('guidance.show', encrypt($guidance->id))}}"> Resposta</a>
             </td>
          </tr>

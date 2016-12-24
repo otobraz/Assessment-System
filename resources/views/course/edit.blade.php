@@ -1,19 +1,18 @@
 @extends('layout.admin.base')
 
 @section('title')
-   Editar Disciplina
-@endsection
-
-@section('content-header')
-   <h1>Editar Disciplina</h1>
-   <hr class="hr-ufop">
+   Disciplina | Editar
 @endsection
 
 @section('content')
 
    <div class="col-md-offset-3 col-md-6">
-      <div class="panel panel-default">
-         <div class="panel-body">
+
+      <div class="box box-primary-ufop">
+         <div class="box-header with-border">
+            <h3 class="box-title">DISCIPLINAS</h3>
+         </div>
+         <div class="box-body">
 
             @include('alert-message.success')
             @include('alert-message.error')
@@ -54,8 +53,8 @@
                      </select>
                   </div>
 
-                  <button class="btn btn-warning pull-right"  type="button" data-toggle="modal" data-action="http://localhost:8000/curso/{{encrypt($course->id)}}" href="#deleteModal"> Excluir</button>
-                  <div class="pull-left">
+                  <button class="btn btn-danger pull-left"  type="button" data-toggle="modal" data-action="http://localhost:8000/curso/{{encrypt($course->id)}}" href="#deleteModal"> Excluir</button>
+                  <div class="pull-right">
                      <button class="btn btn-default" type="button"
                      onclick="history.go(-1)"> Cancelar</button>
                      <button class="btn btn-primary-ufop" type="submit"><i class="fa fa-pencil-square-o"></i> Editar</button>
@@ -63,7 +62,7 @@
 
                </fieldset>
             </form>
-         </div>
+         </div><!-- /.box-body -->
       </div>
 
    </div>

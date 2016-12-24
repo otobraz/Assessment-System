@@ -11,7 +11,7 @@
 
 @section('content')
 
-   <div class="col-md-offset-2 col-md-8">
+   <div class="col-md-offset-3 col-md-6">
       <div class="box box-primary-ufop">
          <div class="box-header with-border">
             <h3 class="box-title">{{$guidance->tipo->tipo}}</h3>
@@ -23,14 +23,8 @@
 
          <div class="box-body">
 
-            <div class="row">
-               <div class="col-md-6">
-                  <p><b>Orientando:</b> {{$guidance->aluno->nomeCompleto}}</p>
-               </div>
-               <div class="col-md-6">
-                  <p><b>Orientador:</b> {{$guidance->professor->nomeCompleto}}</p>
-               </div>
-            </div>
+            <p><b>Orientando:</b> {{$guidance->aluno->nomeCompleto}}</p>
+            <p><b>Orientador:</b> {{$guidance->professor->nomeCompleto}}</p>
 
             <p><b>Status:  </b> {{$guidance->status ? 'Em andamento' : 'Finalizada'}}</p>
 
@@ -39,8 +33,6 @@
                   {{$guidance->descricao}}
                </div>
             </div>
-
-            <a class="btn btn-primary-ufop-ufop" role="button" href="{{route('guidance.edit', encrypt($guidance->id))}}"> <i class="fa fa-edit"></i> Editar</a>
 
          </div>
       </div>

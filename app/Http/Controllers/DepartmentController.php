@@ -99,7 +99,7 @@ class DepartmentController extends Controller
    */
    public function destroy($id)
    {
-      Departament::find(decrypt($id))->delete();
+      Departamento::find(decrypt($id))->delete();
       return redirect()->route('department.index')->with('successMessage', 'Registro excluído com sucesso.');
    }
 }

@@ -1,28 +1,28 @@
-<table class="table table-ufop table-responsive">
+<table id="index-table" class="table table-ufop table-bordered table-col-condensed table-striped table-responsive">
    <thead>
       <tr>
          <th>Id</th>
          <th>Código</th>
          <th>Disciplina</th>
          <th>Departamento</th>
-         <th></th>
-         <th></th>
+         <th>Editar</th>
+         <th>Excluir</th>
       </tr>
 
    </thead>
-   
+
    <tbody>
       @foreach($courses as $course)
          <tr>
-            <td>{{$course->id}}</td>
-            <td>{{$course->cod_disciplina}}</td>
+            <td align="center">{{$course->id}}</td>
+            <td align="center">{{$course->cod_disciplina}}</td>
             <td>{{$course->disciplina}}</td>
-            <td>{{$course->departamento->cod_departamento}}</td>
-            <td>
-               <a href="{{route('course.edit', encrypt($course->id))}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
+            <td align="center">{{$course->departamento->cod_departamento}}</td>
+            <td align="center">
+               <a role="button" class="btn btn-warning btn-xs" href="{{route('course.edit', encrypt($course->id))}}">Editar</a>
             </td>
-            <td>
-               <a data-toggle="modal" href="#deleteModal" data-action="disciplina/{{encrypt($course->id)}}"><i class="fa fa-lg fa-trash-o"></i></a>
+            <td align="center">
+               <a role="button" class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal" data-action="disciplina/{{encrypt($course->id)}}">Excluir</a>
             </td>
          </tr>
       @endforeach

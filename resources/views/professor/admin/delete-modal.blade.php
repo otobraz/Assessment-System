@@ -1,4 +1,4 @@
-<div class="modal fade col-xs-offset-2" name="deleteModal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+<div class="modal modal-danger fade col-xs-offset-2" name="deleteModal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
    <div class="modal-dialog">
       <div class="modal-content">
          <div class="modal-header">
@@ -13,7 +13,7 @@
                {{ csrf_field() }}
                <p class="text-center">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-danger">Confirmar</button>
+                  <button type="submit" class="btn btn-outline">Confirmar</button>
                </p>
             </form>
          </div>

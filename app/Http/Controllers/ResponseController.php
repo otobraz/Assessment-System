@@ -19,16 +19,6 @@ class ResponseController extends Controller
 {
 
    /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-   public function index()
-   {
-      //
-   }
-
-   /**
    * Show the form for answering the survey
    * @return \Illuminate\Http\Response
    */
@@ -132,38 +122,46 @@ class ResponseController extends Controller
    public function show($id)
    {
 
-      $response = Resposta::find(decrypt($id));
-      $survey = Questionario::find($response->questionario_id);
-      $questions = $survey->perguntas;
+      if(session()->get('role') == 1 || session()->get('role') == 0){
+         $response = Resposta::find(decrypt($id));
+         $survey = Questionario::find($response->questionario_id);
+         $questions = $survey->perguntas;
 
-      $resp = RespostaUnicaEscolha::where('resposta_id', $response->id)->get();
-      $respM = RespostaMultiplaEscolha::where('resposta_id', $response->id)->get();
+         $resp = RespostaUnicaEscolha::where('resposta_id', $response->id)->get();
+         $respM = RespostaMultiplaEscolha::where('resposta_id', $response->id)->get();
 
-      foreach ($questions as $question) {
-         foreach ($question->opcoes as $choice) {
-            $answers[$question->id][$choice->id] = 0;
+         foreach ($questions as $question) {
+            foreach ($question->opcoes as $choice) {
+               $answers[$question->id][$choice->id] = 0;
+            }
          }
-      }
-      foreach ($questions as $key => $question) {
-         switch ($question->tipo_id) {
-            case 1:
+         foreach ($questions as $key => $question) {
+            switch ($question->tipo_id) {
+               case 1:
                $answers[$question->id] = RespostaAberta::where('pergunta_id', $question->id)->where('resposta_id', $response->id)->first()->resposta;
                break;
-            case 2:
+               case 2:
                $choice = $resp->where('pergunta_id', $question->id)->first();
                $answers[$question->id][$choice->opcao_id]++;
-            break;
+               break;
 
-            case 3:
-            $choice = $respM->where('pergunta_id', $question->id)->first();
-            $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
-            foreach ($choices as $choice){
-               $answers[$question->id][$choice->opcao_id]++;
+               case 3:
+               $choice = $respM->where('pergunta_id', $question->id)->first();
+               $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
+               foreach ($choices as $choice){
+                  $answers[$question->id][$choice->opcao_id]++;
+               }
+               break;
             }
-            break;
+
          }
+         if(session()->get('role') == 0){
+            return view('response.admin.show', compact('response', 'survey', 'questions', 'answers'));
+         }
+         return view('response.student.show', compact('response', 'survey', 'questions', 'answers'));
 
       }
-      return view('response.student.show', compact('response', 'survey', 'questions', 'answers'));
+      return redirect()->route('home');
    }
+
 }

@@ -17,7 +17,7 @@
                      <th>Turma</th>
                      <th>Professor</th>
                      <th>Título</th>
-                     <th>Data de Atribuição</th>
+                     <th>Disponibilização</th>
                      <th>Status</th>
                      <th>Respostas</th>
                      <th>Detalhes</th>
@@ -40,17 +40,19 @@
                                  Fechado
                               @endif
                            </td>
-                           <td>
+                           <td align="center">
                               @if (isset($responses[$survey->pivot->id]))
-                                 <a class="btn btn-success btn-xs" role="button"
+                                 <a class="btn btn-primary btn-xs" role="button"
                                  style="color: white" href="{{action('ResponseController@show', encrypt($responses[$survey->pivot->id]->id))}}">Ver resposta</a>
                               @else
                                  <a class="btn btn-primary-ufop btn-xs" role="button"
                                  style="color: white" href="{{action('ResponseController@create', encrypt($survey->pivot->id))}}">Responder</a>
                               @endif
                            </td>
-                           <td><a class="btn btn-info btn-xs" role="button"
-                           style="color: white" href="{{action('SurveyController@show', encrypt($survey->id))}}">Detalhes</a></td>
+                           <td align="center">
+                              <a class="btn btn-info btn-xs" role="button"
+                              style="color: white" href="{{action('SurveyController@show', encrypt($survey->id))}}">Detalhes</a>
+                           </td>
                         </tr>
                      @endforeach
 

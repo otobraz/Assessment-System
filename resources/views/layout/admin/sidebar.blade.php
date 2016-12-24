@@ -42,6 +42,9 @@
                <li>
                   <a href="{{route('guidance.index')}}"><i class="fa fa-circle-o"></i>Orientações</a>
                </li>
+               <li>
+                  <a href="{{route('guidanceType.index')}}"><i class="fa fa-circle-o"></i>Tipos de Orientações</a>
+               </li>
             </ul>
          </li>
 
@@ -75,19 +78,10 @@
                   <a href="{{route('survey.index')}}"><i class="fa fa-circle-o"></i>Turmas</a>
                </li>
                <li>
-                  <a href="{{route('guidance.index')}}"><i class="fa fa-circle-o"></i>Orientações</a>
-               </li>
-               <li>
-                  <a href="{{route('guidanceType.index')}}"><i class="fa fa-circle-o"></i>Tipos de Orientações</a>
-               </li>
-               <li>
                   <a href="{{route('question.index')}}"><i class="fa fa-circle-o"></i>Perguntas</a>
                </li>
                <li>
                   <a href="{{route('questionType.index')}}"><i class="fa fa-circle-o"></i>Tipos de Pergunta</a>
-               </li>
-               <li>
-                  <a href="{{route('admin.index')}}"><i class="fa fa-circle-o"></i>Respostas</a>
                </li>
             </ul>
          </li>

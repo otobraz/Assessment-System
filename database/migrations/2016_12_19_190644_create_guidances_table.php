@@ -17,7 +17,7 @@ class CreateGuidancesTable extends Migration
 
          $table->string('descricao');
          $table->tinyInteger('status')->default(1);
-         $table->tinyInteger('questionario_aberto')->default(0);
+         $table->tinyInteger('questionario_liberado')->default(0);
 
          $table->integer('aluno_id')->unsigned();
          $table->integer('professor_id')->unsigned();

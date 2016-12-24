@@ -4,11 +4,6 @@
    Questionário | Detalhes
 @endsection
 
-{{-- @section('content-header')
-<h1>Meus Questionários</h1>
-<hr class="hr-ufop">
-@endsection --}}
-
 @section('content')
 
    @include('alert-message.success')
@@ -33,21 +28,20 @@
 
                <input type="hidden" name="surveyId" value="{{$survey->id}}">
 
-               <table class="table table-bordered table-hover table-col-condensed table-striped table-responsive">
+               <table class="table table-bordered table-hover table-col-condensed clickable-row table-striped table-responsive">
 
                   <thead>
                      <tr>
                         <th colspan="8" class="text-center">TURMAS</th>
                      </tr>
                      <tr>
-                        <th>Comparar Respostas</th>
-                        <th>Disciplina</th>
-                        <th>Código da Turma</th>
+                        <th>Disciplina (selecione para comparar)</th>
+                        <th>Turma</th>
                         <th>Departamento</th>
                         <th>Semestre</th>
-                        <th>Data de Atribuição</th>
+                        <th>Disponibilização</th>
                         <th>Status</th>
-                        <th>Respostas das Turmas</th>
+                        <th>Resultado</th>
                      </tr>
                   </thead>
 
@@ -55,17 +49,17 @@
 
                      <div class="form-group">
 
-                        @foreach ($survey->turmas as $section)
+                        @foreach ($survey->turmas()->OrderByDisciplina()->get() as $section)
                            <tr>
                               <td>
-                                 <input type="checkbox" name="sections[]" value="{{$section->id}}">
+                                 <input type="checkbox" name="sections[]" id="{{$section->id}}" value="{{$section->id}}">
+                                 {{"  " . $section->disciplina->disciplina}}
                               </td>
-                              <td>{{$section->disciplina->disciplina}}</td>
-                              <td>{{$section->cod_turma}}</td>
+                              <td align="center">{{$section->cod_turma}}</td>
                               <td>{{$section->disciplina->departamento->cod_departamento}}</td>
                               <td>{{$section->ano . "/" . $section->semestre}}</td>
                               <td>
-                                 {{date("d/m/y - H:i:s", strtotime($section->pivot->created_at))}}
+                                 {{date("d/m/y", strtotime($section->pivot->created_at))}}
                               </td>
                               <td>
                                  @if($section->pivot->aberto)
@@ -74,20 +68,21 @@
                                     Fechado
                                  @endif
                               </td>
-                              <td><a class="btn btn-primary-ufop btn-xs" role="button"
-                                 style="color: white" href="{{route('survey.classResults', [encrypt($survey->id), encrypt($section->id)])}}"><i class="fa fa-bar-chart"></i> Resultado</a>
+                              <td align="center"><a class="btn btn-primary-ufop btn-xs" role="button"
+                                 style="color: white" href="{{route('survey.classResults', encrypt($section->pivot->id))}}"><i class="fa fa-bar-chart"></i> Resultado</a>
                               </td>
                            </tr>
                         @endforeach
 
                      </div>
 
+                  </tbody>
+
+                  <tfoot>
                      <tr>
                         <td colspan="8"><button class="btn btn-primary-ufop" type="submit"><span class="glyphicon glyphicon-stats" aria-label="Comparar"></span> Comparar</button></td>
                      </tr>
-
-                  </tbody>
-
+                  </tfoot>
                </table>
 
             </fieldset>
@@ -100,5 +95,7 @@
 @endsection
 
 @section('myScripts')
+
+   <script src="{{asset('/js/clickableRow.js')}}"></script>
 
 @endsection

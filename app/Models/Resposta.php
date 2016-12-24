@@ -26,10 +26,11 @@ class Resposta extends Model
    ];
 
    public function aluno(){
-      return $this->belongsTo('App\Models\Alunos');
+      return $this->belongsTo('App\Models\Aluno');
    }
 
    public function questionario(){
       return $this->belongsTo('App\Models\Questionario');
    }
+
 }

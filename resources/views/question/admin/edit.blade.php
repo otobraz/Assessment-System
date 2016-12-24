@@ -73,9 +73,9 @@
 
                </div>
 
-               <button class="btn btn-warning pull-right"  type="button" data-toggle="modal" data-action="http://localhost:8000/pergunta/{{encrypt($question->id)}}" href="#deleteModal"> Excluir</button>
+               <button class="btn btn-danger pull-left"  type="button" data-toggle="modal" data-action="http://localhost:8000/pergunta/{{encrypt($question->id)}}" href="#deleteModal"> Excluir</button>
 
-               <div class="pull-left">
+               <div class="pull-right">
                   <button class="btn btn-default" type="button" onclick="history.go(-1)"> Cancelar</button>
                   <button class="btn btn-primary-ufop" type="submit"><i class="fa fa-pencil-square-o"></i> Editar</button>
                </div>

@@ -29,8 +29,8 @@ class SurveyController extends Controller
 
       switch (session()->get('role')) {
          case '0':
-         $sections = Turma::orderBy('ano', 'desc')->orderBy('semestre', 'desc')->get();
-         return view ('survey.admin.index', compact('sections'));
+         $surveys = Questionario::all();
+         return view ('survey.admin.index', compact('surveys'));
          break;
 
          case '1':
@@ -161,35 +161,17 @@ class SurveyController extends Controller
 
    }
 
-   /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-   public function edit($id)
-   {
-      return redirect()->route('survey.index');
-   }
-
-   /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-   public function update(Request $request, $id)
-   {
-      return redirect()->route('survey.index');
-   }
-
    public function showSections($id){
 
       $survey = Questionario::find(decrypt($id));
       $sections = $survey->turmas;
       return view('survey.professor.show-sections', compact('sections', 'survey'));
 
+   }
+
+   public function showResponses($id){
+      $responses = Resposta::where('questionario_turma_id', decrypt($id))->get();
+      return view('survey.admin.show-responses', compact('responses'));
    }
 
    public function provide($id){
@@ -347,50 +329,6 @@ class SurveyController extends Controller
       $answers[] = $questionAnswers;
       $labels[] = "Turma " . $section->cod_turma . " - " . $section->disciplina->disciplina . " - " . $section->ano . "/" . $section->semestre . " - Data: " . date("d/m/y", strtotime($surveySection->created_at));
 
-      // $answers = array();
-      // foreach ($surveySection as $sS) {
-      //    $responses = Resposta::where('questionario_turma_id', $sS->id)->get();
-      //    $questionAnswers = array();
-      //    foreach ($questions as $question){
-      //       switch ($question->tipo_id){
-      //          case 2:
-      //          $data = array();
-      //          foreach($question->opcoes as $opcao){
-      //             $responseData = RespostaUnicaEscolha::where('opcao_id', $opcao->id)->get();
-      //             $data[] = $responseData->filter(function($rData) use ($responses){
-      //                return $responses->contains('id', $rData->resposta_id);
-      //             })->count();
-      //          }
-      //          $questionAnswers[] = $data;
-      //          break;
-      //
-      //          case 3:
-      //          $data = array();
-      //          $multipleChoiceResponses = RespostaMultiplaEscolha::where('pergunta_id', $question->id)->get();
-      //          $multipleChoiceResponses = $multipleChoiceResponses->filter(function($mCR) use ($responses){
-      //             return $responses->contains('id', $mCR->resposta_id);
-      //          });
-      //          // dd($multipleChoiceResponses);
-      //          foreach($question->opcoes as $opcao){
-      //             $responseData = DB::table('opcao_resposta_multipla_escolha')->where('opcao_id', $opcao->id)->get();
-      //             $r = array_where($responseData, function($v, $rData) use ($multipleChoiceResponses){
-      //                return $multipleChoiceResponses->contains('id', $rData->resposta_me_id);
-      //             });
-      //             $data[] = count($r);
-      //          }
-      //          $questionAnswers[] = $data;
-      //          break;
-      //       }
-      //    }
-      //    // dd($questionAnswers);
-      //    $answers[] = $questionAnswers;
-      // }
-      // $answers[] = $questionAnswers;
-      // $responses = Resposta::where('questionario_turma_id', $surveySection->id)->get();
-      // dd($answers);
-
-      // dd($responses);
-
       switch (session()->get('role')) {
          case '0':
          return view('survey.admin.class-results', compact('survey', 'questions', 'answers', 'labels'));
@@ -447,37 +385,6 @@ class SurveyController extends Controller
          $answers[$key] = array_values($questionAnswers[$key]);
       }
 
-      // foreach ($questions as $question){
-      //    switch ($question->tipo_id) {
-      //       case 2:
-      //       $data = array();
-      //       foreach($question->opcoes as $opcao){
-      //          $responseData = RespostaUnicaEscolha::where('opcao_id', $opcao->id)->get();
-      //          $data[] = $responseData->filter(function($rData) use ($responses){
-      //             return $responses->contains('id', $rData->resposta_id);
-      //          })->count();
-      //       }
-      //       $questionAnswers[] = $data;
-      //       break;
-      //
-      //       case 3:
-      //       $data = array();
-      //       $multipleChoiceResponses = RespostaMultiplaEscolha::where('pergunta_id', $question->id)->get();
-      //       $multipleChoiceResponses = $multipleChoiceResponses->filter(function($mCR) use ($responses){
-      //          return $responses->contains('id', $mCR->resposta_id);
-      //       });
-      //       // dd($multipleChoiceResponses);
-      //       foreach($question->opcoes as $opcao){
-      //          $responseData = DB::table('opcao_resposta_multipla_escolha')->where('opcao_id', $opcao->id)->get();
-      //          $r = array_where($responseData, function($v, $rData) use ($multipleChoiceResponses){
-      //             return $multipleChoiceResponses->contains('id', $rData->resposta_me_id);
-      //          });
-      //          $data[] = count($r);
-      //       }
-      //       $questionAnswers[] = $data;
-      //       break;
-      //    }
-      // }
       switch (session()->get('role')) {
          case '0':
          return view('survey.admin.results', compact('survey', 'questions', 'answers', 'labels'));

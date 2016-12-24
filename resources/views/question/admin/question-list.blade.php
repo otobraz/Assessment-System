@@ -1,18 +1,10 @@
 <div class="box box-primary-ufop">
    <div class="box-header with-border">
-      <h3 class="box-title">Questões</h3>
-      {{-- <div class="text-center">
-      <i class="text-center fa fa-circle-o text-green"> </i>
-      <span> Única Escolha </span>
-      <i class="text-center fa fa-circle-o text-blue"></i>
-      <span> Múltipla Escolha </span>
-      <i class="text-center fa fa-circle-o text-yellow"> </i>
-      <span> Aberta </span>
-   </div> --}}
+      <h3 class="box-title">Perguntas</h3>
+
    <div class="box-tools pull-right">
       <a class="btn btn-primary-ufop btn-sm" role="button"
-      href="{{route('question.create')}}">Criar questão</a>
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      href="{{route('question.create')}}">Criar pergunta</a>
    </div><!-- /.box-tools -->
 </div><!-- /.box-header -->
 
@@ -37,10 +29,10 @@
 
                <div class="box-body">
                   <div class="pull-right">
-                     <a class="btn btn-primary-ufop btn-xs" role="button"
-                     style="color: white" href="{{action('QuestionController@edit', encrypt($question->id))}}"><i class="fa fa-edit"></i> Editar</a>
+                     <a class="btn btn-warning btn-xs" role="button"
+                     style="color: white" href="{{action('QuestionController@edit', encrypt($question->id))}}">Editar</a>
                      <a class="btn btn-danger btn-xs" role="button"
-                     style="color: white" data-toggle="modal" href="#deleteModal" data-action="pergunta/{{encrypt($question->id)}}"><i class="fa fa-trash-o"></i> Excluir</a>
+                     style="color: white" data-toggle="modal" href="#deleteModal" data-action="pergunta/{{encrypt($question->id)}}">Excluir</a>
                   </div><!-- /.box-tools -->
                   <fieldset disabled>
                      @foreach ($question->opcoes as $choice)
@@ -79,10 +71,10 @@
                <div class="box-body">
 
                   <div class="pull-right">
-                     <a class="btn btn-primary-ufop btn-xs" role="button"
-                     style="color: white" href="{{action('QuestionController@edit', encrypt($question->id))}}"><i class="fa fa-edit"></i> Editar</a>
+                     <a class="btn btn-warning btn-xs" role="button"
+                     style="color: white" href="{{action('QuestionController@edit', encrypt($question->id))}}">Editar</a>
                      <a class="btn btn-danger btn-xs" role="button"
-                     style="color: white" data-toggle="modal" href="#deleteModal" data-action="pergunta/{{encrypt($question->id)}}"><i class="fa fa-trash-o"></i> Excluir</a>
+                     style="color: white" data-toggle="modal" href="#deleteModal" data-action="pergunta/{{encrypt($question->id)}}">Excluir</a>
                   </div><!-- /.box-tools -->
 
                   <fieldset disabled>
@@ -120,10 +112,11 @@
                <div class="box-body">
 
                   <div class="pull-right">
-                     <a class="btn btn-primary-ufop btn-xs" role="button"
-                     style="color: white" href="{{action('QuestionController@edit', encrypt($question->id))}}"><i class="fa fa-edit"></i> Editar</a>
+                     <a class="btn btn-warning btn-xs" role="button"
+                     style="color: white" href="{{action('QuestionController@edit', encrypt($question->id))}}">Editar</a>
+
                      <a class="btn btn-danger btn-xs" role="button"
-                     style="color: white" data-toggle="modal" href="#deleteModal" data-action="pergunta/{{encrypt($question->id)}}"><i class="fa fa-trash-o"></i> Excluir</a>
+                     style="color: white" data-toggle="modal" href="#deleteModal" data-action="pergunta/{{encrypt($question->id)}}">Excluir</a>
                   </div><!-- /.box-tools -->
 
                   <br/>
@@ -147,89 +140,4 @@
 </div><!-- /.box-body -->
 </div><!-- /.box -->
 
-{{-- <div class="box box-solid-ufop box-primary-ufop">
-<div class="box-header with-border">
-<h3 class="box-title">Questões Fechadas - Múltipla Escolha</h3>
-<div class="box-tools pull-right">
-<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-</div><!-- /.box-tools -->
-</div><!-- /.box-header -->
-
-<div class="box-body">
-
-@foreach ($multipleChoiceQuestions as $question)
-
-<div class="col-md-6">
-<div class="box box-default">
-<div class="box-header with-border">
-<h3 class="box-title">{{$question->pergunta}}</h3>
-<div class="box-tools pull-right">
-<a class="btn btn-primary-ufop btn-xs" role="button"
-style="color: white" href="#"><i class="fa fa-edit"></i> Editar</a>
-<a class="btn btn-primary-ufop btn-xs" role="button"
-style="color: white" href="#"><i class="fa fa-trash-o"></i> Excluir</a>
-</div><!-- /.box-tools -->
-</div><!-- /.box-header -->
-
-<div class="box-body">
-
-<fieldset disabled>
-@foreach ($question->opcoes as $choice)
-<div class="checkbox">
-<label>
-<input type="checkbox" name="question-{{$question->id}}-checkbox[]" value="{{$choice->id}}">
-{{$choice->opcao}}
-</label>
-</div>
-@endforeach
-</fieldset>
-</div><!-- /.box-body -->
-</div><!-- /.box -->
-</div>
-
-@endforeach
-</div><!-- /.box-body -->
-</div><!-- /.box -->
-
-<div class="box box-solid-ufop box-primary-ufop">
-<div class="box-header with-border">
-<h3 class="box-title">Questões Abertas</h3>
-<div class="box-tools pull-right">
-<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-</div><!-- /.box-tools -->
-</div><!-- /.box-header -->
-
-<div class="box-body">
-
-@foreach ($textQuestions as $question)
-
-<div class="col-md-6">
-<div class="box box-default">
-<div class="box-header with-border">
-<h3 class="box-title">{{$question->pergunta}}</h3>
-<div class="box-tools pull-right">
-<a class="btn btn-primary-ufop btn-xs" role="button"
-style="color: white" href="#"><i class="fa fa-edit"></i> Editar</a>
-<a class="btn btn-primary-ufop btn-xs" role="button"
-style="color: white" href="#"><i class="fa fa-trash-o"></i> Excluir</a>
-</div><!-- /.box-tools -->
-</div><!-- /.box-header -->
-
-<div class="box-body">
-<fieldset disabled>
-<textarea class="form-control input-xlarge"
-rows="1"
-name="question-{{$question->id}}-text"
-id="question-{{$question->id}}-text"
-placeholder="Digite aqui..."
-></textarea>
-</fieldset>
-</div><!-- /.box-body -->
-</div><!-- /.box -->
-</div>
-
-@endforeach
-</div><!-- /.box-body -->
-</div><!-- /.box -->--}}
-
-@include('question-type.delete-modal')
+@include('question.admin.delete-modal')

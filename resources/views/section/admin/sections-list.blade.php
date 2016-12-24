@@ -1,4 +1,4 @@
-<table id="index-table" class="table table-ufop table-col-condensed table-striped table-responsive">
+<table id="index-table" class="table table-ufop table-bordered table-striped table-col-condensed table-responsive">
 
    <thead>
       <tr>
@@ -6,7 +6,6 @@
          <th>Disciplina</th>
          <th>Cód. Turma</th>
          <th>Departamento</th>
-         <th>Ano</th>
          <th>Semestre</th>
          <th>Excluir</th>
       </tr>
@@ -16,13 +15,12 @@
    <tbody>
       @foreach($sections as $section)
          <tr>
-            <td>{{$section->id}}</td>
+            <td align="center">{{$section->id}}</td>
             <td>{{$section->disciplina->disciplina}}</td>
-            <td>{{$section->cod_turma}}</td>
-            <td>{{$section->disciplina->departamento->cod_departamento}}</td>
-            <td>{{$section->ano}}</td>
-            <td>{{$section->semestre}}</td>
-            <td>
+            <td align="center">{{$section->cod_turma}}</td>
+            <td align="center">{{$section->disciplina->departamento->cod_departamento}}</td>
+            <td align="center">{{$section->ano . "/" . $section->semestre}}</td>
+            <td align="center">
                <a  role="button" class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal" data-action="tipo/{{encrypt($section->id)}}">Excluir</a>
             </td>
          </tr>

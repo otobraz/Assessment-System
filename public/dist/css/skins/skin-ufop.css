@@ -157,3 +157,7 @@ border-top-color: #962038;
 /*.box.box-solid > .box-header .btn:hover, .box.box-solid > .box-header a:hover {
    color: rgb(139, 19, 43);
 }*/
+
+.selected-row {
+   background-color: #f2dede !important;
+}

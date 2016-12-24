@@ -1,4 +1,4 @@
-@extends('layout.student.base')
+@extends('layout.admin.base')
 
 @section('title')
    Resposta | Detalhes
@@ -10,7 +10,7 @@
       <div class="box-header with-border">
          <h3 class="box-title">{{$survey->titulo}}</h3>
          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
          </div><!-- /.box-tools -->
       </div><!-- /.box-header -->
 
@@ -77,6 +77,7 @@
       </fieldset>
 
    </div>
+
 </div>
 
 @endsection
