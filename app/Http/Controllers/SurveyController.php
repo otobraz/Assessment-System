@@ -86,7 +86,6 @@ class SurveyController extends Controller
    {
 
       $inputs = $request->except(['_token']);
-      dd($inputs);
       $survey = new Questionario([
          'titulo' => array_shift($inputs),
          'descricao' => array_shift($inputs),

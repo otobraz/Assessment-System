@@ -12,7 +12,7 @@ $("button[name='btn-blank-question']").on("click", function(){
       .append("<div class='text-center'><i class='fa fa-2x fa-refresh fa-spin'></i></div>")
       .load("ajax/nova-questao/" + count)
       .next().load("ajax/novo-input/question-" + count + "/2");
-
+   
 });
 
 $("#survey-preview-panel > .panel-body").on("click", ".select-question-type", function(){

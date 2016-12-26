@@ -76,6 +76,7 @@
                   <textarea class="form-control input-xlarge" type="text" name="description" id="description" rows="4" placeholder="Descrição sobre a orientação"></textarea>
                </div>
 
+
                <button class="btn btn-default"  type="reset"><i class="glyphicon glyphicon-erase"></i> Limpar</button>
                <button class="btn btn-primary-ufop" type="submit"><i class="fa fa-check-square-o"></i> Orientar</button>
 
