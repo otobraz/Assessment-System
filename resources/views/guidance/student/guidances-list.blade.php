@@ -1,10 +1,11 @@
-<table class="table table-ufop table-col-condensed table-striped table-responsive">
+<table class="table table-ufop table-col-condensed table-bordered table-striped table-responsive">
    <thead>
       <tr>
          <th>Tipo</th>
          <th>Orientando</th>
          <th>Orientador</th>
          <th>Status</th>
+         {{-- <th>Início</th> --}}
          <th>Detalhes</th>
          <th>Questionário</th>
       </tr>
@@ -24,14 +25,15 @@
                   Finalizada
                @endif
             </td>
-            <td>
+            {{-- <td>{{date("d/m/y", strtotime($guidance->created_at))}}</td> --}}
+            <td align="center">
                <a class="btn btn-info btn-xs" role="button" href="{{route('guidance.show', encrypt($guidance->id))}}"> Detalhes</a>
             </td>
-            <td>
-               @if ($guidance->questionario_liberado)
+            <td align="center">
+               @if (!$guidance->questionario_liberado)
                   <a class="btn btn-primary-ufop btn-xs" role="button" href="#">Responder</a>
                @else
-                  <a class="btn btn-success btn-xs" role="button" href="#" disabled><span class="glyphicon glyphicon-ok" aria-hidden="true">Insdisponível</a>
+                  <a class="btn btn-warning btn-xs" role="button" href="#" disabled>Insdisponível</a>
                @endif
             </td>
          </tr>

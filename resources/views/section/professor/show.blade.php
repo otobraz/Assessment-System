@@ -23,13 +23,12 @@
       <div class="box-body">
 
 
-         <table class="table table-ufop table-striped table-responsive">
+         <table class="table table-ufop table-striped table-bordered table-col-condensed table-responsive">
 
             <thead>
                <tr>
                   <th>Nome</th>
                   <th>Matrícula</th>
-                  <th>CPF</th>
                   <th>E-mail</th>
                   <th>Curso</th>
                </tr>
@@ -39,8 +38,7 @@
                @foreach($students as $student)
                   <tr>
                      <td>{{$student->nome_completo}}</td>
-                     <td>{{$student->matricula}}</td>
-                     <td>{{$student->usuario}}</td>
+                     <td align="center">{{$student->matricula}}</td>
                      <td>{{$student->email}}</td>
                      <td>{{$student->curso->curso}}</td>
                   </tr>

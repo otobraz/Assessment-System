@@ -1,7 +1,7 @@
 @extends('layout.student.base')
 
 @section('title')
-   Meus Questionários
+   Questionários
 @endsection
 
 {{-- @section('content-header')

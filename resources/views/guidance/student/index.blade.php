@@ -1,7 +1,7 @@
 @extends('layout.student.base')
 
 @section('title')
-   Gerenciar Orientações
+   Orientações
 @endsection
 
 @section('content')

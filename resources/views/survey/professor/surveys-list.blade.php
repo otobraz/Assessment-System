@@ -5,7 +5,7 @@
          <h3 class="box-title">{{$survey->titulo}}</h3>
          {{-- . " - " . date("d/m/y - H:i:s", strtotime($survey->created_at)) --}}
          <div class="box-tools pull-right">
-            <a class="btn btn-primary-ufop btn-sm" role="button"
+            <a class="btn btn-info btn-sm" role="button"
             style="color: white" href="{{action('SurveyController@show', encrypt($survey->id))}}"><i class="fa fa-info-circle"></i> Detalhes</a>
             <a class="btn btn-primary-ufop btn-sm" role="button"
             style="color: white" href="{{action('SurveyController@getResults', encrypt($survey->id))}}"><i class="fa fa-bar-chart"></i> Resultado Geral</a>
@@ -23,7 +23,7 @@
 
                <input type="hidden" name="surveyId" value="{{$survey->id}}">
 
-               <table class="table table-bordered table-col-condensed table-striped table-responsive">
+               <table class="table table-bordered table-col-condensed table-hover clickable-row table-striped table-responsive">
 
                   <thead>
                      <tr>
@@ -33,8 +33,7 @@
                         </th>
                      </tr>
                      <tr>
-                        <th>Comparar</th>
-                        <th>Disciplina</th>
+                        <th>Disciplina (selecione para comparar)</th>
                         <th>Turma</th>
                         {{-- <th>Departamento</th> --}}
                         <th>Semestre</th>
@@ -52,14 +51,14 @@
                         @foreach ($survey->turmas()->OrderByDisciplina()->get() as $section)
                            <tr>
                               <td>
-                                 <input type="checkbox" name="sections[]" value="{{$section->id}}">
+                                 <input type="checkbox" name="sections[]" id="{{$section->id}}" value="{{$section->id}}">
+                                 {{"  " . $section->disciplina->disciplina}}
                               </td>
-                              <td>{{$section->disciplina->disciplina}}</td>
-                              <td>{{$section->cod_turma}}</td>
+                              <td align="center">{{$section->cod_turma}}</td>
                               {{-- <td>{{$section->disciplina->departamento->cod_departamento}}</td> --}}
-                              <td>{{$section->ano . "/" . $section->semestre}}</td>
-                              <td>
-                                 {{date("d/m/y - H:i:s", strtotime($section->pivot->created_at))}}
+                              <td align="center">{{$section->ano . "/" . $section->semestre}}</td>
+                              <td align="center">
+                                 {{date("d/m/y", strtotime($section->pivot->created_at))}}
                               </td>
                               <td>
                                  @if($section->pivot->aberto)
@@ -68,7 +67,7 @@
                                     Fechado
                                  @endif
                               </td>
-                              <td>
+                              <td align="center">
                                  @if($section->pivot->aberto)
                                     <a class="btn btn-danger btn-xs" role="button"
                                     style="color: white" href="{{route('survey.close', encrypt($section->pivot->id))}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>  Fechar</a>
@@ -77,8 +76,8 @@
                                     style="color: white" href="{{route('survey.open', encrypt($section->pivot->id))}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  Abrir</a>
                                  @endif
                               </td>
-                              <td>
-                                 <a class="btn btn-primary-ufop btn-xs" role="button"
+                              <td align="center">
+                                 <a class="btn btn-info btn-xs" role="button"
                                  style="color: white" href="{{route('survey.classResults', encrypt($section->pivot->id))}}"><i class="fa fa-bar-chart"></i> Resultado</a>
                               </td>
                            </tr>
@@ -87,7 +86,7 @@
                      </div>
 
                      <tr>
-                        <td colspan="8"><button class="btn btn-primary-ufop" type="submit">Comparar</button></td>
+                        <td colspan="8"><button class="btn btn-primary-ufop" type="submit"><span class="glyphicon glyphicon-stats" aria-label="Comparar"></span> Comparar</button></td>
                      </tr>
 
                   </tbody>
@@ -101,3 +100,9 @@
       </div><!-- /.box-body -->
    </div><!-- /.box -->
 @endforeach
+
+@section('myScripts')
+
+   <script src="{{asset('/js/clickableRow.js')}}"></script>
+
+@endsection

@@ -1,20 +1,25 @@
 @extends('layout.student.base')
 
 @section('title')
-   Responder Questionário
-@endsection
-
-@section('content-header')
-   <h1>{{$survey->titulo}}</h1>
-   <br/>
-   <h1><small>{{$survey->descricao}}</small></h1>
-   <hr class="hr-ufop">
+   Questionário | Responder
 @endsection
 
 @section('content')
 
-   <div class="panel panel-default">
-      <div class="panel-body panel-survey">
+   <div class="box box-primary-ufop">
+      <div class="box-header with-border">
+         <h3 class="box-title">{{$survey->titulo}}</h3>
+         <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+         </div><!-- /.box-tools -->
+      </div><!-- /.box-header -->
+
+      <div class="box-body">
+
+         {{-- <h4>{{$survey->titulo}}</h4> --}}
+         <h4><small>{{$survey->descricao}}</small></h4>
+         <hr class="hr-ufop">
+
          <form class="form-signin" method="POST" action="{{action('ResponseController@store')}}">
 
             {{ csrf_field() }}
@@ -32,7 +37,7 @@
                            <div class="radio">
                               <label>
                                  <input type="radio" name="question-{{$question->id}}-radio"
-                                 id="question-{{$question->id}}-radio" value="{{$choice->id}}">
+                                 id="question-{{$question->id}}-radio" value="{{$choice->id}}" required>
                                  {{$choice->opcao}}
                               </label>
                            </div>
@@ -55,7 +60,7 @@
                         rows="1"
                         name="question-{{$question->id}}-text"
                         id="question-{{$question->id}}-text"
-                        placeholder="Digite aqui..."
+                        placeholder="Digite aqui..." required
                         ></textarea>
                      @endif
                   </div>
@@ -70,5 +75,6 @@
             </fieldset>
          </form>
       </div>
+   </div>
 
-   @endsection
+@endsection

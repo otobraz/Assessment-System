@@ -9,7 +9,7 @@
             </div><!-- /.box-tools -->
          </div><!-- /.box-header -->
          <div class="box-body">
-            <table class="table table-ufop table-col-condensed table-striped table-responsive">
+            <table class="table table-ufop table-col-condensed table-bordered table-striped table-responsive">
 
                <thead>
                   <tr>
@@ -29,10 +29,10 @@
                      @foreach ($section->questionarios->sortByDesc('id') as $survey)
                         <tr>
                            <td>{{$section->disciplina->disciplina}}</td>
-                           <td>{{$section->cod_turma}}</td>
-                           <td>{{$survey->professor->nome . " " . $survey->professor->sobrenome}}</td>
+                           <td align="center">{{$section->cod_turma}}</td>
+                           <td>{{$survey->professor->nomeCompleto}}</td>
                            <td>{{$survey->titulo}}</td>
-                           <td>{{date("d/m/y", strtotime($survey->pivot->created_at))}}</td>
+                           <td align="center">{{date("d/m/y", strtotime($survey->pivot->created_at))}}</td>
                            <td>
                               @if($survey->pivot->aberto)
                                  Aberto
@@ -43,7 +43,7 @@
                            <td align="center">
                               @if (isset($responses[$survey->pivot->id]))
                                  <a class="btn btn-primary btn-xs" role="button"
-                                 style="color: white" href="{{action('ResponseController@show', encrypt($responses[$survey->pivot->id]->id))}}">Ver resposta</a>
+                                 style="color: white" href="{{action('ResponseController@show', encrypt($responses[$survey->pivot->id]->id))}}">Resposta</a>
                               @else
                                  <a class="btn btn-primary-ufop btn-xs" role="button"
                                  style="color: white" href="{{action('ResponseController@create', encrypt($survey->pivot->id))}}">Responder</a>

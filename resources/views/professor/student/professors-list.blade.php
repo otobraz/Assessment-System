@@ -1,4 +1,4 @@
-<table id="index-table" class="table table-hover table-col-condensed table-ufop table-striped table-bordered table-responsive">
+<table id="index-table" class="table table-col-condensed table-ufop table-striped table-bordered table-responsive">
 
    <thead>
       <tr>
@@ -13,12 +13,12 @@
    <tbody>
       @foreach($professors as $professor)
          <tr>
-            <td>{{$professor->nome . " " . $professor->sobrenome}}</td>
+            <td>{{$professor->nomeCompleto}}</td>
             <td>{{$professor->email}}</td>
             <td>{{$professor->areas_interesse}}</td>
-            <td>{{$professor->departamento->cod_departamento}}</td>
-            <td>
-               <a class="btn btn-primary-ufop btn-xs" role="button"
+            <td align="center">{{$professor->departamento->cod_departamento}}</td>
+            <td align="center">
+               <a class="btn btn-info btn-xs" role="button"
                style="color: white" href="{{route('professor.show', encrypt($professor->id))}}">Detalhes</a>
             </td>
          </tr>

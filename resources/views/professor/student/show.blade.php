@@ -15,7 +15,7 @@
       <div class="box-header with-border">
          <h3 class="box-title">{{$professor->nome_completo}}</h3>
          <div class="box-tools pull-right">
-            <button class="btn btn-primary-ufop btn-sm" type="button" onclick="history.go(-1)"><i class="fa fa-arrow-left"></i> Voltar</button>
+            <button class="btn btn-default btn-sm" type="button" onclick="history.go(-1)"><i class="fa fa-arrow-left"></i> Voltar</button>
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
          </div><!-- /.box-tools -->
       </div><!-- /.box-header -->
@@ -40,12 +40,12 @@
                </div><!-- /.box-tools -->
             </div><!-- /.box-header -->
             <div class="box-body">
-               <table class="table table-ufop table-striped table-responsive">
+               <table class="table table-ufop table-bordered table-col-condensed table-striped table-responsive">
 
                   <thead>
                      <tr>
                         <th>Turma</th>
-                        <th>Cod. Disciplina</th>
+                        <th>Código da Disciplina</th>
                         <th>Disciplina</th>
                      </tr>
                   </thead>
@@ -54,8 +54,8 @@
                   <tbody>
                      @foreach($sections as $section)
                         <tr>
-                           <td>{{$section->cod_turma}}</td>
-                           <td>{{$section->disciplina->cod_disciplina}}</td>
+                           <td align="center">{{$section->cod_turma}}</td>
+                           <td align="center">{{$section->disciplina->cod_disciplina}}</td>
                            <td>{{$section->disciplina->disciplina}}</td>
                         </tr>
                      @endforeach
@@ -74,7 +74,7 @@
          </div><!-- /.box-tools -->
       </div><!-- /.box-header -->
       <div class="box-body">
-         <table class="table table-hover table-ufop table-striped table-responsive">
+         <table class="table table-ufop table-bordered table-striped table-responsive">
 
             <thead>
                <tr>
@@ -89,9 +89,9 @@
                @foreach ($surveys as $survey)
                   <tr>
                      <td>{{{$survey->titulo}}}</td>
-                     <td>{{date("d/m/y", strtotime($survey->created_at))}}</td>
-                     <td>
-                        <a type="button" class="btn btn-primary-ufop btn-xs" href="{{route('survey.show', encrypt($survey->id))}}">Detalhes</a>
+                     <td align="center">{{date("d/m/y", strtotime($survey->created_at))}}</td>
+                     <td align="center">
+                        <a type="button" class="btn btn-info btn-xs" href="{{route('survey.show', encrypt($survey->id))}}">Detalhes</a>
                      </td>
                   </tr>
                @endforeach
@@ -110,7 +110,7 @@
          </div><!-- /.box-header -->
          <div class="box-body">
 
-            <table class="table table-ufop table-col-condensed table-striped table-responsive">
+            <table class="table table-ufop table-col-condensed table-bordered table-striped table-responsive">
 
                <thead>
                   <tr>
@@ -134,10 +134,10 @@
                               Finalizada
                            @endif
                         </td>
-                        <td>
+                        <td align="center">
                            <a class="btn btn-info btn-xs" role="button" href="{{route('guidance.show', encrypt($guidance->id))}}"> Detalhes</a>
                         </td>
-                        <td>
+                        <td align="center">
                            <a class="btn btn-primary-ufop btn-xs" role="button" href="{{route('guidance.show', encrypt($guidance->id))}}"> Resposta</a>
                         </td>
                      </tr>

@@ -187,8 +187,8 @@ class GuidanceController extends Controller
    public function provideSurvey($id){
 
       $guidance = Orientacao::find(decrypt($id));
-      if(!$guidance->questionario_aberto){
-         $guidance->questionario_aberto = 1;
+      if(!$guidance->questionario_liberado){
+         $guidance->questionario_liberado = 1;
          $guidance->save();
          return redirect()->route('guidance.index')->with('successMessage', 'Questionário disponibilizado.');
       }
@@ -199,8 +199,8 @@ class GuidanceController extends Controller
    public function cancelSurvey($id){
 
       $guidance = Orientacao::find(decrypt($id));
-      if($guidance->questionario_aberto){
-         $guidance->questionario_aberto = 0;
+      if($guidance->questionario_liberado){
+         $guidance->questionario_liberado = 0;
          $guidance->save();
          return redirect()->route('guidance.index')->with('successMessage', 'Disponibilização cancelada.');
       }

@@ -4,17 +4,18 @@
    Questionário | Detalhes
 @endsection
 
-@section('content-header')
-   <h1>{{$survey->titulo}}</h1>
-   <br/>
-   <h1><small>{{$survey->descricao}}</small></h1>
-   <hr class="hr-ufop">
-@endsection
-
 @section('content')
 
-   <div class="panel panel-default">
-      <div class="panel-body panel-survey">
+
+   <div class="box box-primary-ufop">
+      <div class="box-header with-border">
+         <h3 class="box-title">{{$survey->titulo}}</h3>
+         <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+         </div><!-- /.box-tools -->
+      </div><!-- /.box-header -->
+
+      <div class="box-body">
 
          <fieldset disabled>
 
@@ -70,5 +71,6 @@
          </div>
 
       </div>
+   </div>
 
-   @endsection
+@endsection

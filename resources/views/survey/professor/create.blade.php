@@ -33,7 +33,9 @@
 
                         <div class="form-group">
                            <label for="name">Título:</label>
-                           <input type="text" name="name" class="form-control" id="name" placeholder="Informe o título do questionário" required>
+                           <input type="text" name="name" class="form-control" id="name" placeholder="Informe o título do questionário" required
+                           oninvalid="setCustomValidity('Informe o título do questionário.')"
+                           oninput="setCustomValidity('')">
                         </div>
 
                         <div class="form-group">

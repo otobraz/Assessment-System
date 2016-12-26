@@ -30,7 +30,7 @@
 
                   <input type="hidden" name="surveyId" value="{{$survey->id}}">
 
-                  <table class="table table-bordered table-striped table-responsive">
+                  <table class="table table-bordered table-striped table-col-condensed table-responsive">
 
                      <thead>
                         <tr>
@@ -58,10 +58,10 @@
                                     <input type="checkbox" name="sections[]" value="{{$section->id}}">
                                  </td>
                                  <td>{{$section->disciplina->disciplina}}</td>
-                                 <td>{{$section->cod_turma}}</td>
-                                 <td>{{$section->disciplina->departamento->cod_departamento}}</td>
-                                 <td>{{$section->ano . "/" . $section->semestre}}</td>
-                                 <td>
+                                 <td align="center">{{$section->cod_turma}}</td>
+                                 <td align="center">{{$section->disciplina->departamento->cod_departamento}}</td>
+                                 <td align="center">{{$section->ano . "/" . $section->semestre}}</td>
+                                 <td align="center">
                                     {{date("d/m/y - H:i:s", strtotime($section->pivot->created_at))}}
                                  </td>
                                  <td>
@@ -71,7 +71,7 @@
                                        Fechado
                                     @endif
                                  </td>
-                                 <td><a class="btn btn-primary-ufop btn-xs" role="button"
+                                 <td align="center"><a class="btn btn-primary-ufop btn-xs" role="button"
                                     style="color: white" href="{{route('survey.classResults', [encrypt($survey->id), encrypt($section->id)])}}">Resultado</a>
                                  </td>
                               </tr>

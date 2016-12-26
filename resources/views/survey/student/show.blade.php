@@ -56,9 +56,9 @@
                                  {{"  " . $section->disciplina->disciplina}}
                               </td>
                               <td align="center">{{$section->cod_turma}}</td>
-                              <td>{{$section->disciplina->departamento->cod_departamento}}</td>
-                              <td>{{$section->ano . "/" . $section->semestre}}</td>
-                              <td>
+                              <td align="center">{{$section->disciplina->departamento->cod_departamento}}</td>
+                              <td align="center">{{$section->ano . "/" . $section->semestre}}</td>
+                              <td align="center">
                                  {{date("d/m/y", strtotime($section->pivot->created_at))}}
                               </td>
                               <td>
@@ -68,7 +68,7 @@
                                     Fechado
                                  @endif
                               </td>
-                              <td align="center"><a class="btn btn-primary-ufop btn-xs" role="button"
+                              <td align="center"><a class="btn btn-info btn-xs" role="button"
                                  style="color: white" href="{{route('survey.classResults', encrypt($section->pivot->id))}}"><i class="fa fa-bar-chart"></i> Resultado</a>
                               </td>
                            </tr>

@@ -1,4 +1,4 @@
-<table id="table-index" class="table table-col-condensed table-hover table-bordered table-striped table-ufop table-responsive">
+<table id="table-index" class="table table-col-condensed table-bordered table-striped table-ufop table-responsive">
 
    <thead>
       <tr>

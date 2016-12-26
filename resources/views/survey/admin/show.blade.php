@@ -162,3 +162,9 @@
    </div><!-- /.box -->
 
 @endsection
+
+@section('myScripts')
+
+   <script src="{{asset('/js/clickableRow.js')}}"></script>
+
+@endsection

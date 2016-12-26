@@ -54,6 +54,10 @@
          "order": [],
          "autoWidth": true,
          "aLengthMenu": [[25, 50, 100, 200, 300, -1], [25, 50, 100, 200, 300, "Tudo"]],
+         "columnDefs": [{
+            "orderable": false,
+            "targets": 4
+         }]
       });
    });
    </script>
