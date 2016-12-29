@@ -215,9 +215,11 @@ class SurveyController extends Controller
 
       $textAnswers = array();
       $answers = array();
+      $responsesCount = 0;
 
       foreach ($surveySection as $sS) {
          $responses = Resposta::where('questionario_turma_id', $sS->id)->get();
+         $responsesCount += $responses->count();
          foreach ($questions as $question) {
             if($question->tipo_id == 1){
                $textAnswers[$question->id] = array();
@@ -259,10 +261,10 @@ class SurveyController extends Controller
             $answers[$key] = array_values($answers[$key]);
          }
       }
-      return array($textAnswers, $answers);
+      return array($textAnswers, $answers, $responsesCount);
    }
 
-   public function postResults(Request $request){
+   public function comparedResult(Request $request){
 
       $sectionsInput = $request->input('sections');
       $survey = Questionario::find($request->input('surveyId'));
@@ -276,7 +278,7 @@ class SurveyController extends Controller
          $textAnswers[] = $sectionAnswers[0];
          $answers[] = $sectionAnswers[1];
          $section = Turma::find($section);
-         $labels[] = "Turma " . $section->cod_turma . " - " . $section->disciplina->disciplina . " - " . $section->ano . "/" . $section->semestre;
+         $labels[] = $label = "T" . $section->cod_turma . ": " . $section->disciplina->disciplina . " - " . $section->ano . "/" . $section->semestre . " (TOTAL: " . $sectionAnswers[2] . ")";
       }
 
       switch (session()->get('role')) {
@@ -299,7 +301,7 @@ class SurveyController extends Controller
 
    }
 
-   public function classResults($surveySectionId){
+   public function classResult($surveySectionId){
 
       $surveySection = DB::table('questionario_turma')->where('id', decrypt($surveySectionId))->first();
       $survey = Questionario::find($surveySection->questionario_id);
@@ -347,7 +349,7 @@ class SurveyController extends Controller
       foreach ($answers as $key => $value) {
          $answers[$key] = array_values($answers[$key]);
       }
-      $label = "Turma " . $section->cod_turma . " - " . $section->disciplina->disciplina . " - " . $section->ano . "/" . $section->semestre . " - Data: " . date("d/m/y", strtotime($surveySection->created_at));
+      $label = "T" . $section->cod_turma . ": " . $section->disciplina->disciplina . " - " . $section->ano . "/" . $section->semestre . " - Data: " . date("d/m/y", strtotime($surveySection->created_at)) . " (TOTAL: " . $responses->count() . ")";
       $responsesCount = $responses->count();
       switch (session()->get('role')) {
          case '0':
@@ -368,7 +370,7 @@ class SurveyController extends Controller
 
    }
 
-   public function getResults($surveyId){
+   public function overallResult($surveyId){
 
       $survey = Questionario::find(decrypt($surveyId));
       if(session()->get('role') != 1){
@@ -419,17 +421,19 @@ class SurveyController extends Controller
          $answers[$key] = array_values($answers[$key]);
       }
 
+      $label = "(TOTAL: " . $responses->count() . ")";
+
       switch (session()->get('role')) {
          case '0':
-         return view('survey.admin.results', compact('survey', 'questions', 'answers', 'textAnswers'));
+         return view('survey.admin.results', compact('survey', 'questions', 'answers', 'textAnswers', 'label'));
          break;
 
          case '1':
-         return view('survey.student.results', compact('survey', 'questions', 'answers'));
+         return view('survey.student.results', compact('survey', 'questions', 'answers', 'label'));
          break;
 
          case '2':
-         return view('survey.professor.results', compact('survey', 'questions', 'answers', 'textAnswers'));
+         return view('survey.professor.results', compact('survey', 'questions', 'answers', 'textAnswers', 'label'));
          break;
 
          default:

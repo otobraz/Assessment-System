@@ -119,6 +119,7 @@
          labels: {!! $question->opcoes->pluck('opcao') !!},
          datasets: [
             {
+               label: "{{ $label }}",
                backgroundColor: color + '0.2)',
                borderColor: color + '1.0)',
                hoverBackgroundColor: color + '0.3)',
@@ -154,9 +155,14 @@
          animation: {
             onComplete: showBarValues
          },
+
          legend: {
-            display: false
+            labels: {
+               fontStyle: 'bold',
+               usePointStyle: true
+            }
          },
+
          responsive: true,
       };
 

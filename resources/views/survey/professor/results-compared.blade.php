@@ -163,6 +163,12 @@
             onComplete: showBarValues
          },
 
+         legend: {
+            labels: {
+               fontStyle: 'bold',
+               usePointStyle: true
+            }
+         },
          // animation: {
          //    duration: 1,
          //    onComplete: function () {

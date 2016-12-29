@@ -187,9 +187,9 @@ Route::group(['middleware' => ['auth.user']], function () {
    // Surveys
    Route::get('questionarios', ['as' => 'survey.index', 'uses' => 'SurveyController@index']);
    Route::get('questionario/{id}', ['as' => 'survey.show', 'uses' => 'SurveyController@show']);
-   Route::get('questionario/resultados/{surveyId}', ['as' => 'survey.results', 'uses' => 'SurveyController@getResults']);
-   Route::get('questionario/resultado/turma/{surveySectionId}', ['as' => 'survey.classResults', 'uses' => 'SurveyController@classResults']);
-   Route::post('questionario/resultados-comparados', ['as' => 'survey.postResults', 'uses' => 'SurveyController@postResults']);
+   Route::get('questionario/resultados/{surveyId}', ['as' => 'survey.overallResult', 'uses' => 'SurveyController@overallResult']);
+   Route::get('questionario/resultado/turma/{surveySectionId}', ['as' => 'survey.classResult', 'uses' => 'SurveyController@classResult']);
+   Route::post('questionario/resultados-comparados', ['as' => 'survey.comparedResult', 'uses' => 'SurveyController@comparedResult']);
 
    // responses
    Route::get('resposta/{id}', ['as' => 'response.show', 'uses' => 'ResponseController@show']);

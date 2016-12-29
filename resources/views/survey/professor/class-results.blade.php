@@ -35,6 +35,9 @@
                   </table>
                @else
                   <div id="chart-area{{$question->id}}" class="chart chart-area">
+                     <div class="legend">
+
+                     </div>
                      <canvas id="barChart{{$question->id}}"></canvas>
                   </div>
                @endif
@@ -50,7 +53,9 @@
 
 @section('myScripts')
 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script> --}}
+
+   <script src="{{asset('plugins/chartjs/Chart.js')}}" type="text/javascript"></script>
 
    <script>
 
@@ -144,6 +149,57 @@
             onComplete: showBarValues
          },
 
+         legend: {
+            labels: {
+               fontStyle: 'bold',
+               usePointStyle: true
+            }
+         },
+
+         // legendCallback: function(chart) {
+			// 	var text = [];
+			// 	text.push('<ul class="' + chart.id + '-legend">');
+			// 	for (var i = 0; i < chart.data.datasets.length; i++) {
+			// 		text.push('<li><span style="background-color:' + chart.data.datasets[i].backgroundColor + '"></span>');
+			// 		if (chart.data.datasets[i].label) {
+			// 			text.push(chart.data.datasets[i].label);
+			// 		}
+			// 		text.push('</li>');
+			// 	}
+			// 	text.push('</ul>');
+         //
+			// 	return text.join('');
+			// },
+
+         // legendCallback: function(chart) {
+         //    alert(chart.data);
+         //    var text = [];
+         //    text.push('<ul>');
+         //    for (var i=0; i<chart.data.datasets[0].data.length; i++) {
+         //       text.push('<li>');
+         //       text.push('<span style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">' + chart.data.datasets[0].data[i] + '</span>');
+         //       if (chart.data.labels[i]) {
+         //          text.push(chart.data.labels[i]);
+         //       }
+         //       text.push('</li>');
+         //    }
+         //    text.push('</ul>');
+         //    return text.join("");
+         // },
+
+         // legendCallback: function(chart) {
+         //    var text = [];
+         //    text.push('<ul class="' + chart.id + '-legend">');
+         //    for (var i = 0; i < chart.data.datasets[0].data.length; i++) {
+         //       text.push('<li><span style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">');
+         //       if (chart.data.labels[i]) {
+         //          text.push(chart.data.labels[i]);
+         //       }
+         //       text.push('</span></li>');
+         //    }
+         //    text.push('</ul>');
+         //    return text.join("");
+         // },
          // animation: {
          //    duration: 1,
          //    onComplete: function () {
@@ -195,7 +251,6 @@
          data: barChart{{$question->id}}Data,
          options: barChart{{$question->id}}Options
       });
-
 
       @endforeach
    });
