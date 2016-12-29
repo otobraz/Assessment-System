@@ -5,8 +5,8 @@
 @endsection
 
 {{-- @section('content-header')
-   <h1>{{$survey->titulo . " - " . $section->disciplina->disciplina}}</h1>
-   <hr class="hr-ufop">
+<h1>{{$survey->titulo . " - " . $section->disciplina->disciplina}}</h1>
+<hr class="hr-ufop">
 @endsection --}}
 
 @section('content')
@@ -64,7 +64,7 @@
             meta.data.forEach(function (bar, index) {
                var data = (dataset.data[index] * 100 / total).toFixed(2);
                if(isNaN(data)){
-                     ctx.fillText("0.00%", bar._model.x, bar._model.y);
+                  ctx.fillText("0.00%", bar._model.x, bar._model.y);
                }else{
                   ctx.fillText(data + "%", bar._model.x, bar._model.y + 15);
                }
@@ -83,26 +83,21 @@
       //- AREA CHART -
       //--------------
 
-      var colors = [];
-      @foreach ($answers as $key => $answer)
-      colors[{{$key}}] = getRandomColor();
-      @endforeach
+      color = getRandomColor();
 
       @foreach ($questions as $question)
 
       var data{{$question->id}} = {
          labels: {!! $question->opcoes->pluck('opcao') !!},
          datasets: [
-            @foreach ($answers as $aK => $answer)
             {
-               label: "{{ $labels[$aK] }}",
-               backgroundColor: colors[{{$aK}}] + '0.2)',
-               borderColor: colors[{{$aK}}] + '1.0)',
+               label: "{{ $label }}",
+               backgroundColor: color + '0.2)',
+               borderColor: color + '1.0)',
                borderWidth: 1,
-               hoverBackgroundColor: colors[{{$aK}}] + '0.3)',
-               data: {{ json_encode($answer[$question->id]) }},
+               hoverBackgroundColor: color + '0.3)',
+               data: {{ json_encode($answers[$question->id]) }},
             },
-            @endforeach
          ]
       };
 

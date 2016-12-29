@@ -13,6 +13,7 @@ use App\Models\TipoPergunta;
 use App\Models\Turma;
 use App\Models\Opcao;
 use App\Models\Resposta;
+use App\Models\RespostaAberta;
 use App\Models\RespostaUnicaEscolha;
 use App\Models\RespostaMultiplaEscolha;
 use DB;
@@ -212,61 +213,75 @@ class SurveyController extends Controller
 
       $surveySection = DB::table('questionario_turma')->where('questionario_id', $survey->id)->where('turma_id', $section->id)->get();
 
+      $textAnswers = array();
       $answers = array();
+
       foreach ($surveySection as $sS) {
          $responses = Resposta::where('questionario_turma_id', $sS->id)->get();
-         $questionAnswers = array();
          foreach ($questions as $question) {
-            $questionAnswers[$question->id] = array();
-            foreach ($question->opcoes as $choice) {
-               $questionAnswers[$question->id][$choice->id] = 0;
+            if($question->tipo_id == 1){
+               $textAnswers[$question->id] = array();
+            }else{
+               foreach ($question->opcoes as $choice) {
+                  $answers[$question->id][$choice->id] = 0;
+               }
             }
          }
+
          foreach ($responses as $response){
             $resp = RespostaUnicaEscolha::where('resposta_id', $response->id)->get();
             $respM = RespostaMultiplaEscolha::where('resposta_id', $response->id)->get();
             foreach ($questions as $question){
                switch ($question->tipo_id) {
 
+                  case 1:
+                  $textAnswers[$question->id][] = RespostaAberta::where('resposta_id', $response->id)
+                  ->where('pergunta_id', $question->id)->first()->resposta;
+                  break;
+
                   case 2:
                   $choice = $resp->where('pergunta_id', $question->id)->first();
-                  // dd($resp);
-                  $questionAnswers[$question->id][$choice->opcao_id]++;
+                  $answers[$question->id][$choice->opcao_id]++;
                   break;
 
                   case 3:
                   $choice = $respM->where('pergunta_id', $question->id)->first();
                   $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
                   foreach ($choices as $choice){
-                     $questionAnswers[$question->id][$choice->opcao_id]++;
+                     $answers[$question->id][$choice->opcao_id]++;
                   }
                   break;
                }
 
             }
          }
-         foreach ($questionAnswers as $key => $value) {
-            $questionAnswers[$key] = array_values($questionAnswers[$key]);
+         foreach ($answers as $key => $value) {
+            $answers[$key] = array_values($answers[$key]);
          }
       }
-      return $questionAnswers;
+      return array($textAnswers, $answers);
    }
 
    public function postResults(Request $request){
 
       $sectionsInput = $request->input('sections');
       $survey = Questionario::find($request->input('surveyId'));
-      $questions = $survey->perguntas()->where('tipo_id', '!=', '1')->get();
-
+      if(session()->get('role') != 1){
+         $questions = $survey->perguntas;
+      }else{
+         $questions = $survey->perguntas()->where('tipo_id', '!=', 1)->get();
+      }
       foreach ($sectionsInput as $section) {
-         $answers[] = $this->getClassAnswers($survey, Turma::find($section), $questions);
+         $sectionAnswers = $this->getClassAnswers($survey, Turma::find($section), $questions);
+         $textAnswers[] = $sectionAnswers[0];
+         $answers[] = $sectionAnswers[1];
          $section = Turma::find($section);
          $labels[] = "Turma " . $section->cod_turma . " - " . $section->disciplina->disciplina . " - " . $section->ano . "/" . $section->semestre;
       }
 
       switch (session()->get('role')) {
          case '0':
-         return view('survey.admin.results-compared', compact('survey', 'questions', 'answers', 'labels'));
+         return view('survey.admin.results-compared', compact('survey', 'questions', 'answers', 'labels', 'textAnswers'));
          break;
 
          case '1':
@@ -274,7 +289,7 @@ class SurveyController extends Controller
          break;
 
          case '2':
-         return view('survey.professor.results-compared', compact('survey', 'questions', 'answers', 'labels'));
+         return view('survey.professor.results-compared', compact('survey', 'questions', 'answers', 'labels', 'textAnswers'));
          break;
 
          default:
@@ -288,17 +303,20 @@ class SurveyController extends Controller
 
       $surveySection = DB::table('questionario_turma')->where('id', decrypt($surveySectionId))->first();
       $survey = Questionario::find($surveySection->questionario_id);
-      $questions = $survey->perguntas()->where('tipo_id', '!=', '1')->get();
+      if(session()->get('role') != 1){
+         $questions = $survey->perguntas;
+      }else{
+         $questions = $survey->perguntas()->where('tipo_id', '!=', 1)->get();
+      }
       $section = Turma::find($surveySection->turma_id);
-
-
-      // $answers = array();
       $responses = Resposta::where('questionario_turma_id', $surveySection->id)->get();
-      // $questionAnswers = array();
       foreach ($questions as $question) {
-         // $questionAnswers[$question->id] = array();
-         foreach ($question->opcoes as $choice) {
-            $questionAnswers[$question->id][$choice->id] = 0;
+         if($question->tipo_id == 1){
+            $textAnswers[$question->id] = array();
+         }else{
+            foreach ($question->opcoes as $choice) {
+               $answers[$question->id][$choice->id] = 0;
+            }
          }
       }
       foreach ($responses as $response){
@@ -306,39 +324,42 @@ class SurveyController extends Controller
          $respM = RespostaMultiplaEscolha::where('resposta_id', $response->id)->get();
          foreach ($questions as $question){
             switch ($question->tipo_id) {
+               case 1:
+               $textAnswers[$question->id][] = RespostaAberta::where('resposta_id', $response->id)
+               ->where('pergunta_id', $question->id)->first()->resposta;
+               break;
                case 2:
                $choice = $resp->where('pergunta_id', $question->id)->first();
-               $questionAnswers[$question->id][$choice->opcao_id]++;
+               $answers[$question->id][$choice->opcao_id]++;
                break;
 
                case 3:
                $choice = $respM->where('pergunta_id', $question->id)->first();
                $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
                foreach ($choices as $choice){
-                  $questionAnswers[$question->id][$choice->opcao_id]++;
+                  $answers[$question->id][$choice->opcao_id]++;
                }
                break;
             }
 
          }
       }
-      foreach ($questionAnswers as $key => $value) {
-         $questionAnswers[$key] = array_values($questionAnswers[$key]);
+      foreach ($answers as $key => $value) {
+         $answers[$key] = array_values($answers[$key]);
       }
-      $answers[] = $questionAnswers;
-      $labels[] = "Turma " . $section->cod_turma . " - " . $section->disciplina->disciplina . " - " . $section->ano . "/" . $section->semestre . " - Data: " . date("d/m/y", strtotime($surveySection->created_at));
-
+      $label = "Turma " . $section->cod_turma . " - " . $section->disciplina->disciplina . " - " . $section->ano . "/" . $section->semestre . " - Data: " . date("d/m/y", strtotime($surveySection->created_at));
+      $responsesCount = $responses->count();
       switch (session()->get('role')) {
          case '0':
-         return view('survey.admin.class-results', compact('survey', 'questions', 'answers', 'labels'));
+         return view('survey.admin.class-results', compact('survey', 'questions', 'answers', 'label', 'responsesCount', 'textAnswers'));
          break;
 
          case '1':
-         return view('survey.student.class-results', compact('survey', 'questions', 'answers', 'labels'));
+         return view('survey.student.class-results', compact('survey', 'questions', 'answers', 'label', 'responsesCount'));
          break;
 
          case '2':
-         return view('survey.professor.class-results', compact('survey', 'questions', 'answers', 'labels'));
+         return view('survey.professor.class-results', compact('survey', 'questions', 'answers', 'label', 'responsesCount', 'textAnswers'));
          break;
 
          default:
@@ -350,12 +371,20 @@ class SurveyController extends Controller
    public function getResults($surveyId){
 
       $survey = Questionario::find(decrypt($surveyId));
-      $questions = $survey->perguntas()->where('tipo_id', '!=', '1')->get();
+      if(session()->get('role') != 1){
+         $questions = $survey->perguntas;
+      }else{
+         $questions = $survey->perguntas()->where('tipo_id', '!=', 1)->get();
+      }
       $responses = Resposta::where('questionario_id', $survey->id)->get();
 
       foreach ($questions as $question) {
-         foreach ($question->opcoes as $choice) {
-            $questionAnswers[$question->id][$choice->id] = 0;
+         if($question->tipo_id == 1){
+            $textAnswers[$question->id] = array();
+         }else{
+            foreach ($question->opcoes as $choice) {
+               $answers[$question->id][$choice->id] = 0;
+            }
          }
       }
 
@@ -364,37 +393,43 @@ class SurveyController extends Controller
          $respM = RespostaMultiplaEscolha::where('resposta_id', $response->id)->get();
          foreach ($questions as $question){
             switch ($question->tipo_id) {
+
+               case 1:
+               $textAnswers[$question->id][] = RespostaAberta::where('resposta_id', $response->id)
+               ->where('pergunta_id', $question->id)->first()->resposta;
+               break;
+
                case 2:
                $choice = $resp->where('pergunta_id', $question->id)->first();
-               $questionAnswers[$question->id][$choice->opcao_id]++;
+               $answers[$question->id][$choice->opcao_id]++;
                break;
 
                case 3:
                $choice = $respM->where('pergunta_id', $question->id)->first();
                $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
                foreach ($choices as $choice){
-                  $questionAnswers[$question->id][$choice->opcao_id]++;
+                  $answers[$question->id][$choice->opcao_id]++;
                }
                break;
             }
 
          }
       }
-      foreach ($questionAnswers as $key => $value) {
-         $answers[$key] = array_values($questionAnswers[$key]);
+      foreach ($answers as $key => $value) {
+         $answers[$key] = array_values($answers[$key]);
       }
 
       switch (session()->get('role')) {
          case '0':
-         return view('survey.admin.results', compact('survey', 'questions', 'answers', 'labels'));
+         return view('survey.admin.results', compact('survey', 'questions', 'answers', 'textAnswers'));
          break;
 
          case '1':
-         return view('survey.student.results', compact('survey', 'questions', 'answers', 'labels'));
+         return view('survey.student.results', compact('survey', 'questions', 'answers'));
          break;
 
          case '2':
-         return view('survey.professor.results', compact('survey', 'questions', 'answers', 'labels'));
+         return view('survey.professor.results', compact('survey', 'questions', 'answers', 'textAnswers'));
          break;
 
          default:

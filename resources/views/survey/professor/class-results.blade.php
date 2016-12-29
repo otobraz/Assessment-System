@@ -20,13 +20,25 @@
                <div class="box-tools pull-right">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                </div>
             </div>
             <div class="box-body">
-               <div id="chart-area{{$question->id}}" class="chart chart-area">
-                  <canvas id="barChart{{$question->id}}"></canvas>
-               </div>
+               @if ($question->tipo_id == 1)
+                  <table class="table table-bordered table-col-condensed table-striped table-responsive">
+                     <tbody>
+                        @foreach ($textAnswers[$question->id] as $answer)
+                           <tr>
+                              <td>{{$answer}}</td>
+                           </tr>
+                        @endforeach
+                     </tbody>
+                  </table>
+               @else
+                  <div id="chart-area{{$question->id}}" class="chart chart-area">
+                     <canvas id="barChart{{$question->id}}"></canvas>
+                  </div>
+               @endif
+
             </div>
             <!-- /.box-body -->
          </div>
@@ -64,7 +76,7 @@
             meta.data.forEach(function (bar, index) {
                var data = (dataset.data[index] * 100 / total).toFixed(2);
                if(isNaN(data)){
-                     ctx.fillText("0.00%", bar._model.x, bar._model.y);
+                  ctx.fillText("0.00%", bar._model.x, bar._model.y);
                }else{
                   ctx.fillText(data + "%", bar._model.x, bar._model.y + 15);
                }
@@ -83,26 +95,21 @@
       //- AREA CHART -
       //--------------
 
-      var colors = [];
-      @foreach ($answers as $key => $answer)
-      colors[{{$key}}] = getRandomColor();
-      @endforeach
+      color = getRandomColor();
 
-      @foreach ($questions as $question)
+      @foreach ($questions->whereIn('tipo_id', [2,3]) as $question)
 
       var data{{$question->id}} = {
          labels: {!! $question->opcoes->pluck('opcao') !!},
          datasets: [
-            @foreach ($answers as $aK => $answer)
             {
-               label: "{{ $labels[$aK] }}",
-               backgroundColor: colors[{{$aK}}] + '0.2)',
-               borderColor: colors[{{$aK}}] + '1.0)',
+               label: "{{ $label }}",
+               backgroundColor: color + '0.2)',
+               borderColor: color + '1.0)',
                borderWidth: 1,
-               hoverBackgroundColor: colors[{{$aK}}] + '0.3)',
-               data: {{ json_encode($answer[$question->id]) }},
+               hoverBackgroundColor: color + '0.3)',
+               data: {{ json_encode($answers[$question->id]) }},
             },
-            @endforeach
          ]
       };
 

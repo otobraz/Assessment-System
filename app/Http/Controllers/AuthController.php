@@ -142,17 +142,17 @@ class AuthController extends Controller{
          return redirect()->route('home');
       }
 
-      $authenticatedUser = array(
-         'id' => "30",
-         'username' => $request->username,
-         'first_name' => "Professor",
-         'last_name' => "Professor",
-         'email' =>  "theo@decsi.ufop.br",
-         'department_id' => "2",
-         'role' => '2'
-      );
-      $request->session()->put($authenticatedUser);
-      return redirect()->route('home');
+      // $authenticatedUser = array(
+      //    'id' => "30",
+      //    'username' => $request->username,
+      //    'first_name' => "Professor",
+      //    'last_name' => "Professor",
+      //    'email' =>  "theo@decsi.ufop.br",
+      //    'department_id' => "2",
+      //    'role' => '2'
+      // );
+      // $request->session()->put($authenticatedUser);
+      // return redirect()->route('home');
 
       $user = Admin::where('usuario', $request->username)->first();
       if (isset($user)){
