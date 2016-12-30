@@ -1,4 +1,4 @@
-@extends('layout.professor.base')
+@extends('layout.student.base')
 
 @section('title')
    Resultado Geral
@@ -13,53 +13,24 @@
 
    @foreach ($questions as $question)
 
-      @if ($question->tipo_id == 1)
-
-         <div class="col-md-12">
-            <div class="box box-primary-ufop collapsed-box">
-               <div class="box-header with-border">
-                  <h3 class="box-title">{{$question->pergunta}}</h3>
-                  <div class="box-tools pull-right">
-                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                     </button>
-                  </div>
+      <div class="col-md-12">
+         <div class="box box-primary-ufop">
+            <div class="box-header with-border">
+               <h3 class="box-title">{{$question->pergunta}}</h3>
+               <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                </div>
-               <div class="box-body">
-                  <table class="table table-bordered table-col-condensed table-striped table-responsive">
-                     <tbody>
-                        @for ($i = 0; $i < count($textAnswers[$question->id]) / 2; $i++)
-                           <tr>
-                              <td>{{each($textAnswers[$question->id])[1]}}</td>
-                              <td>{{each($textAnswers[$question->id])[1]}}</td>
-                           </tr>
-                        @endfor
-                     </tbody>
-                  </table>
-               </div>
-               <!-- /.box-body -->
             </div>
-         </div>
-
-      @else
-
-         <div class="col-md-12">
-            <div class="box box-primary-ufop">
-               <div class="box-header with-border">
-                  <h3 class="box-title">{{$question->pergunta}}</h3>
-                  <div class="box-tools pull-right">
-                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                     </button>
-                  </div>
+            <div class="box-body">
+               <div id="chart-area{{$question->id}}" class="chart chart-area">
+                  <canvas id="barChart{{$question->id}}"></canvas>
                </div>
-               <div class="box-body">
-                  <div id="chart-area{{$question->id}}" class="chart chart-area">
-                     <canvas id="barChart{{$question->id}}"></canvas>
-                  </div>
-               </div>
-               <!-- /.box-body -->
             </div>
+            <!-- /.box-body -->
          </div>
-      @endif
+      </div>
 
    @endforeach
 
@@ -86,14 +57,10 @@
       this.data.datasets.forEach(function (dataset, i) {
          var meta = chartInstance.controller.getDatasetMeta(i);
          if(meta.hidden === null){
-            var total = 0;
             meta.data.forEach(function (bar, index) {
-               total += dataset.data[index];
-            });
-            meta.data.forEach(function (bar, index) {
-               var data = (dataset.data[index] * 100 / total).toFixed(2);
+               var data = (dataset.data[index] * 100 / {{$responsesCount}}).toFixed(2);
                if(isNaN(data)){
-                  ctx.fillText("0.00%", bar._model.x, bar._model.y);
+                     ctx.fillText("0.00%", bar._model.x, bar._model.y);
                }else{
                   ctx.fillText(data + "%", bar._model.x, bar._model.y + 15);
                }
@@ -113,13 +80,12 @@
       //--------------
       var color = getRandomColor();
 
-      @foreach ($questions->whereIn('tipo_id', [2,3]) as $question)
+      @foreach ($questions as $question)
 
       var data{{$question->id}} = {
          labels: {!! $question->opcoes->pluck('opcao') !!},
          datasets: [
             {
-               label: "{{ $label }}",
                backgroundColor: color + '0.2)',
                borderColor: color + '1.0)',
                hoverBackgroundColor: color + '0.3)',
@@ -155,14 +121,9 @@
          animation: {
             onComplete: showBarValues
          },
-
          legend: {
-            labels: {
-               fontStyle: 'bold',
-               usePointStyle: true
-            }
+            display: false
          },
-
          responsive: true,
       };
 

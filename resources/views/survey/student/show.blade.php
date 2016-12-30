@@ -9,18 +9,19 @@
    @include('alert-message.success')
    @include('alert-message.error')
 
-   <form class="form-signin" method="POST" autocomplete="off" action="{{action('SurveyController@postResults')}}">
-      <div class="box box-primary-ufop">
-         <div class="box-header with-border">
-            <h3 class="box-title">{{$survey->titulo . " - " . date("d/m/y - H:i:s", strtotime($survey->created_at))}}</h3>
-            <div class="box-tools pull-right">
-               <a class="btn btn-primary-ufop btn-sm" role="button"
-               style="color: white" href="{{action('SurveyController@getResults', encrypt($survey->id))}}"><i class="fa fa-bar-chart"></i> Resultado Geral</a>
-               <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            </div><!-- /.box-tools -->
-         </div><!-- /.box-header -->
+   <div class="box box-primary-ufop">
+      <div class="box-header with-border">
+         <h3 class="box-title">{{$survey->titulo . " - " . date("d/m/y - H:i:s", strtotime($survey->created_at))}}</h3>
+         <div class="box-tools pull-right">
+            <a class="btn btn-primary-ufop btn-sm" role="button"
+            style="color: white" href="{{action('SurveyController@overallResult', encrypt($survey->id))}}"><i class="fa fa-bar-chart"></i> Resultado Geral</a>
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+         </div><!-- /.box-tools -->
+      </div><!-- /.box-header -->
 
-         <div class="box-body">
+      <div class="box-body">
+
+         <form class="form-signin" method="POST" autocomplete="off" action="{{action('SurveyController@comparedResult')}}">
 
             <fieldset>
 
@@ -69,7 +70,7 @@
                                  @endif
                               </td>
                               <td align="center"><a class="btn btn-info btn-xs" role="button"
-                                 style="color: white" href="{{route('survey.classResults', encrypt($section->pivot->id))}}"><i class="fa fa-bar-chart"></i> Resultado</a>
+                                 style="color: white" href="{{route('survey.classResult', encrypt($section->pivot->id))}}"><i class="fa fa-bar-chart"></i> Resultado</a>
                               </td>
                            </tr>
                         @endforeach

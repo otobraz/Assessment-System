@@ -1,4 +1,4 @@
-@extends('layout.admin.base')
+@extends('layout.professor.base')
 
 @section('title')
    Resultados
@@ -91,12 +91,8 @@
       this.data.datasets.forEach(function (dataset, i) {
          var meta = chartInstance.controller.getDatasetMeta(i);
          if(meta.hidden === null){
-            var total = 0;
             meta.data.forEach(function (bar, index) {
-               total += dataset.data[index];
-            });
-            meta.data.forEach(function (bar, index) {
-               var data = (dataset.data[index] * 100 / total).toFixed(2);
+               var data = (dataset.data[index] * 100 / {{$responsesCount}}).toFixed(2);
                if(isNaN(data)){
                   ctx.fillText("0.00%", bar._model.x, bar._model.y);
                }else{
@@ -163,6 +159,12 @@
             onComplete: showBarValues
          },
 
+         legend: {
+            labels: {
+               fontStyle: 'bold',
+               usePointStyle: true
+            }
+         },
          // animation: {
          //    duration: 1,
          //    onComplete: function () {

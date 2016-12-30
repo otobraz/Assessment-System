@@ -8,14 +8,14 @@
             <a class="btn btn-info btn-sm" role="button"
             style="color: white" href="{{action('SurveyController@show', encrypt($survey->id))}}"><i class="fa fa-info-circle"></i> Detalhes</a>
             <a class="btn btn-primary-ufop btn-sm" role="button"
-            style="color: white" href="{{action('SurveyController@getResults', encrypt($survey->id))}}"><i class="fa fa-bar-chart"></i> Resultado Geral</a>
+            style="color: white" href="{{action('SurveyController@overallResult', encrypt($survey->id))}}"><i class="fa fa-bar-chart"></i> Resultado Geral</a>
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
          </div><!-- /.box-tools -->
       </div><!-- /.box-header -->
 
       <div class="box-body">
 
-         <form class="form-signin" method="POST" autocomplete="off" action="{{action('SurveyController@postResults')}}">
+         <form class="form-signin" method="POST" autocomplete="off" action="{{action('SurveyController@comparedResult')}}">
 
             <fieldset>
 
@@ -78,7 +78,7 @@
                               </td>
                               <td align="center">
                                  <a class="btn btn-info btn-xs" role="button"
-                                 style="color: white" href="{{route('survey.classResults', encrypt($section->pivot->id))}}"><i class="fa fa-bar-chart"></i> Resultado</a>
+                                 style="color: white" href="{{route('survey.classResult', encrypt($section->pivot->id))}}"><i class="fa fa-bar-chart"></i> Resultado</a>
                               </td>
                            </tr>
                         @endforeach

@@ -1,4 +1,4 @@
-@extends('layout.student.base')
+@extends('layout.professor.base')
 
 @section('title')
    Resultados
@@ -20,13 +20,28 @@
                <div class="box-tools pull-right">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                </div>
             </div>
             <div class="box-body">
-               <div id="chart-area{{$question->id}}" class="chart chart-area">
-                  <canvas id="barChart{{$question->id}}"></canvas>
-               </div>
+               @if ($question->tipo_id == 1)
+                  <table class="table table-bordered table-col-condensed table-striped table-responsive">
+                     <tbody>
+                        @foreach ($textAnswers[$question->id] as $answer)
+                           <tr>
+                              <td>{{$answer}}</td>
+                           </tr>
+                        @endforeach
+                     </tbody>
+                  </table>
+               @else
+                  <div id="chart-area{{$question->id}}" class="chart chart-area">
+                     <div class="legend">
+
+                     </div>
+                     <canvas id="barChart{{$question->id}}"></canvas>
+                  </div>
+               @endif
+
             </div>
             <!-- /.box-body -->
          </div>
@@ -38,7 +53,9 @@
 
 @section('myScripts')
 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script> --}}
+
+   <script src="{{asset('plugins/chartjs/Chart.js')}}" type="text/javascript"></script>
 
    <script>
 
@@ -59,10 +76,7 @@
          if(meta.hidden === null){
             var total = 0;
             meta.data.forEach(function (bar, index) {
-               total += dataset.data[index];
-            });
-            meta.data.forEach(function (bar, index) {
-               var data = (dataset.data[index] * 100 / total).toFixed(2);
+               var data = (dataset.data[index] * 100 / {{$responsesCount}}).toFixed(2);
                if(isNaN(data)){
                   ctx.fillText("0.00%", bar._model.x, bar._model.y);
                }else{
@@ -85,7 +99,7 @@
 
       color = getRandomColor();
 
-      @foreach ($questions as $question)
+      @foreach ($questions->whereIn('tipo_id', [2,3]) as $question)
 
       var data{{$question->id}} = {
          labels: {!! $question->opcoes->pluck('opcao') !!},
@@ -132,6 +146,57 @@
             onComplete: showBarValues
          },
 
+         legend: {
+            labels: {
+               fontStyle: 'bold',
+               usePointStyle: true
+            }
+         },
+
+         // legendCallback: function(chart) {
+			// 	var text = [];
+			// 	text.push('<ul class="' + chart.id + '-legend">');
+			// 	for (var i = 0; i < chart.data.datasets.length; i++) {
+			// 		text.push('<li><span style="background-color:' + chart.data.datasets[i].backgroundColor + '"></span>');
+			// 		if (chart.data.datasets[i].label) {
+			// 			text.push(chart.data.datasets[i].label);
+			// 		}
+			// 		text.push('</li>');
+			// 	}
+			// 	text.push('</ul>');
+         //
+			// 	return text.join('');
+			// },
+
+         // legendCallback: function(chart) {
+         //    alert(chart.data);
+         //    var text = [];
+         //    text.push('<ul>');
+         //    for (var i=0; i<chart.data.datasets[0].data.length; i++) {
+         //       text.push('<li>');
+         //       text.push('<span style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">' + chart.data.datasets[0].data[i] + '</span>');
+         //       if (chart.data.labels[i]) {
+         //          text.push(chart.data.labels[i]);
+         //       }
+         //       text.push('</li>');
+         //    }
+         //    text.push('</ul>');
+         //    return text.join("");
+         // },
+
+         // legendCallback: function(chart) {
+         //    var text = [];
+         //    text.push('<ul class="' + chart.id + '-legend">');
+         //    for (var i = 0; i < chart.data.datasets[0].data.length; i++) {
+         //       text.push('<li><span style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">');
+         //       if (chart.data.labels[i]) {
+         //          text.push(chart.data.labels[i]);
+         //       }
+         //       text.push('</span></li>');
+         //    }
+         //    text.push('</ul>');
+         //    return text.join("");
+         // },
          // animation: {
          //    duration: 1,
          //    onComplete: function () {
@@ -183,7 +248,6 @@
          data: barChart{{$question->id}}Data,
          options: barChart{{$question->id}}Options
       });
-
 
       @endforeach
    });

@@ -43,11 +43,8 @@ class SurveyController extends Controller
          foreach ($sections as $section) {
             foreach ($section->questionarios as $survey) {
                $responses[$survey->pivot->id] = Resposta::where('questionario_turma_id', $survey->pivot->id)->where('aluno_id', $student->id)->first();
-               // $surveys[$section->ano] = $survey;
             }
          }
-         // $surveys = collect($surveys);
-         // $surveys->sortByDesc('id');
          return view ('survey.student.index', compact('sectionsGroup', 'responses'));
          break;
 
@@ -283,15 +280,15 @@ class SurveyController extends Controller
 
       switch (session()->get('role')) {
          case '0':
-         return view('survey.admin.results-compared', compact('survey', 'questions', 'answers', 'labels', 'textAnswers'));
+         return view('survey.admin.compared-result', compact('survey', 'questions', 'answers', 'labels', 'textAnswers'));
          break;
 
          case '1':
-         return view('survey.student.results-compared', compact('survey', 'questions', 'answers', 'labels'));
+         return view('survey.student.compared-result', compact('survey', 'questions', 'answers', 'labels'));
          break;
 
          case '2':
-         return view('survey.professor.results-compared', compact('survey', 'questions', 'answers', 'labels', 'textAnswers'));
+         return view('survey.professor.compared-result', compact('survey', 'questions', 'answers', 'labels', 'textAnswers'));
          break;
 
          default:
@@ -353,15 +350,15 @@ class SurveyController extends Controller
       $responsesCount = $responses->count();
       switch (session()->get('role')) {
          case '0':
-         return view('survey.admin.class-results', compact('survey', 'questions', 'answers', 'label', 'responsesCount', 'textAnswers'));
+         return view('survey.admin.class-result', compact('survey', 'questions', 'answers', 'label', 'responsesCount', 'textAnswers'));
          break;
 
          case '1':
-         return view('survey.student.class-results', compact('survey', 'questions', 'answers', 'label', 'responsesCount'));
+         return view('survey.student.class-result', compact('survey', 'questions', 'answers', 'label', 'responsesCount'));
          break;
 
          case '2':
-         return view('survey.professor.class-results', compact('survey', 'questions', 'answers', 'label', 'responsesCount', 'textAnswers'));
+         return view('survey.professor.class-result', compact('survey', 'questions', 'answers', 'label', 'responsesCount', 'textAnswers'));
          break;
 
          default:
@@ -425,15 +422,15 @@ class SurveyController extends Controller
 
       switch (session()->get('role')) {
          case '0':
-         return view('survey.admin.results', compact('survey', 'questions', 'answers', 'textAnswers', 'label'));
+         return view('survey.admin.overall-result', compact('survey', 'questions', 'answers', 'textAnswers', 'label'));
          break;
 
          case '1':
-         return view('survey.student.results', compact('survey', 'questions', 'answers', 'label'));
+         return view('survey.student.overall-result', compact('survey', 'questions', 'answers', 'label'));
          break;
 
          case '2':
-         return view('survey.professor.results', compact('survey', 'questions', 'answers', 'textAnswers', 'label'));
+         return view('survey.professor.overall-result', compact('survey', 'questions', 'answers', 'textAnswers', 'label'));
          break;
 
          default:
