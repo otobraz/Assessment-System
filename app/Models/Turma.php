@@ -46,4 +46,9 @@ class Turma extends Model
       ->orderBy("disciplinas.disciplina", "asc")->orderBy("cod_turma", "asc")->select('turmas.*');
    }
 
+   public function scopeAbertos($query){
+      return $query->join('questionarios', 'questionarios.id', '=', 'questionario_turma.questionario_id')
+         ->where('questionario_turma.aberto', 1)->select('questionarios.titulo', 'turmas.*');
+   }
+
 }

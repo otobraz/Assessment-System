@@ -92,6 +92,7 @@
                   ctx.fillText("0.00%", bar._model.x, bar._model.y);
                }else{
                   ctx.fillText(data + "%", bar._model.x, bar._model.y + 15);
+                  // ctx.fillText(dataset.data[index], bar._model.x, bar._model.y);
                }
             });
          }
@@ -104,9 +105,6 @@
       * Here we will create a few charts using ChartJS
       */
 
-      //--------------
-      //- AREA CHART -
-      //--------------
       var color = getRandomColor();
 
       @foreach ($questions->whereIn('tipo_id', [2,3]) as $question)
@@ -142,12 +140,26 @@
                }
             }]
          },
+
          tooltips: {
-            enabled: true
+            enabled: true,
+            bodyFontStyle: 'bold',
+            callbacks: {
+               label: function(tooltipItem) {
+                  var percentage = (tooltipItem.yLabel * 100 / {{$responsesCount}}).toFixed(2);
+                  if(isNaN(percentage)){
+                     return " " + tooltipItem.yLabel + " (0%)";
+                  }else{
+                     return " " + tooltipItem.yLabel + " (" + percentage + "%)";
+                  }
+               }
+            }
          },
+
          hover: {
             animationDuration: 0
          },
+
          animation: {
             onComplete: showBarValues
          },

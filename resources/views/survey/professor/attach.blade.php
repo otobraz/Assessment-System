@@ -14,14 +14,11 @@
    <div class="box box-primary-ufop">
       <div class="box-header with-border">
          <h3 class="box-title">{{$survey->titulo}}</h3>
-         <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-         </div><!-- /.box-tools -->
       </div><!-- /.box-header -->
 
       <div class="box-body">
 
-         <form class="form-signin" id="questions-form" method="POST" action="{{action('SurveyController@postAttach')}}">
+         <form class="form-signin" id="questions-form" method="POST" action="{{action('SurveyController@attach')}}">
 
             {{ csrf_field() }}
 
@@ -33,11 +30,11 @@
                   <label for="sections">Disponibilizar questionário às turmas:</label>
                   @foreach ($sectionsGroup as $year => $groups)
                      @foreach ($groups as $semester => $sections)
-                        @foreach ($sections as $key => $section)
+                        @foreach ($sections as $section)
                            <div class="checkbox">
                               <label>
                                  <input type="checkbox" name="sections[]" value="{{$section->id}}">
-                                 {{$year . "/" . $semester . " " . $section->disciplina->disciplina}}
+                                 {{$year . "/" . $semester . " - " . "T" . $section->cod_turma . ": " . $section->disciplina->disciplina}}
                               </label>
                            </div>
                         @endforeach

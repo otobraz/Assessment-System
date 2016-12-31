@@ -173,7 +173,7 @@ class SurveyController extends Controller
 
    public function provide($id){
       $survey = Questionario::find(decrypt($id));
-      $sections = Professor::find(session()->get('id'))->turmas;
+      $sections = Professor::find(session()->get('id'))->turmas()->orderByDisciplina()->get();
       $sectionsGroup = $sections->groupBy('ano')->transform(function($item, $k) {
          return $item->groupBy('semestre');
       });
@@ -274,21 +274,22 @@ class SurveyController extends Controller
          $sectionAnswers = $this->getClassAnswers($survey, Turma::find($section), $questions);
          $textAnswers[] = $sectionAnswers[0];
          $answers[] = $sectionAnswers[1];
+         $responsesCount[] = $sectionAnswers[2];
          $section = Turma::find($section);
          $labels[] = $label = "T" . $section->cod_turma . ": " . $section->disciplina->disciplina . " - " . $section->ano . "/" . $section->semestre . " (TOTAL: " . $sectionAnswers[2] . ")";
       }
 
       switch (session()->get('role')) {
          case '0':
-         return view('survey.admin.compared-result', compact('survey', 'questions', 'answers', 'labels', 'textAnswers'));
+         return view('survey.admin.compared-result', compact('survey', 'questions', 'answers', 'labels', 'textAnswers', 'responsesCount'));
          break;
 
          case '1':
-         return view('survey.student.compared-result', compact('survey', 'questions', 'answers', 'labels'));
+         return view('survey.student.compared-result', compact('survey', 'questions', 'answers', 'labels', 'responsesCount'));
          break;
 
          case '2':
-         return view('survey.professor.compared-result', compact('survey', 'questions', 'answers', 'labels', 'textAnswers'));
+         return view('survey.professor.compared-result', compact('survey', 'questions', 'answers', 'labels', 'textAnswers', 'responsesCount'));
          break;
 
          default:
@@ -418,19 +419,21 @@ class SurveyController extends Controller
          $answers[$key] = array_values($answers[$key]);
       }
 
-      $label = "(TOTAL: " . $responses->count() . ")";
+      $responsesCount = $responses->count();
+
+      $label = "(TOTAL: " . $responsesCount . ")";
 
       switch (session()->get('role')) {
          case '0':
-         return view('survey.admin.overall-result', compact('survey', 'questions', 'answers', 'textAnswers', 'label'));
+         return view('survey.admin.overall-result', compact('survey', 'questions', 'answers', 'textAnswers', 'label', 'responsesCount'));
          break;
 
          case '1':
-         return view('survey.student.overall-result', compact('survey', 'questions', 'answers', 'label'));
+         return view('survey.student.overall-result', compact('survey', 'questions', 'answers', 'label', 'responsesCount'));
          break;
 
          case '2':
-         return view('survey.professor.overall-result', compact('survey', 'questions', 'answers', 'textAnswers', 'label'));
+         return view('survey.professor.overall-result', compact('survey', 'questions', 'answers', 'textAnswers', 'label', 'responsesCount'));
          break;
 
          default:

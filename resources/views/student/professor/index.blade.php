@@ -18,9 +18,6 @@
    <div class="box box-primary-ufop">
       <div class="box-header with-border">
          <h3 class="box-title">Alunos</h3>
-         <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-         </div><!-- /.box-tools -->
       </div><!-- /.box-header -->
       <div class="box-body">
          @include('alert-message.success')
@@ -51,7 +48,7 @@
                "previous": "Anterior"
             }
          },
-         "order": [],
+         "order": [[1, 'asc']],
          "autoWidth": true,
          "aLengthMenu": [[25, 50, 100, 200, 300, -1], [25, 50, 100, 200, 300, "Tudo"]],
          "columnDefs": [{

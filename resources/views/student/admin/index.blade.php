@@ -16,7 +16,6 @@
          <div class="box-tools pull-right">
             <a class="btn btn-primary-ufop btn-sm" role="button"
             style="color: white" href="{{route('student.import')}}">Importar Alunos</a>
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
          </div>
       </div>

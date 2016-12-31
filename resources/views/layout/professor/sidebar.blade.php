@@ -4,43 +4,19 @@
    <!-- sidebar: style can be found in sidebar.less -->
    <section class="sidebar">
 
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-         <div class="pull-left image">
-            <img src="{{ asset("img/user.png") }}" class="img-circle" alt="User Image"/>
-         </div>
-         <div class="pull-left info">
-            <p></p>
-            <p>{{session()->get('first_name')}}</p>
-
-         </div>
-      </div>
-
-      <!-- search form (Optional) -->
-      {{-- <form action="{{url('search')}}" method="post" class="sidebar-form">
-         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-         <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Procure..."/>
-            <span class="input-group-btn">
-               <button type='submit' name='search' class="btn btn-flat"><i class="fa fa-search"></i></button>
-            </span>
-         </div>
-      </form> --}}
-      <!-- /.search form -->
-
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
          <li class="header">MENU</li>
 
          <li>
-            <a href="{{action('SurveyController@index')}}"><i class="fa fa-comments"></i> <span>Meus Questionários</span></a>
+            <a href="{{action('SurveyController@index')}}"><i class="fa fa-comments"></i> <span>Questionários</span></a>
          </li>
 
          <li>
-            <a href="{{action('SectionController@index')}}"><i class="fa fa-book"></i> <span>Minhas Turmas</span></a>
+            <a href="{{action('SectionController@index')}}"><i class="fa fa-book"></i> <span>Turmas</span></a>
          </li>
          <li>
-            <a href="{{action('GuidanceController@index')}}"><i class="fa fa-cubes"></i> <span>Minhas Orientações</span></a>
+            <a href="{{action('GuidanceController@index')}}"><i class="fa fa-cubes"></i> <span>Orientações</span></a>
          </li>
          <li>
             <a href="{{action('StudentController@index')}}"><i class="fa fa-graduation-cap"></i> <span>Alunos</span></a>

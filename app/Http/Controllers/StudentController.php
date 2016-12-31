@@ -46,7 +46,7 @@ class StudentController extends Controller
          break;
 
          case '2':
-         $students = Aluno::orderBy('nome', 'asc')->orderBy('sobrenome', 'asc')->get();
+         $students = Aluno::all();
          return view ('student.professor.index', compact('students'));
          break;
 

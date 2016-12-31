@@ -211,7 +211,7 @@ Route::group(['middleware' => ['auth.user']], function () {
 });
 
 // System home
-Route::get('/', ['as' => '/', 'uses' => 'HomeController@getIndex']);
+Route::get('/', ['as' => '/', 'uses' => 'HomeController@index']);
 
 // Login
 Route::get('login', ['as' => 'getLogin', 'uses' => 'AuthController@getLogin']);

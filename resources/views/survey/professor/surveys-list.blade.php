@@ -85,11 +85,13 @@
 
                      </div>
 
+                  </tbody>
+
+                  <tfoot>
                      <tr>
                         <td colspan="8"><button class="btn btn-primary-ufop" type="submit"><span class="glyphicon glyphicon-stats" aria-label="Comparar"></span> Comparar</button></td>
                      </tr>
-
-                  </tbody>
+                  </tfoot>
 
                </table>
 

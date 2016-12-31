@@ -10,9 +10,6 @@
    <div class="box box-primary-ufop">
       <div class="box-header with-border">
          <h3 class="box-title">{{$survey->titulo}}</h3>
-         <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-         </div><!-- /.box-tools -->
       </div><!-- /.box-header -->
 
       <div class="box-body">
@@ -63,13 +60,10 @@
 
          </fieldset>
 
-         <div class="pull-left">
+         <div class="box-footer">
             <button class="btn btn-default" type="button"
             onclick="history.go(-1)"> Voltar</button>
-            <a class="btn btn-primary-ufop" role="button" style="color: white" href="{{action('SurveyController@edit', encrypt($survey->id))}}"><i class="fa fa-lg fa-edit"></i> Editar</a>
-
          </div>
-
       </div>
    </div>
 

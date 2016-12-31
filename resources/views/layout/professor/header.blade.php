@@ -24,9 +24,9 @@
                <!-- Menu Toggle Button -->
                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <!-- The user image in the navbar-->
-                  <img src="{{ asset("img/user.png") }}" class="user-image" alt="User Image" height="160px" width="160px"/>
+                  {{-- <img src="{{ asset("img/user.png") }}" class="user-image" alt="User Image" height="160px" width="160px"/> --}}
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs">{{session()->get('first_name')}} {{session()->get('last_name')}}</span>
+                  <span class="hidden-xs">{{session()->get('first_name')}} {{session()->get('last_name')}}</i></span>
                </a>
                <ul class="dropdown-menu">
                   <!-- The user image in the menu -->

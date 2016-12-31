@@ -79,10 +79,6 @@
       * Here we will create a few charts using ChartJS
       */
 
-      //--------------
-      //- AREA CHART -
-      //--------------
-
       color = getRandomColor();
 
       @foreach ($questions as $question)
@@ -121,7 +117,18 @@
          },
 
          tooltips: {
-            enabled: true
+            enabled: true,
+            bodyFontStyle: 'bold',
+            callbacks: {
+               label: function(tooltipItem) {
+                  var percentage = (tooltipItem.yLabel * 100 / {{$responsesCount}}).toFixed(2);
+                  if(isNaN(percentage)){
+                     return " " + tooltipItem.yLabel + " (0%)";
+                  }else{
+                     return " " + tooltipItem.yLabel + " (" + percentage + "%)";
+                  }
+               }
+            }
          },
 
          hover: {
@@ -132,49 +139,6 @@
             onComplete: showBarValues
          },
 
-         // animation: {
-         //    duration: 1,
-         //    onComplete: function () {
-         //       var chartInstance = this.chart,
-         //       barChart{{$question->id}}Canvas = chartInstance.barChart{{$question->id}}Canvas;
-         //       barChart{{$question->id}}Canvas.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-         //       barChart{{$question->id}}Canvas.textAlign = 'center';
-         //       barChart{{$question->id}}Canvas.textBaseline = 'bottom';
-         //
-         //       this.data.datasets.forEach(function (dataset, i) {
-         //          var meta = chartInstance.controller.getDatasetMeta(i);
-         //          meta.data.forEach(function (bar, index) {
-         //             var data = dataset.data[index];
-         //             barChart{{$question->id}}Canvas.fillText(data, bar._model.x, bar._model.y - 5);
-         //          });
-         //       });
-         //    }
-         // },
-         // //Boolean - Whether grid lines are shown across the chart
-         // scaleShowGridLines: true,
-         // //String - Colour of the grid lines
-         // scaleGridLineColor: "rgba(0,0,0,.05)",
-         // //Number - Width of the grid lines
-         // scaleGridLineWidth: 1,
-         // //Boolean - Whether to show horizontal lines (except X axis)
-         // scaleShowHorizontalLines: true,
-         // //Boolean - Whether to show vertical lines (except Y axis)
-         // scaleShowVerticalLines: true,
-         // //Boolean - If there is a stroke on each bar
-         // barShowStroke: true,
-         // //Number - Pixel width of the bar stroke
-         // barStrokeWidth: 2,
-         // //Number - Spacing between each of the X value sets
-         // barValueSpacing: 5,
-         // //Number - Spacing between data sets within X values
-         // barDatasetSpacing: 2,
-
-         //String - A legend template
-         // tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>kb",
-         // "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><div id=\"col-legend\" class=\"col-md-3\"><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><div id=\"legend-text\"><%if(datasets[i].label){%><%=datasets[i].label%></div></div><%}%><%}%></ul>",
-         // legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><div class=\"col-md-3\"><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li></div><%}%></ul>",
-
-         //Boolean - whether to make the chart responsive
          responsive: true,
       };
 

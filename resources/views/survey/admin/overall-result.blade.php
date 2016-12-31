@@ -104,9 +104,6 @@
       * Here we will create a few charts using ChartJS
       */
 
-      //--------------
-      //- AREA CHART -
-      //--------------
       var color = getRandomColor();
 
       @foreach ($questions->whereIn('tipo_id', [2,3]) as $question)
@@ -141,18 +138,41 @@
                }
             }]
          },
+
          tooltips: {
-            enabled: true
+            enabled: true,
+            bodyFontStyle: 'bold',
+            callbacks: {
+               label: function(tooltipItem) {
+                  var percentage = (tooltipItem.yLabel * 100 / {{$responsesCount}}).toFixed(2);
+                  if(isNaN(percentage)){
+                     return " " + tooltipItem.yLabel + " (0%)";
+                  }else{
+                     return " " + tooltipItem.yLabel + " (" + percentage + "%)";
+                  }
+               }
+            }
          },
+
          hover: {
             animationDuration: 0
          },
+
          animation: {
             onComplete: showBarValues
          },
+
          legend: {
             display: false
          },
+
+         legend: {
+            labels: {
+               fontStyle: 'bold',
+               usePointStyle: true
+            }
+         },
+
          responsive: true,
       };
 

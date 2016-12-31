@@ -70,14 +70,7 @@
    }
 
    $(function () {
-      /* ChartJS
-      * -------
-      * Here we will create a few charts using ChartJS
-      */
 
-      //--------------
-      //- AREA CHART -
-      //--------------
       var color = getRandomColor();
 
       @foreach ($questions as $question)
@@ -86,6 +79,7 @@
          labels: {!! $question->opcoes->pluck('opcao') !!},
          datasets: [
             {
+               label: "{{ $label }}",
                backgroundColor: color + '0.2)',
                borderColor: color + '1.0)',
                hoverBackgroundColor: color + '0.3)',
@@ -112,18 +106,37 @@
                }
             }]
          },
+
          tooltips: {
-            enabled: true
+            enabled: true,
+            bodyFontStyle: 'bold',
+            callbacks: {
+               label: function(tooltipItem) {
+                  var percentage = (tooltipItem.yLabel * 100 / {{$responsesCount}}).toFixed(2);
+                  if(isNaN(percentage)){
+                     return " " + tooltipItem.yLabel + " (0%)";
+                  }else{
+                     return " " + tooltipItem.yLabel + " (" + percentage + "%)";
+                  }
+               }
+            }
          },
+
          hover: {
             animationDuration: 0
          },
+
          animation: {
             onComplete: showBarValues
          },
+
          legend: {
-            display: false
+            labels: {
+               fontStyle: 'bold',
+               usePointStyle: true
+            }
          },
+
          responsive: true,
       };
 

@@ -4,17 +4,6 @@
    <!-- sidebar: style can be found in sidebar.less -->
    <section class="sidebar">
 
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-         <div class="pull-left image">
-            <img src="{{ asset("img/user.png") }}" class="img-circle" alt="User Image"/>
-         </div>
-         <div class="pull-left info">
-            <p></p>
-            <p>{{Session::get('first_name')}}</p>
-         </div>
-      </div>
-
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
          <li class="header">MENU</li>

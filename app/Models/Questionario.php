@@ -50,4 +50,10 @@ class Questionario extends Model
       ->orderBy("nome", "asc")->orderBy("sobrenome", "asc")->select('questionarios.*');
    }
 
+   // public function scopeAbertos($query){
+   //    return $query->join('questionario_turma', 'questionario_turma.questionario_id', '=', 'questionarios.id')
+   //       ->where('questionario_turma.questionario_id', $this->id)
+   //       ->where('questionario_turma.aberto', 1);
+   // }
+
 }

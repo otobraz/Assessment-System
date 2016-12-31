@@ -4,18 +4,6 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel">
-            <div class="pull-left image">
-                <img src="{{ asset("img/user.png") }}" class="img-circle" alt="User Image" height="160px" width="160px"/>
-            </div>
-            <div class="pull-left info">
-                <p>{{Session::get('first_name')}}</p>
-                <!-- Status -->
-                <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a>  -->
-            </div>
-        </div>
-
         <!-- search form (Optional) -->
         <form action="{{url('search')}}" method="post" class="sidebar-form">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
