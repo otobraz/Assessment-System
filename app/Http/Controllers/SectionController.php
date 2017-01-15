@@ -47,27 +47,6 @@ class SectionController extends Controller
    }
 
    /**
-   * Show the form for creating a new resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-   public function create()
-   {
-      // Waiting for UFOP DB access to be implemented
-   }
-
-   /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
-   */
-   public function store(Request $request)
-   {
-      // Waiting for UFOP DB access to be implemented
-   }
-
-   /**
    * Display the specified resource.
    *
    * @param  int  $id
@@ -81,7 +60,7 @@ class SectionController extends Controller
 
       switch (session()->get('role')) {
          case '0':
-         return view('section.show', compact('section', 'students'));
+         return view('section.admin.show', compact('section', 'students'));
          break;
 
          case '1':

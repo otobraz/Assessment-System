@@ -17,6 +17,7 @@
                      <th>Turma</th>
                      <th>Cod. Disciplina</th>
                      <th>Disciplina</th>
+                     <th>Professor</th>
                      <th>Departamento</th>
                      <th>Semestre</th>
                      <th>Detalhes</th>
@@ -26,16 +27,32 @@
 
                <tbody>
                   @foreach($sections as $section)
+
                      <tr>
-                        <td align="center">{{$section->cod_turma}}</td>
-                        <td align="center">{{$section->disciplina->cod_disciplina}}</td>
-                        <td>{{$section->disciplina->disciplina}}</td>
-                        <td align="center">{{$section->disciplina->departamento->cod_departamento}}</td>
-                        <td align="center">{{$section->ano . "/" . $section->semestre}}</td>
-                        <td align="center"><a class="btn btn-info btn-xs" role="button"
-                           style="color: white" href="{{route('section.show', encrypt($section->id))}}">Detalhes</a>
+                        <td align="center" rowspan="{{count($section->professores)}}">{{$section->cod_turma}}</td>
+                        <td align="center" rowspan="{{count($section->professores)}}">
+                           {{$section->disciplina->cod_disciplina}}
+                        </td>
+                        <td rowspan="{{count($section->professores)}}">{{$section->disciplina->disciplina}}</td>
+                        <td>{{$section->professores[0]->nome_completo}}</td>
+                        <td align="center" rowspan="{{count($section->professores)}}">
+                           {{$section->disciplina->departamento->cod_departamento}}
+                        </td>
+                        <td align="center" rowspan="{{count($section->professores)}}">{{$section->ano . "/" . $section->semestre}}</td>
+                        <td rowspan="{{count($section->professores)}}" align="center">
+                           <a class="btn btn-info btn-xs" role="button" style="color: white" href="{{route('section.show', encrypt($section->id))}}">
+                              Detalhes
+                           </a>
                         </td>
                      </tr>
+                     @if (count($section->professores) > 1)
+                        @foreach (array_slice($section->professores,1) as $professor)
+                           <tr>
+                              <td>{{$professor->nome_completo}}</td>
+                           </tr>
+                        @endforeach
+                     @endif
+
                   @endforeach
                </tbody>
 

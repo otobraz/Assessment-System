@@ -60,7 +60,7 @@
          "aLengthMenu": [[50, 100, 200, 300, -1], [50, 100, 200, 300, "Tudo"]],
          "columnDefs": [{
             "orderable": false,
-            "targets": 5
+            "targets": [5,6]
          }]
       });
    });

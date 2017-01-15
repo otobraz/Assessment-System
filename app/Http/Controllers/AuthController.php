@@ -73,12 +73,6 @@ class AuthController extends Controller{
          $newUser->save();
          session()->put('id', $newUser->id);
       }
-
-      // $user->username = $authenticatedUser['username'];
-      // $user->first_name = $authenticatedUser['first_name'];
-      // $user->last_name = $authenticatedUser['last_name'];
-      // $user->email = $authenticatedUser['email'];
-      // $user->major_id = $authenticatedUser['major_id'];
    }
 
    public function insertUpdateProfessor($authenticatedUser){
@@ -87,8 +81,6 @@ class AuthController extends Controller{
          $user->usuario = $authenticatedUser['username'];
          $user->nome = $authenticatedUser['first_name'];
          $user->sobrenome = $authenticatedUser['last_name'];
-         // $user->email = $authenticatedUser['email'];
-         // $user->departamento_id = $authenticatedUser['department_id'];
          $user->save();
          session()->put('id', $user->id);
       }else{
@@ -101,15 +93,6 @@ class AuthController extends Controller{
          $newUser->save();
          session()->put('id', $newUser->id);
       }
-      // $professorsTable = DB::table('professors');
-      // if($user = $professorsTable->where('username', $authenticatedUser['username'])
-      // ->select('username', 'first_name', 'last_name', 'email', 'department_id')->get()){
-      //    if((array)$user[0] == $authenticatedUser){
-      //       $professorsTable->update($authenticatedUser);
-      //    }
-      // }else{
-      //    $professorsTable->insertGetId($authenticatedUser);
-      // }
    }
 
    public function getLogin(Request $request){
@@ -121,8 +104,6 @@ class AuthController extends Controller{
 
    public function postAdminLogin(Admin $user, Request $request){
 
-      //dd(bcrypt($request->password));
-      //dd(Hash::check($request->input('password'), $user->password));
       if(Hash::check($request->input('password'), $user->senha)){
          $request->session()->put(array(
             'id' => $user->id,
@@ -162,8 +143,9 @@ class AuthController extends Controller{
          // $ldapUserGroups = config('my_config.userGroups');
          if($ldapUser = $this->getLdapUser($ldapData, $request->input('username'))){
             $ou = $ldapUser[0][$ldapData['group_field']][0];
+            // $ou = "INSTITUTO DE CIENCIAS EXATAS E APLICADAS";
             // If the user's 'ou' field is in the majors table, he is a student
-            if($major = Curso::where('curso', $ldapUser[0][$ldapData['group_field']][0])->first()){
+            if($major = Curso::where('curso', $ou)->first()){
                $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
                if ($this->isPasswordValid($userPassword, $request->input('password'))){
                   $authenticatedUser = array(
@@ -197,6 +179,24 @@ class AuthController extends Controller{
                   return redirect()->route('home');
                }
                return redirect('login')->with('authError', 'Usuário e/ou Senha inválidos');
+            }else if($ou == "INSTITUTO DE CIENCIAS EXATAS E APLICADAS"){
+               $professor = Professor::where('usuario', $ldapUser[0][$ldapData['id_field']][0]);
+               if(isset($professor)){
+                  $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
+                  if ($this->isPasswordValid($userPassword, $request->input('password'))){
+                     $authenticatedUser = array(
+                        'username' => $ldapUser[0][$ldapData['id_field']][0],
+                        'first_name' => $ldapUser[0][$ldapData['given_name_field']][0],
+                        'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
+                        'email' => $professor->email,
+                        'department_id' => $professor->department->id,
+                        'role' => '2'
+                     );
+                     $this->insertUpdateProfessor($authenticatedUser);
+                     $request->session()->put($authenticatedUser); // put role in session
+                     return redirect()->route('home');
+                  }
+               }
             }
             return redirect('login')->with('authError', 'Usuário sem permissão de acesso ao sistema');
          }

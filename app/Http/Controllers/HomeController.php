@@ -41,6 +41,36 @@ class HomeController extends Controller
    }
 
    public function studentsHome(){
+      $student = Aluno::find(session()->get('id'));
+
+      $currentSections = $student->turmas()->OrderByDisciplina()->get()->groupBy('ano')->transform(function($item, $k) {
+         return $item->groupBy('semestre');
+      })->first()->first();
+
+      $currentGuidances = $student->orientacoes()->emAndamento()->get();
+
+      $myOpenSurveys = collect();
+
+      foreach  ($student->turmas as $section){
+         foreach ($section->questionarios as $survey) {
+
+            if($survey->pivot->aberto){
+               $response = Resposta::where('questionario_turma_id', $survey->pivot->id)->first();
+               if(!isset($response)){
+                  $myOpenSurveys = $myOpenSurveys->push(array($survey, $section));
+               }
+            }
+         }
+         // $responsesCount[$section->pivot->id] = Resposta::where('questionario_turma_id', $section->pivot->id)->get()->count();
+      }
+
+      $array = [1,2];
+      return view('student.home', compact(
+         'currentSections',
+         'currentGuidances',
+         'myOpenSurveys',
+         'array'
+      ));
 
    }
 
@@ -57,20 +87,12 @@ class HomeController extends Controller
 
       $myOpenSurveys = collect();
 
-
-
       foreach  ($surveys as $survey){
          foreach  ($survey->turmas()->OrderByDisciplina()->abertos()->get() as $section){
             $myOpenSurveys = $myOpenSurveys->push($section);
             $responsesCount[$section->pivot->id] = Resposta::where('questionario_turma_id', $section->pivot->id)->get()->count();
          }
       }
-
-      // dd($myOpenSurveys);
-
-      // foreach ($myOpenSurveys as $openSurvey){
-      //
-      // }
 
       return view('professor.home', compact(
          'currentSections',
@@ -84,17 +106,17 @@ class HomeController extends Controller
    public function getUsersHome(Request $request){
       switch (session()->get('role')) {
          case '0':
-            return $this->adminsHome();
-            break;
+         return $this->adminsHome();
+         break;
          case '1':
-            return view('student.home');
-            break;
+         return $this->studentsHome();
+         break;
 
          case '2':
-            return $this->professorsHome();
-            break;
+         return $this->professorsHome();
+         break;
          default:
-            break;
+         break;
       }
    }
 

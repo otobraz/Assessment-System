@@ -17,7 +17,7 @@
 
    <div class="box box-primary-ufop">
       <div class="box-header with-border">
-         <h3 class="box-title">Seus Professores</h3>
+         <h3 class="box-title">Meus Professores</h3>
          <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
          </div><!-- /.box-tools -->
