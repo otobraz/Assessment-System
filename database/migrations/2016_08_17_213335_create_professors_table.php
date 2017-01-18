@@ -16,7 +16,7 @@ class CreateProfessorsTable extends Migration
          $table->increments('id');
          $table->string('usuario', 11)->unique();
          $table->string('nome', 20)->nullable();
-         $table->string('sobrenome', 50)->nullable();
+         $table->string('sobrenome', 100)->nullable();
          $table->string('areas_interesse', 200);
          $table->string('email', 50)->unique()->nullable();
          $table->integer('departamento_id')->unsigned();

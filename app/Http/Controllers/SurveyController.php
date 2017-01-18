@@ -173,10 +173,17 @@ class SurveyController extends Controller
 
    public function provide($id){
       $survey = Questionario::find(decrypt($id));
-      $sections = Professor::find(session()->get('id'))->turmas()->orderByDisciplina()->get();
-      $sectionsGroup = $sections->groupBy('ano')->transform(function($item, $k) {
+      $sections = Professor::find(session()->get('id'))->turmas()->orderByDisciplina()->get()->groupBy('ano');
+
+      if($sections->isEmpty()){
+
+         return back()->with('errorMessage', 'Você não possui turmas para disponibilizar o questionário.');
+      }
+
+      $sectionsGroup = $sections->transform(function($item, $k) {
          return $item->groupBy('semestre');
       });
+
       return view('survey.professor.attach', compact('survey', 'sectionsGroup'));
    }
 
@@ -185,7 +192,7 @@ class SurveyController extends Controller
       foreach ($request->input('sections') as $sectionId) {
          Turma::find($sectionId)->questionarios()->attach($surveyId);
       }
-      return redirect()->route('survey.index')->with(successMessage('Questionário disponibilizado com sucesso.'));
+      return redirect()->route('survey.index')->with('successMessage', 'Questionário disponibilizado com sucesso.');
    }
 
    public function open($id){

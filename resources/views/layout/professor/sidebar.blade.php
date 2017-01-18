@@ -22,7 +22,10 @@
             <a href="{{action('StudentController@index')}}"><i class="fa fa-graduation-cap"></i> <span>Alunos</span></a>
          </li>
          <li>
-            <a href="{{action('ProfessorController@edit')}}" target="_blank"><i class="fa fa-pencil-square-o"></i> <span>Editar Cadastro</span></a>
+            <a href="{{action('ProfessorController@edit', encrypt(session()->get('id')))}}"><i class="fa fa-id-badge"></i> Perfil</a>
+         </li>
+         <li>
+            <a href="https://zeppelin10.ufop.br/minhaUfop/desktop/login.xhtml" target="_blank"><i class="fa fa-pencil-square-o"></i> <span>Editar Cadastro - minhaUFOP</span></a>
          </li>
          <li>
             <a href="{{action('AuthController@logout')}}" ><i class="fa fa-sign-out"></i> <span>Sair</span></a>

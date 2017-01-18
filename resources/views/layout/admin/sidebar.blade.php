@@ -10,9 +10,10 @@
          <!-- Optionally, you can add icons to the links -->
 
          <li class="treeview">
-            <a href="#"><i class="fa fa-university"></i>ICEA
+            <a href="#"><i class="fa fa-university"></i><span>ICEA</span>
                <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
+               </span>
             </a>
             <ul class="treeview-menu">
                <li>
@@ -37,10 +38,10 @@
          </li>
 
          <li class="treeview">
-            <a href="#"><i class="fa fa-users"></i>Usuários
+            <a href="#"><i class="fa fa-users"></i><span>Usuários</span>
                <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
-
+               </span>
             </a>
             <ul class="treeview-menu">
                <li>
@@ -56,10 +57,10 @@
          </li>
 
          <li class="treeview">
-            <a href="#"><i class="fa fa-comments-o"></i>Questionários
+            <a href="#"><i class="fa fa-comments-o"></i><span>Questionários</span>
                <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
-
+               </span>
             </a>
             <ul class="treeview-menu">
                <li>
@@ -75,11 +76,14 @@
          </li>
 
          <li>
-            <a href="{{route('admin.edit', encrypt(session()->get('id')))}}"><i class="fa fa-pencil-square-o"></i>Editar Cadastro</a>
+            <a href="{{action('AdminController@edit', encrypt(session()->get('id')))}}"><i class="fa fa-id-badge"></i> Perfil</a>
+         </li>
+         <li>
+            <a href="https://zeppelin10.ufop.br/minhaUfop/desktop/login.xhtml" target="_blank"><i class="fa fa-pencil-square-o"></i> <span>Editar Cadastro - minhaUFOP</span></a>
          </li>
 
          <li>
-            <a href="{{action('AuthController@logout')}}"><i class="fa fa-sign-out"></i>Sair</a>
+            <a href="{{action('AuthController@logout')}}"><i class="fa fa-sign-out"></i><span>Sair</span></a>
          </li>
       </ul><!-- /.sidebar-menu -->
    </section>

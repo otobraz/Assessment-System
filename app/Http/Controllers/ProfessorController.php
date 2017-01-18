@@ -50,12 +50,6 @@ class ProfessorController extends Controller
          case '1':
          $professors = Professor::all();
          $mySections = Aluno::find(session()->get('id'))->turmas;
-         // $myProfessors = array();
-         // foreach ($mySections as $key => $section) {
-         //    $myProfessors = $section->professores;
-         // }
-         //
-         // dd($myProfessors);
          return view ('professor.student.index', compact('professors', 'mySections'));
          break;
 
@@ -74,33 +68,13 @@ class ProfessorController extends Controller
    public function show($id)
    {
 
-      switch (session()->get('role')) {
-
-         case '0':
-            $professors = Professor::all();
-            return view ('professor.admin.index', compact('professors'));
-            break;
-
-         case '1':
-            $professor = Professor::find(decrypt($id));
-            $surveys = $professor->questionarios;
-            $sectionsGroup = $professor->turmas->groupBy('ano')->transform(function($item, $k) {
-               return $item->groupBy('semestre');
-            });
-            $guidances = $professor->orientacoes   ;
-            return view ('professor.student.show', compact('professor', 'surveys', 'sectionsGroup', 'guidances'));
-            break;
-
-         case '2':
-            $professor = Professor::find(decrypt($id));
-            return view('professor.show', compact('professor'));
-            break;
-
-         default:
-            return redirect('/');
-            break;
-      }
-
+      $professor = Professor::find(decrypt($id));
+      $surveys = $professor->questionarios;
+      $sectionsGroup = $professor->turmas->groupBy('ano')->transform(function($item, $k) {
+         return $item->groupBy('semestre');
+      });
+      $guidances = $professor->orientacoes   ;
+      return view ('professor.admin.show', compact('professor', 'surveys', 'sectionsGroup', 'guidances'));
    }
 
    public function showSurveys($id){
@@ -128,25 +102,15 @@ class ProfessorController extends Controller
    }
 
    /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
-   */
-   public function store(Request $request)
-   {
-      //
-   }
-
-   /**
    * Show the form for editing the specified resource.
    *
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-   public function edit()
+   public function edit($id)
    {
-      return redirect()->away('https://zeppelin10.ufop.br/minhaUfop/desktop/login.xhtml');
+      $professor = Professor::find(decrypt($id));
+      return view('professor.edit', compact('professor'));
    }
 
    /**
@@ -158,7 +122,13 @@ class ProfessorController extends Controller
    */
    public function update(Request $request, $id)
    {
-      //
+
+      $professor = Professor::find(decrypt($id));
+      $professor->email = $request->input('email');
+      if($professor->save()){
+         return redirect()->route('professor.edit', ['id' => $id])->with('successMessage', 'Informações alteradas com sucesso.');
+      }
+      return redirect()->route('professor.edit', ['id' => $id])->with('errorMessage', 'Erro ao atualizar informações');
    }
 
    /**
@@ -228,28 +198,10 @@ class ProfessorController extends Controller
             return redirect()->back()->with('errorMessage', 'Arquivo inválido');
          }
 
-         // $file = fopen($request->file('professors-csv'),"r");
-         // $professors = array();
-         // while(!feof($file)){
-         //    $professors[] = (fgetcsv($file));
-         // }
-         // fclose($file);
-         // dd($professors);
-
       }else{
          return redirect()->back()->with('errorMessage', 'Erro ao importar CSV');
       }
 
-      // $path = "D:\Oto\WebProjects\Professors-and-Classes-Evaluation\storage\csvs\MATRICULA AJUSTE SJM.csv";
-      // $students = (array_map('str_getcsv', file($path)));
-      // array_shift($students);
-      // foreach ($students as $student) {
-      //    $newStudent = Aluno::firstOrCreate([
-      //       'matricula' => $student[0],
-      //       'curso_id' => Curso::where('curso', $student[5])->first()->id,
-      //       'usuario' => $student[0]
-      //    ]);
-      // }
    }
 
 }

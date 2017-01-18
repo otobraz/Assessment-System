@@ -74,12 +74,6 @@ class AdminController extends Controller
       return view('admin.edit', compact('admin'));
    }
 
-   public function editPassword($id)
-   {
-      $admin = Admin::find(decrypt($id));
-      return view('admin.edit-password', compact('admin'));
-   }
-
    /**
    * Update the specified resource in storage.
    *
@@ -90,10 +84,7 @@ class AdminController extends Controller
    public function update(Request $request, $id)
    {
       $admin = Admin::find(decrypt($id));
-      $admin->nome = $request->first_name;
-      $admin->sobrenome = $request->last_name;
       $admin->email = $request->email;
-      $admin->usuario = $request->username;
       if($admin->save()){
          return redirect()->route('admin.edit', ['id' => $id])->with('successMessage', 'Informações alteradas com sucesso.');
       }

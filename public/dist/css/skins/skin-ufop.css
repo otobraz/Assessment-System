@@ -138,6 +138,10 @@ border-top-color: #962038;
    border-top-color: #962038;
 }
 
+.ufop-border {
+    border-top: 3px solid #962038;
+}
+
 /*.box-solid-ufop > .box-header{
    color: #a94442;
    background: #962038;

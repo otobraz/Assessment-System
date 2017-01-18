@@ -51,19 +51,7 @@
    <footer>
       <div class="container">
          <div class="row">
-            <div class="col-md-4">
-               <span class="copyright"><a href="https://github.com/otobraz" target="_blank">Oto Braz Assunção</a> &copy; Sistema de Avaliação 2016</span>
-            </div>
-            <div class="col-md-4">
-               <ul class="list-inline social-buttons">
-                  <li><a href="#"><i class="fa fa-twitter"></i></a>
-                  </li>
-                  <li><a href="#"><i class="fa fa-facebook"></i></a>
-                  </li>
-                  <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                  </li>
-               </ul>
-            </div>
+            <span class="copyright"><a href="https://github.com/otobraz" target="_blank">Oto Braz Assunção</a> &copy; Sistema de Avaliação 2017</span>
          </div>
       </div>
    </footer>
@@ -78,8 +66,6 @@
 
    <!-- Plugin JavaScript -->
    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-   {{-- <script src="js/classie.js"></script>
-   <script src="js/cbpAnimatedHeader.js"></script> --}}
 
    <!-- Custom Theme JavaScript -->
    <script src="agency/js/agency.min.js"></script>

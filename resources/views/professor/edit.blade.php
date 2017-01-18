@@ -1,4 +1,4 @@
-@extends('layout.admin.base')
+@extends('layout.professor.base')
 
 @section('title')
    {{session()->get('first_name')}} | Perfil
@@ -17,7 +17,7 @@
             @include('alert-message.success')
             @include('alert-message.error')
 
-            <form class="form-signin" method="POST" action="{{action('AdminController@update', encrypt($admin->id))}}">
+            <form class="form-signin" method="POST" action="{{action('ProfessorController@update', encrypt($professor->id))}}">
 
                {{ csrf_field() }}
 
@@ -27,16 +27,20 @@
                <tbody>
                   <tr>
                      <th>Nome:</th>
-                     <td>{{$admin->nome_completo}}</td>
+                     <td>{{$professor->nome_completo}}</td>
+                  </tr>
+                  <tr>
+                     <th>Departamento:</th>
+                     <td>{{$professor->departamento->departamento}}</td>
                   </tr>
                   <tr>
                      <th>Login (CPF):</th>
-                     <td>{{$admin->usuario}}</td>
+                     <td>{{$professor->usuario}}</td>
                   </tr>
                   <tr>
                      <th>E-mail:</th>
                      <td>
-                        <input class="form-control" type="email" name="email" placeholder="E-mail" value="{{$admin->email}}" autofocus required>
+                        <input class="form-control" type="email" name="email" placeholder="E-mail" value="{{$professor->email}}" autofocus required>
                      </td>
                   </tr>
 

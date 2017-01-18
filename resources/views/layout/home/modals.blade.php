@@ -14,7 +14,7 @@
 
                <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                  <input class="form-control input-xlarge" type="text" maxlength="14" name="username" id="username" placeholder="CPF" autofocus required oninvalid="setCustomValidity('Informe o usuário.')" oninput="setCustomValidity('')"
+                  <input class="form-control input-xlarge" type="text" maxlength="14" name="username" id="username" placeholder="CPF (somente números)" autofocus required oninvalid="setCustomValidity('Informe o usuário.')" oninput="setCustomValidity('')"
                   >
                      {{-- <p class="help-block">{{"Apenas números"}}</p> --}}
                </div>

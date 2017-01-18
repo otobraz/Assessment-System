@@ -7,6 +7,7 @@
          <th>CPF</th>
          <th>E-mail</th>
          <th>Departamento</th>
+         <th>Detalhes</th>
          <th>Excluir</th>
       </tr>
    </thead>
@@ -19,6 +20,10 @@
             <td align="center">{{$professor->usuario}}</td>
             <td>{{$professor->email}}</td>
             <td align="center">{{$professor->departamento->cod_departamento}}</td>
+            <td align="center">
+               <a class="btn btn-info btn-xs" role="button"
+               style="color: white" href="{{route('professor.show', encrypt($professor->id))}}">Detalhes</a>
+            </td>
             <td align="center">
                <a type="button" class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal" data-action="professor/{{encrypt($professor->id)}}">Excluir</a>
             </td>

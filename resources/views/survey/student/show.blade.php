@@ -81,7 +81,11 @@
 
                   <tfoot>
                      <tr>
-                        <td colspan="8"><button class="btn btn-primary-ufop" type="submit"><span class="glyphicon glyphicon-stats" aria-label="Comparar"></span> Comparar</button></td>
+                        @if ($survey->turmas()->OrderByDisciplina()->get()->count() >= 1)
+                           <td colspan="8"><button class="btn btn-primary-ufop" type="submit"><span class="glyphicon glyphicon-stats" aria-label="Comparar"></span> Comparar</button></td>
+                        @else
+                           <td colspan="8"><button disabled class="btn btn-primary-ufop" type="submit"><span class="glyphicon glyphicon-stats" aria-label="Comparar"></span> Comparar</button></td>
+                        @endif
                      </tr>
                   </tfoot>
                </table>

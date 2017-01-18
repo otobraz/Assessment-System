@@ -17,7 +17,7 @@ class CreateStudentsTable extends Migration
          $table->string('matricula', 9)->unique();
          $table->string('usuario', 11)->unique();
          $table->string('nome', 20)->nullable();
-         $table->string('sobrenome', 50)->nullable();
+         $table->string('sobrenome', 100)->nullable();
          $table->string('email', 50)->unique()->nullable();
          $table->integer('curso_id')->unsigned();
 

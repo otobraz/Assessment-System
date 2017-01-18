@@ -61,15 +61,11 @@ class HomeController extends Controller
                }
             }
          }
-         // $responsesCount[$section->pivot->id] = Resposta::where('questionario_turma_id', $section->pivot->id)->get()->count();
       }
-
-      $array = [1,2];
       return view('student.home', compact(
          'currentSections',
          'currentGuidances',
-         'myOpenSurveys',
-         'array'
+         'myOpenSurveys'
       ));
 
    }
@@ -77,9 +73,12 @@ class HomeController extends Controller
    public function professorsHome(){
       $professor = Professor::find(session()->get('id'));
 
-      $currentSections = $professor->turmas()->OrderByDisciplina()->get()->groupBy('ano')->transform(function($item, $k) {
-         return $item->groupBy('semestre');
-      })->first()->first();
+      $currentSections = $professor->turmas()->OrderByDisciplina()->get()->groupBy('ano');
+      if(!$currentSections->isEmpty()){
+         $currentSections = $currentSections->transform(function($item, $k) {
+            return $item->groupBy('semestre');
+         })->first()->first();
+      }
 
       $currentGuidances = $professor->orientacoes()->emAndamento()->get();
 

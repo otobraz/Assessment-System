@@ -52,15 +52,20 @@ class AuthController extends Controller{
       return $string;
    }
 
-   public function insertUpdateStudent($authenticatedUser){
+   public function insertUpdateStudent($ldapUser, $ldapData){
+
+      $authenticatedUser = array(
+         'username' => $ldapUser[0][$ldapData['id_field']][0],
+         'first_name' => $ldapUser[0][$ldapData['given_name_field']][0],
+         'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
+         'email' => $ldapUser[0][$ldapData['email_field']][0],
+         'major_id' => Curso::where('curso', $ldapUser[0][$ldapData['group_field']][0])->first()->value('id'),
+         'role' => '1'
+      );
+
       $user = Aluno::where('usuario', $authenticatedUser['username'])->first();
+
       if(isset($user)){
-         $user->usuario = $authenticatedUser['username'];
-         $user->nome = $authenticatedUser['first_name'];
-         $user->sobrenome = $authenticatedUser['last_name'];
-         $user->email = $authenticatedUser['email'];
-         $user->curso_id = $authenticatedUser['major_id'];
-         $user->save();
          session()->put('id', $user->id);
       }else{
          $newUser = new Aluno();
@@ -73,15 +78,25 @@ class AuthController extends Controller{
          $newUser->save();
          session()->put('id', $newUser->id);
       }
+
+      session()->put($authenticatedUser);
+
    }
 
-   public function insertUpdateProfessor($authenticatedUser){
+   public function insertUpdateProfessor($ldapUser, $ldapData){
+
+      $authenticatedUser = array(
+         'username' => $ldapUser[0][$ldapData['id_field']][0],
+         'first_name' => $ldapUser[0][$ldapData['given_name_field']][0],
+         'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
+         'email' => $ldapUser[0][$ldapData['email_field']][0],
+         'department_id' => Departamento::where('departamento', $ldapUser[0][$ldapData['group_field']][0])->first()->value('id'),
+         'role' => '2'
+      );
+
       $user = Professor::where('usuario', $authenticatedUser['username'])->first();
+
       if(isset($user)){
-         $user->usuario = $authenticatedUser['username'];
-         $user->nome = $authenticatedUser['first_name'];
-         $user->sobrenome = $authenticatedUser['last_name'];
-         $user->save();
          session()->put('id', $user->id);
       }else{
          $newUser = new Professor();
@@ -93,6 +108,7 @@ class AuthController extends Controller{
          $newUser->save();
          session()->put('id', $newUser->id);
       }
+      session()->put($authenticatedUser);
    }
 
    public function getLogin(Request $request){
@@ -100,22 +116,6 @@ class AuthController extends Controller{
          return redirect('/');
       }
       return view('auth.login');
-   }
-
-   public function postAdminLogin(Admin $user, Request $request){
-
-      if(Hash::check($request->input('password'), $user->senha)){
-         $request->session()->put(array(
-            'id' => $user->id,
-            'username' => $user->usuario,
-            'first_name' => $user->nome,
-            'last_name' => $user->sobrenome,
-            'email' => $user->email,
-            'role' => '0'
-         ));
-         return redirect()->route('home');
-      }
-      return redirect('login')->with('authError', 'Usuário e/ou Senha inválidos');
    }
 
    public function postLogin(Request $request){
@@ -135,78 +135,72 @@ class AuthController extends Controller{
       // $request->session()->put($authenticatedUser);
       // return redirect()->route('home');
 
-      $user = Admin::where('usuario', $request->username)->first();
-      if (isset($user)){
-         return $this->postAdminLogin($user, $request);
-      }else{
-         $ldapData = config('my_config.ldapData');
-         // $ldapUserGroups = config('my_config.userGroups');
-         if($ldapUser = $this->getLdapUser($ldapData, $request->input('username'))){
-            $ou = $ldapUser[0][$ldapData['group_field']][0];
-            // $ou = "INSTITUTO DE CIENCIAS EXATAS E APLICADAS";
-            // If the user's 'ou' field is in the majors table, he is a student
-            if($major = Curso::where('curso', $ou)->first()){
-               $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
-               if ($this->isPasswordValid($userPassword, $request->input('password'))){
-                  $authenticatedUser = array(
-                     'username' => $ldapUser[0][$ldapData['id_field']][0],
-                     'first_name' => $ldapUser[0][$ldapData['given_name_field']][0],
-                     'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
-                     'email' => $ldapUser[0][$ldapData['email_field']][0],
-                     'major_id' => $major->id,
-                     'role' => '1'
-                  );
-                  $this->insertUpdateStudent($authenticatedUser);
-                  $request->session()->put($authenticatedUser);
-                  return redirect()->route('home');
-               }
-               return redirect('login')->with('authError', 'Usuário e/ou Senha inválidos');
-
-               // If the user's 'ou' field is in the departments table, he is a professor
-            }else if($department = Departamento::where('departamento', 'LIKE', "%$ou%")->first()){
-               $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
-               if ($this->isPasswordValid($userPassword, $request->input('password'))){
-                  $authenticatedUser = array(
-                     'username' => $ldapUser[0][$ldapData['id_field']][0],
-                     'first_name' => $ldapUser[0][$ldapData['given_name_field']][0],
-                     'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
-                     'email' => $ldapUser[0][$ldapData['email_field']][0],
-                     'department_id' => $department->id,
-                     'role' => '2'
-                  );
-                  $this->insertUpdateProfessor($authenticatedUser);
-                  $request->session()->put($authenticatedUser); // put role in session
-                  return redirect()->route('home');
-               }
-               return redirect('login')->with('authError', 'Usuário e/ou Senha inválidos');
-            }else if($ou == "INSTITUTO DE CIENCIAS EXATAS E APLICADAS"){
-               $professor = Professor::where('usuario', $ldapUser[0][$ldapData['id_field']][0]);
-               if(isset($professor)){
+      $ldapData = config('my_config.ldapData');
+      $ldapUserGroups = config('my_config.userGroups');
+      if($ldapUser = $this->getLdapUser($ldapData, $request->input('username'))){
+         if(array_key_exists($ldapUser[0][$ldapData['group_field']][0], $ldapUserGroups)){
+            switch ($ldapUserGroups[$ldapUser[0][$ldapData['group_field']][0]]){
+               case 0:
+               if($professor = Professor::where('usuario', $ldapUser[0][$ldapData['id_field']][0])->first()){
                   $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
                   if ($this->isPasswordValid($userPassword, $request->input('password'))){
                      $authenticatedUser = array(
-                        'username' => $ldapUser[0][$ldapData['id_field']][0],
-                        'first_name' => $ldapUser[0][$ldapData['given_name_field']][0],
-                        'last_name' => $ldapUser[0][$ldapData['last_name_field']][0],
+                        'id' => $professor->id,
+                        'username' => $professor->usuario,
+                        'first_name' => $professor->nome,
+                        'last_name' => $professor->sobrenome,
                         'email' => $professor->email,
-                        'department_id' => $professor->department->id,
                         'role' => '2'
                      );
-                     $this->insertUpdateProfessor($authenticatedUser);
-                     $request->session()->put($authenticatedUser); // put role in session
+                     $request->session()->put($authenticatedUser);
                      return redirect()->route('home');
                   }
+                  return redirect()->route('login')->with('authError', 'Usuário e/ou Senha inválidos');
+               }else if($admin = Admin::where('usuario', $ldapUser[0][$ldapData['id_field']][0])->first()){
+                  $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
+                  if ($this->isPasswordValid($userPassword, $request->input('password'))){
+                     $authenticatedUser = array(
+                        'id' => $admin->id,
+                        'username' => $admin->usuario,
+                        'first_name' => $admin->nome,
+                        'last_name' => $admin->sobrenome,
+                        'email' => $admin->email,
+                        'role' => '0'
+                     );
+                     $request->session()->put($authenticatedUser);
+                     return redirect()->route('home');
+                  }
+                  return redirect()->route('login')->with('authError', 'Usuário e/ou Senha inválidos');
                }
+               break;
+
+               case 1:
+               $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
+               if ($this->isPasswordValid($userPassword, $request->input('password'))){
+                  $this->insertUpdateStudent($ldapUser, $ldapData);
+                  return redirect()->route('home');
+               }
+               return redirect()->route('login')->with('authError', 'Usuário e/ou Senha inválidos');
+               break;
+
+               case 2:
+               $userPassword = substr($ldapUser[0][$ldapData['password_field']][0], 5);
+               if ($this->isPasswordValid($userPassword, $request->input('password'))){
+                  $this->insertUpdateProfessor($authenticatedUser);
+                  return redirect()->route('home');
+               }
+               return redirect()->route('login')->with('authError', 'Usuário e/ou Senha inválidos');
+               break;
             }
-            return redirect('login')->with('authError', 'Usuário sem permissão de acesso ao sistema');
          }
-         return redirect('login')->with('authError', 'CPF inválido');
+         return redirect()->route('login')->with('authError', 'Usuário sem permissão de acesso ao sistema');
       }
+      return redirect()->route('login')->with('authError', 'Usuário e/ou Senha inválidos');
    }
 
    public function logout(Request $request){
       $request->session()->flush();
-      return redirect('login')->with('message', 'Você foi desconectado com sucesso!');
+      return redirect()->route('login')->with('message', 'Você foi desconectado com sucesso!');
    }
 
 }

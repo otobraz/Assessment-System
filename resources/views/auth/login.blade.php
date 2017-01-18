@@ -1,65 +1,63 @@
 @extends('auth.base')
 
 @section('content')
-   <body>
-      <br>
-      <div class="container">
-         <div class="row">
-            <div class="col-md-offset-4 col-md-4"> {{-- Define a coluna de tamanho 6 mas com offset de coluna 3 --}}
-               <!-- <img src="{{asset('image/logoFull.png')}}" height="300px" width="250px" class="img-responsive center-block" alt="Logotipo"/> -->
-               <form class="form-signin" method="POST" action="{{url('login')}}">
 
-                  <fieldset>
-                     {{ csrf_field() }}
-                     <legend>Login no Sistema</legend>
-                     @if(session('authError'))
-                        <div class="form-group has-error">
-                           <div class="input-group">
-                              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                              <input class="form-control input-xlarge" type="text" maxlength="14" name="username" id="username" placeholder="CPF" autofocus required
-                              oninvalid="setCustomValidity('Informe o usuário.')"
-                              oninput="setCustomValidity('')"
-                              >
-                              {{-- onkeypress="return mask(this)" --}}
-                           </div>
-                           <br/>
-                           <div class="input-group">
-                              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                              <input class="form-control input-xlarge " type="password" name="password" id="password" placeholder="Senha" required
-                              oninvalid="setCustomValidity('Informe a senha.')"
-                              oninput="setCustomValidity('')"
-                              >
-                           </div>
-                           <p class="help-block">{{session('authError')}}</p>
-                        </div>
-                     @else
-                        <div class="input-group">
-                           <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                           <input class="form-control input-xlarge" type="text" maxlength="14" name="username" id="username" placeholder="CPF" autofocus required
-                           oninvalid="setCustomValidity('Informe o usuário.')"
-                           oninput="setCustomValidity('')"
-                           >
-                        </div>
-                        {{-- <p class="help-block">{{"Apenas números"}}</p> --}}
-                        <br/>
-                        <div class="input-group">
-                           <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                           <input class="form-control input-xlarge " type="password" name="password" id="password" placeholder="Senha" required
-                           oninvalid="setCustomValidity('Informe a senha.')"
-                           oninput="setCustomValidity('')"
-                           >
-                        </div>
-                     @endif
-                     <br/>
-                     <p class="text-center">
-                        <button class="btn btn-default"  type="reset"><i class="glyphicon glyphicon-erase"></i> Limpar</button>
-                        <button class="btn btn-primary-ufop" type="submit"><i class="fa fa-sign-in"></i> Entrar</button>
-                        <p>
-                        </fieldset>
-                     </form>
+   <div class="login-box">
+      <div class="login-logo">
+         <i class="fa fa-bar-chart"></i>
+         <b>Sis</b>tema de <b>Av</b>aliação de classes e orientações
+      </div>
+      <!-- /.login-logo -->
+      <div class="login-box-body ufop-border">
+         <p class="login-box-msg">Faça o login para utilizar o sistema</p>
+
+         <form method="POST" action="{{url('login')}}">
+
+            {{ csrf_field() }}
+            <fildset>
+
+               @if(session('authError'))
+                  <div class="has-error">
+                     <div class="form-group has-feedback">
+                        <input class="form-control" type="text" name="username" id="username" placeholder="CPF (somente números)" autofocus required>
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                     </div>
+                     <div class="form-group has-feedback">
+                        <input class="form-control input-xlarge " type="password" name="password" id="password" placeholder="Senha" required>
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                     </div>
+                     <p class="help-block">{{session('authError')}}</p>
+                  </div>
+               @else
+                  <div class="form-group has-feedback">
+                     <input class="form-control" type="text" name="username" id="username" placeholder="CPF (somente números)" autofocus required>
+                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                  </div>
+                  <div class="form-group has-feedback">
+                     <input class="form-control input-xlarge " type="password" name="password" id="password" placeholder="Senha" required>
+                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                  </div>
+               @endif
+
+               <div class="row">
+                  <div class="col-md-6">
+                     <button class="btn btn-flat btn-block btn-default"  type="reset"><i class="glyphicon glyphicon-erase"></i> Limpar</button>
+                  </div>
+                  <div class="col-md-6">
+                     <button class="btn btn-flat btn-block btn-primary-ufop" type="submit"><i class="fa fa-sign-in"></i> Entrar</button>
                   </div>
                </div>
-            </div>
-            <hr>
-         </body>
-      @endsection
+
+               <hr>
+
+               <p class="text-center">
+                  Use o <span class="text-bold">mesmo CPF</span> e a <span class="text-bold">mesma SENHA</span><br> do <a href="http://www.minha.ufop.br/" target="_blank"><i class="fa fa-home"></i>Minha UFOP</a>
+               </p>
+
+            </form>
+         </fieldset>
+      </div><!-- /.login-box-body -->
+   </div><!-- /.login-box -->
+
+
+@endsection

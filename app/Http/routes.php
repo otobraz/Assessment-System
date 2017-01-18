@@ -26,8 +26,8 @@
 Route::group(['middleware' => ['auth.student']], function () {
 
    // Student Routes
-   Route::get('aluno/editar', ['as' => 'student.edit', 'uses' => 'StudentController@edit']);
-   Route::get('aluno/{id}', ['as' => 'student.show', 'uses' => 'StudentController@show']);
+   Route::get('aluno/{id}/editar', ['as' => 'student.edit', 'uses' => 'StudentController@edit']);
+   Route::put('aluno/{id}', ['as' => 'student.update', 'uses' => 'StudentController@update']);
 
    // Response Routes
    Route::get('resposta/{surveySectionId}/criar', ['as' => 'response.create', 'uses' => 'ResponseController@create']);
@@ -39,7 +39,8 @@ Route::group(['middleware' => ['auth.student']], function () {
 Route::group(['middleware' => ['auth.professor']], function () {
 
    // Professor's route
-   Route::get('professor/editar', ['as' => 'professor.edit', 'uses' => 'ProfessorController@edit']);
+   Route::get('professor/{id}/editar', ['as' => 'professor.edit', 'uses' => 'ProfessorController@edit']);
+   Route::put('professor/{id}', ['as' => 'professor.update', 'uses' => 'ProfessorController@update']);
 
    // Guidance routes
    Route::get('orientacao/{studentId}/criar', ['as' => 'guidance.create', 'uses' => 'GuidanceController@create']);
@@ -196,6 +197,7 @@ Route::group(['middleware' => ['auth.user']], function () {
 
    // Students
    Route::get('alunos', ['as' => 'student.index', 'uses' => 'StudentController@index']);
+   Route::get('aluno/{id}', ['as' => 'student.show', 'uses' => 'StudentController@show']);
 
    // Professors
    Route::get('professores', ['as' => 'professor.index', 'uses' => 'ProfessorController@index']);
@@ -214,5 +216,5 @@ Route::group(['middleware' => ['auth.user']], function () {
 Route::get('/', ['as' => '/', 'uses' => 'HomeController@index']);
 
 // Login
-Route::get('login', ['as' => 'getLogin', 'uses' => 'AuthController@getLogin']);
-Route::post('login', ['as' => 'postLogin', 'uses' => 'AuthController@postLogin']);
+Route::get('login', ['as' => 'login', 'uses' => 'AuthController@getLogin']);
+Route::post('login', ['as' => 'login', 'uses' => 'AuthController@postLogin']);

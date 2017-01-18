@@ -19,7 +19,6 @@ class Admin extends Model
       'nome',
       'sobrenome',
       'email',
-      'senha'
    ];
 
    /**
@@ -30,5 +29,9 @@ class Admin extends Model
    protected $hidden = [
       'senha'
    ];
+
+   public function getNomeCompletoAttribute(){
+      return $this->nome . " " . $this->sobrenome;
+   }
 
 }

@@ -58,48 +58,27 @@ class StudentController extends Controller
    }
 
    /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-   public function show($id)
-   {
-      $student = Aluno::find(decrypt($id));
-      return view('student.show', compact('student'));
-   }
-
-   /**
    * Show the form for editing the specified resource.
    *
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-   public function edit()
+   public function edit($id)
    {
-      return redirect()->away('https://zeppelin10.ufop.br/minhaUfop/desktop/login.xhtml');
+      $student = Aluno::find(decrypt($id));
+      return view('student.edit', compact('student'));
    }
 
-   /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-
-   public function destroy($id)
+   public function update(Request $request, $id)
    {
-      //
-   }
 
-   // public function in_array_r($needle, $haystack, $strict = false) {
-   //    foreach ($haystack as $item) {
-   //       if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && $this->in_array_r($needle, $item, $strict))) {
-   //          return true;
-   //       }
-   //    }
-   //    return false;
-   // }
+      $student = Aluno::find(decrypt($id));
+      $student->email = $request->input('email');
+      if($student->save()){
+         return redirect()->route('student.edit', ['id' => $id])->with('successMessage', 'Informações alteradas com sucesso.');
+      }
+      return redirect()->route('student.edit', ['id' => $id])->with('errorMessage', 'Erro ao atualizar informações');
+   }
 
    public function import(){
       return view('student.admin.import');
@@ -109,7 +88,6 @@ class StudentController extends Controller
 
       if($request->file('students-csv')->isValid()){
 
-         // dd($request->file('students-csv'));
          $studentsCsv = (array_map('str_getcsv', file($request->file('students-csv'))));
          $filtered = array_filter($studentsCsv, function($v, $k){
             return $v[6] == "MATRICULADO";
@@ -117,17 +95,11 @@ class StudentController extends Controller
          $cpfs = array_column($filtered, 4, 0);
          $cursos = array_column($filtered, 7, 0);
          krsort($cpfs);
-         // dd($cursos);
-         // dd($studentsCsv);
-         // $cpfs = array_column($studentsCsv, 4, );
-         // $teste = array_combine($cpfs, $studentsCsv);
-         // // dd($teste);
          $cpfs = array_unique($cpfs);
          $array1 = array_intersect_key($cpfs, $cursos);
          $array2 = array_intersect_key($cursos, $cpfs);
          $studentsData = array_merge_recursive($array1, $array2);
-         // dd(array_count_values("086.176.906-66"));
-         // // dd($studentsCsv);
+
 
          $header = [
             "MATRICULA",
@@ -139,16 +111,6 @@ class StudentController extends Controller
             "DESCRICAO SITUACAO ALUNO",
             "COD CURSO"
          ];
-
-         // $newStudent = Aluno::firstOrNew([
-         //    'usuario' => '09647636644',
-         //    'matricula' => '',
-         //    'nome' => 'OTO',
-         //    'sobrenome' => 'BRAZ ASSUNCAO',
-         //    'email' => 'oto.braz@outlook.com',
-         //    'curso_id' => '1',
-         // ]);
-         // dd($newStudent->id);
 
          if($header == array_shift($studentsCsv)){
             $students = Aluno::all();
