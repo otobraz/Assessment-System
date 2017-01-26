@@ -4,11 +4,6 @@
    Resultados
 @endsection
 
-{{-- @section('content-header')
-<h1>{{$survey->titulo . " - " . $section->disciplina->disciplina}}</h1>
-<hr class="hr-ufop">
-@endsection --}}
-
 @section('content')
 
    @foreach ($questions as $question)
@@ -53,9 +48,9 @@
 
 @section('myScripts')
 
-   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script> --}}
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
-   <script src="{{asset('plugins/chartjs/Chart.js')}}" type="text/javascript"></script>
+   {{-- <script src="{{asset('plugins/chartjs/Chart.js')}}" type="text/javascript"></script> --}}
 
    <script>
 
@@ -88,14 +83,10 @@
    }
 
    $(function () {
-      /* ChartJS
-      * -------
-      * Here we will create a few charts using ChartJS
-      */
 
       color = getRandomColor();
 
-      @foreach ($questions->whereIn('tipo_id', [2,3]) as $question)
+      @foreach ($questions->whereInLoose('tipo_id', [2,3]) as $question)
 
       var data{{$question->id}} = {
          labels: {!! $question->opcoes->pluck('opcao') !!},

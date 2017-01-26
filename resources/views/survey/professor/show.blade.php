@@ -60,11 +60,13 @@
 
          </fieldset>
 
-         <div class="box-footer">
-            <button class="btn btn-default" type="button"
-            onclick="history.go(-1)"> Voltar</button>
-         </div>
       </div>
+
+      <div class="box-footer">
+         <button class="btn btn-default" type="button"
+         onclick="history.go(-1)"> Voltar</button>
+      </div>
+      
    </div>
 
 @endsection

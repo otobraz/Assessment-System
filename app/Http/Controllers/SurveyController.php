@@ -246,12 +246,12 @@ class SurveyController extends Controller
                   break;
 
                   case 2:
-                  $choice = $resp->where('pergunta_id', $question->id)->first();
+                  $choice = $resp->whereLoose('pergunta_id', $question->id)->first();
                   $answers[$question->id][$choice->opcao_id]++;
                   break;
 
                   case 3:
-                  $choice = $respM->where('pergunta_id', $question->id)->first();
+                  $choice = $respM->whereLoose('pergunta_id', $question->id)->first();
                   $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
                   foreach ($choices as $choice){
                      $answers[$question->id][$choice->opcao_id]++;
@@ -275,7 +275,7 @@ class SurveyController extends Controller
       if(session()->get('role') != 1){
          $questions = $survey->perguntas;
       }else{
-         $questions = $survey->perguntas()->where('tipo_id', '!=', 1)->get();
+         $questions = $survey->perguntas()->whereLoose('tipo_id', '!=', 1)->get();
       }
       foreach ($sectionsInput as $section) {
          $sectionAnswers = $this->getClassAnswers($survey, Turma::find($section), $questions);
@@ -313,7 +313,7 @@ class SurveyController extends Controller
       if(session()->get('role') != 1){
          $questions = $survey->perguntas;
       }else{
-         $questions = $survey->perguntas()->where('tipo_id', '!=', 1)->get();
+         $questions = $survey->perguntas()->whereLoose('tipo_id', '!=', 1)->get();
       }
       $section = Turma::find($surveySection->turma_id);
       $responses = Resposta::where('questionario_turma_id', $surveySection->id)->get();
@@ -336,12 +336,12 @@ class SurveyController extends Controller
                ->where('pergunta_id', $question->id)->first()->resposta;
                break;
                case 2:
-               $choice = $resp->where('pergunta_id', $question->id)->first();
+               $choice = $resp->whereLoose('pergunta_id', $question->id)->first();
                $answers[$question->id][$choice->opcao_id]++;
                break;
 
                case 3:
-               $choice = $respM->where('pergunta_id', $question->id)->first();
+               $choice = $respM->whereLoose('pergunta_id', $question->id)->first();
                $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
                foreach ($choices as $choice){
                   $answers[$question->id][$choice->opcao_id]++;
@@ -381,7 +381,7 @@ class SurveyController extends Controller
       if(session()->get('role') != 1){
          $questions = $survey->perguntas;
       }else{
-         $questions = $survey->perguntas()->where('tipo_id', '!=', 1)->get();
+         $questions = $survey->perguntas()->whereLoose('tipo_id', '!=', 1)->get();
       }
       $responses = Resposta::where('questionario_id', $survey->id)->get();
 
@@ -407,12 +407,12 @@ class SurveyController extends Controller
                break;
 
                case 2:
-               $choice = $resp->where('pergunta_id', $question->id)->first();
+               $choice = $resp->whereLoose('pergunta_id', $question->id)->first();
                $answers[$question->id][$choice->opcao_id]++;
                break;
 
                case 3:
-               $choice = $respM->where('pergunta_id', $question->id)->first();
+               $choice = $respM->whereLoose('pergunta_id', $question->id)->first();
                $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
                foreach ($choices as $choice){
                   $answers[$question->id][$choice->opcao_id]++;

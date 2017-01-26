@@ -10,6 +10,7 @@ class Orientacao extends Model
    protected $table = 'orientacoes';
 
    protected $fillable = [
+      'titulo',
       'descricao',
       'aluno_id',
       'professor_id',

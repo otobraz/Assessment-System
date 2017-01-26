@@ -23,9 +23,9 @@ class QuestionController extends Controller
          case 0:
 
          $questions = Pergunta::where('professor_id', NULL)->get();
-         $textQuestions = $questions->where('tipo_id', 1);
-         $singleChoiceQuestions = $questions->where('tipo_id', 2);
-         $multipleChoiceQuestions = $questions->where('tipo_id', 3);
+         $textQuestions = $questions->whereLoose('tipo_id', 1);
+         $singleChoiceQuestions = $questions->whereLoose('tipo_id', 2);
+         $multipleChoiceQuestions = $questions->whereLoose('tipo_id', 3);
          return view('question.admin.index', compact('textQuestions', 'singleChoiceQuestions', 'multipleChoiceQuestions'));
 
          break;

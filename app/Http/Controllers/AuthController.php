@@ -137,7 +137,7 @@ class AuthController extends Controller{
 
       $ldapData = config('my_config.ldapData');
       $ldapUserGroups = config('my_config.userGroups');
-      if($ldapUser = $this->getLdapUser($ldapData, $request->input('username'))){
+      if($ldapUser = $this->getLdapUser($ldapData, preg_replace('/\D/', '', $request->input('username')))){
          if(array_key_exists($ldapUser[0][$ldapData['group_field']][0], $ldapUserGroups)){
             switch ($ldapUserGroups[$ldapUser[0][$ldapData['group_field']][0]]){
                case 0:

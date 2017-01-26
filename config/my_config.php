@@ -38,7 +38,14 @@
          'DEPARTAMENTO DE ENGENHARIA ELETRICA' => 2,
 
 
+      ],
+
+      // cod_disciplina values that can't be imported
+      'sectionsNotAllowed' => [
+
+         'CSI495', 'CSI496', 'CSI498', 'CSI499'
       ]
+      
    ]
 
 ?>

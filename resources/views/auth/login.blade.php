@@ -59,5 +59,16 @@
       </div><!-- /.login-box-body -->
    </div><!-- /.login-box -->
 
+@endsection
+
+@section('myScripts')
+
+   <script>
+
+      $(document).ready(function(){
+         $('#username').inputmask("999.999.999-99");  //static mask
+      });
+
+   </script>
 
 @endsection

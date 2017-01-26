@@ -106,7 +106,7 @@
 
       var color = getRandomColor();
 
-      @foreach ($questions->whereIn('tipo_id', [2,3]) as $question)
+      @foreach ($questions->whereInLoose('tipo_id', [2,3]) as $question)
 
       var data{{$question->id}} = {
          labels: {!! $question->opcoes->pluck('opcao') !!},

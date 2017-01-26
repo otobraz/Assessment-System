@@ -34,7 +34,7 @@ class ResponseController extends Controller
             $student = Aluno::where('usuario', session()->get('username'))->first();
             if(isset($student)){
                $studentSections = $student->turmas;
-               $section = $studentSections->where('id', $surveySection->turma_id)->first();
+               $section = $studentSections->whereLoose('id', $surveySection->turma_id)->first();
 
                // Verifies whether or not the user belongs to one of the classes which the survey was assigned to
                if(isset($section)){
@@ -45,11 +45,6 @@ class ResponseController extends Controller
                   return redirect()->route('survey.index');
                }
             }
-            // else if(session()->get('role') == '0'){
-            //    $survey = Questionario::find(decrypt($id));
-            //    $questions = $survey->perguntas;
-            //    return view('response.admin.create', compact('survey', 'questions'));
-            // }
          }else{
             return back()->with('errorMessage', 'Questionário fechado. Não é possível respondê-lo.');
          }
@@ -141,13 +136,13 @@ class ResponseController extends Controller
                $answers[$question->id] = RespostaAberta::where('pergunta_id', $question->id)->where('resposta_id', $response->id)->first()->resposta;
                break;
                case 2:
-               $choice = $resp->where('pergunta_id', $question->id)->first();
+               $choice = $resp->whereLoose('pergunta_id', $question->id)->first();
                $answers[$question->id][$choice->opcao_id]++;
                break;
 
                case 3:
-               $choice = $respM->where('pergunta_id', $question->id)->first();
-               $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
+               $choice = $respM->whereLoose('pergunta_id', $question->id)->first();
+               $choices = DB::table('opcao_resposta_multipla_escolha')->whereLoose('resposta_me_id', $choice->id)->get();
                foreach ($choices as $choice){
                   $answers[$question->id][$choice->opcao_id]++;
                }

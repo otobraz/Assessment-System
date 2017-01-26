@@ -213,9 +213,9 @@ header .intro-text {
 
 }
 
-/*.form-control{
-   border-radius: 4px;
-}*/
+.form-control{
+   border-radius: 2px;
+}
 
 .input-group .input-group-addon {
    border-radius: 4px;

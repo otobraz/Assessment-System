@@ -4,11 +4,6 @@
    Orientação | Editar
 @endsection
 
-{{-- @section('content-header')
-<h1>Criar novo departamento</h1>
-<hr>
-@endsection --}}
-
 @section('content')
 
    <div class="box box-primary-ufop">
@@ -73,12 +68,6 @@
                   <label for="description">Descrição:</label>
                   <textarea class="form-control input-xlarge" type="text" name="description" id="description" rows="4" placeholder="Descrição sobre a orientação">{{$guidance->descricao}}</textarea>
                </div>
-
-               {{-- @if ($guidance->status)
-                  <a class="btn btn-warning" role="button" href="{{route('guidance.finish', encrypt($guidance->id))}}">Encerrar</a>
-               @else
-                  <a class="btn btn-success" role="button" href="{{route('guidance.restart', encrypt($guidance->id))}}">Recomeçar</a>
-               @endif --}}
 
                {{-- <div class="pull-right"> --}}
                   <button class="btn btn-default" type="button" onclick="history.go(-1)"> Cancelar</button>

@@ -72,7 +72,6 @@ class SectionController extends Controller
          break;
       }
 
-
    }
 
    /**
@@ -197,39 +196,42 @@ class SectionController extends Controller
 
          if($header == array_shift($sectionsCsv)){
             $professors = Professor::all()->lists('id', 'nome_completo');
+            $sectionsNotAllowed = config('my_config.sectionsNotAllowed');
             foreach ($sectionsCsv as $sectionCsv){
 
-               $section = [
-                  'cod_turma' => $sectionCsv[5],
-                  'disciplina' => $sectionCsv[3],
-                  'cod_disciplina' => $sectionCsv[2],
-                  'professor' => preg_split("/\//", $sectionCsv[11]),
-                  'ano' => $sectionCsv[0],
-                  'semestre' => $sectionCsv[1]
-               ];
+               if(!in_array($sectionCsv[2], $sectionsNotAllowed)){
+                  $section = [
+                     'cod_turma' => $sectionCsv[5],
+                     'disciplina' => $sectionCsv[3],
+                     'cod_disciplina' => $sectionCsv[2],
+                     'professor' => preg_split("/\//", $sectionCsv[11]),
+                     'ano' => $sectionCsv[0],
+                     'semestre' => $sectionCsv[1]
+                  ];
 
-               $courseId = Disciplina::where('cod_disciplina', $section['cod_disciplina'])->first()->id;
+                  $courseId = Disciplina::where('cod_disciplina', $section['cod_disciplina'])->first()->id;
 
-               $newSection = Turma::where('ano', $section['ano'])
-               ->where('semestre', $section['semestre'])
-               ->where('cod_turma', $section['cod_turma'])
-               ->where('disciplina_id', $courseId)->first();
+                  $newSection = Turma::where('ano', $section['ano'])
+                  ->where('semestre', $section['semestre'])
+                  ->where('cod_turma', $section['cod_turma'])
+                  ->where('disciplina_id', $courseId)->first();
 
-               if(!isset($newSection)){
-                  $newSection = new Turma([
-                     'ano' => $section['ano'],
-                     'semestre' => $section['semestre'],
-                     'disciplina_id' => $courseId,
-                     'cod_turma' => $section['cod_turma']
-                  ]);
-                  $newSection->save();
-                  foreach ($section['professor'] as $key => $professor){
-                     $professor = ltrim($professor);
-                     $section['professor'][$key] = strtok($professor, '(');
-                  }
-                  foreach ($section['professor'] as $professor){
-                     $professorId = $professors->get($professor);
-                     $newSection->professores()->attach($professorId);
+                  if(!isset($newSection)){
+                     $newSection = new Turma([
+                        'ano' => $section['ano'],
+                        'semestre' => $section['semestre'],
+                        'disciplina_id' => $courseId,
+                        'cod_turma' => $section['cod_turma']
+                     ]);
+                     $newSection->save();
+                     foreach ($section['professor'] as $key => $professor){
+                        $professor = ltrim($professor);
+                        $section['professor'][$key] = strtok($professor, '(');
+                     }
+                     foreach ($section['professor'] as $professor){
+                        $professorId = $professors->get($professor);
+                        $newSection->professores()->attach($professorId);
+                     }
                   }
                }
             }

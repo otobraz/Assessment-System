@@ -1,47 +1,24 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Erro: 503</title>
+@extends('errors.base')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@section('title')
+   Erro 503
+@endsection
 
-        <style>
-            html, body {
-                height: 100%;
-            }
+@section('content')
 
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                color: #B0BEC5;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
+   <div class="row">
+      <div class="error-page">
+         <h2 class="headline text-yellow">503</h2>
+         <br />
+         <div class="error-content">
+            <h3><i class="fa fa-warning text-yellow"></i> Sistema indisponível</h3>
 
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
+            <p>
+               O acesso ao sistema está indisponível no momento. Por favor, volte mais tarde.
+            </p>
 
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
+         </div>
+      </div>
+   </div>
 
-            .title {
-                font-size: 72px;
-                margin-bottom: 40px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Servidor da UFOP indisponível</div>
-            </div>
-        </div>
-    </body>
-</html>
+@endsection

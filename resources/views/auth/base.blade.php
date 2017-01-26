@@ -1,7 +1,7 @@
 @include('auth.header')
 
 <body class="hold-transition login-page skin-ufop" style="-moz-user-select: text;">
-@yield('content')
+   @yield('content')
 </body>
 
 @include('auth.footer')
@@ -16,7 +16,11 @@
 <!-- CPF Mask Js -->
 <script src="{{asset('js/cpfMask.js') }}"></script>
 
+<script src="{{asset('plugins/input-mask/jquery.inputmask.js')}}"></script>
+
 <script src="../../plugins/iCheck/icheck.min.js"></script>
+
+@yield('myScripts')
 
 </body>
 </html>

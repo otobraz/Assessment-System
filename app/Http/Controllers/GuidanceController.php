@@ -143,23 +143,16 @@ class GuidanceController extends Controller
       $guidance = Orientacao::find(decrypt($id));
       $guidance->tipo_id = $request->input('guidance-type');
       $guidance->descricao = $request->input('description');
+      $guidance->titulo = $request->input('title');
+
+      if($request->hasFile('tcc1') && $request->file('tcc1')->isValid()){
+
+      }
+      
       $guidance->save();
       return redirect()->route('guidance.show', $id)->with('successMessage', 'Informações alteradas com sucesso');
 
    }
-
-   // /**
-   // * Remove the specified resource from storage.
-   // *
-   // * @param  int  $id
-   // * @return \Illuminate\Http\Response
-   // */
-   // public function destroy($id)
-   // {
-   //
-   //    $guidance = Orientacao::find(decrypt($id));
-   //
-   // }
 
    public function finish($id){
 
@@ -215,6 +208,7 @@ class GuidanceController extends Controller
    }
 
    public function showResponse($id){
+
 
    }
 

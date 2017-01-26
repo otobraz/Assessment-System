@@ -11,38 +11,62 @@
 
 @section('content')
 
-   <div class="col-md-offset-2 col-md-8">
-      <div class="box box-primary-ufop">
-         <div class="box-header with-border">
-            <h3 class="box-title">{{$guidance->tipo->tipo}}</h3>
-            <div class="box-tools pull-right">
-               <a class="btn btn-primary-ufop btn-sm" role="button"
-               style="color: white" href="{{action('GuidanceController@showResponse', encrypt($guidance->id))}}">Ver resposta</a>
-            </div><!-- /.box-tools -->
-         </div><!-- /.box-header -->
+   <div class="box box-primary-ufop">
+      <div class="box-header with-border">
+         <h3 class="box-title">{{$guidance->tipo->tipo}}</h3>
+         <div class="box-tools pull-right">
+            <a class="btn btn-primary-ufop btn-sm" role="button"
+            style="color: white" href="{{action('GuidanceController@showResponse', encrypt($guidance->id))}}">Ver resposta</a>
+         </div><!-- /.box-tools -->
+      </div><!-- /.box-header -->
 
-         <div class="box-body">
+      <div class="box-body">
 
-            <div class="row">
-               <div class="col-md-6">
-                  <p><b>Orientando:</b> {{$guidance->aluno->nomeCompleto}}</p>
-               </div>
-               <div class="col-md-6">
-                  <p><b>Orientador:</b> {{$guidance->professor->nomeCompleto}}</p>
-               </div>
-            </div>
-
-            <p><b>Status:  </b> {{$guidance->status ? 'Em andamento' : 'Finalizada'}}</p>
-
-            <div class="panel panel-default">
-               <div class="panel-body">
-                  {{$guidance->descricao}}
+         <div class="row">
+            <div class="col-md-6">
+               <div class="form-group">
+                  <label for="student">Orientando:</label>
+                  <input class="form-control input-xlarge" type="text" name="student" id="student"
+                  value="{{$guidance->aluno->nomeCompleto}}" disabled>
                </div>
             </div>
 
-            <a class="btn btn-primary-ufop" role="button" href="{{route('guidance.edit', encrypt($guidance->id))}}"> <i class="fa fa-edit"></i> Editar</a>
+            <div class="col-md-6">
+               <div class="form-group">
+                  <label for="student">Orientador:</label>
+                  <input class="form-control input-xlarge" type="text" name="student" id="student"
+                  value="{{$guidance->professor->nomeCompleto}}" disabled>
+               </div>
+            </div>
 
+            <div class="col-md-6">
+               <div class="form-group">
+                  <label for="student">Titulo:</label>
+                  <input class="form-control input-xlarge" type="text" name="student" id="student"
+                  value="{{$guidance->titulo}}" disabled>
+               </div>
+            </div>
+
+            <div class="col-md-6">
+               <div class="form-group">
+                  <label for="student">Status:</label>
+                  <input class="form-control input-xlarge" type="text" name="student" id="student"
+                  value="{{$guidance->status ? 'Em andamento' : 'Finalizada'}}" disabled>
+               </div>
+            </div>
          </div>
+
+         <label>Descrição:</label>
+         <div class="panel panel-default">
+            <div class="panel-body">
+               {{$guidance->descricao}}
+            </div>
+         </div>
+
+         <hr>
+
+         <a class="btn btn-primary-ufop" role="button" href="{{route('guidance.edit', encrypt($guidance->id))}}"> <i class="fa fa-edit"></i> Editar</a>
+
       </div>
    </div>
 

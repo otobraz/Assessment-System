@@ -68,13 +68,37 @@ class ProfessorController extends Controller
    public function show($id)
    {
 
-      $professor = Professor::find(decrypt($id));
-      $surveys = $professor->questionarios;
-      $sectionsGroup = $professor->turmas->groupBy('ano')->transform(function($item, $k) {
-         return $item->groupBy('semestre');
-      });
-      $guidances = $professor->orientacoes   ;
-      return view ('professor.admin.show', compact('professor', 'surveys', 'sectionsGroup', 'guidances'));
+      switch (session()->get('role')) {
+         case '0':
+            $professor = Professor::find(decrypt($id));
+            $surveys = $professor->questionarios;
+            $sectionsGroup = $professor->turmas->groupBy('ano')->transform(function($item, $k) {
+               return $item->groupBy('semestre');
+            });
+            $guidances = $professor->orientacoes;
+            return view ('professor.admin.show', compact('professor', 'surveys', 'sectionsGroup', 'guidances'));
+            break;
+
+         case '1':
+            $professor = Professor::find(decrypt($id));
+            $surveys = $professor->questionarios;
+            $sectionsGroup = $professor->turmas->groupBy('ano')->transform(function($item, $k) {
+               return $item->groupBy('semestre');
+            });
+            $guidances = $professor->orientacoes;
+            return view ('professor.student.show', compact('professor', 'surveys', 'sectionsGroup', 'guidances'));
+            break;
+
+         // case '2':
+         //    $professor = Professor::find(decrypt($id));
+         //    return view('professor.show', compact('professor'));
+         //    break;
+
+         default:
+            return redirect('/');
+            break;
+      }
+
    }
 
    public function showSurveys($id){
@@ -175,8 +199,8 @@ class ProfessorController extends Controller
             $ldapData = config('my_config.ldapData');
             foreach ($professorsData as $professor){
                $username = preg_replace('/[^0-9]+/', '', $professor[6]);
-               $department = $departments->where('cod_departamento', preg_replace('/\s\s+/','', $professor[3]))->first();
-               if($professorModel = $professors->where('usuario', $username)->first()){
+               $department = $departments->whereLoose('cod_departamento', preg_replace('/\s\s+/','', $professor[3]))->first();
+               if($professorModel = $professors->whereLoose('usuario', $username)->first()){
                   $professorModel->departamento_id = $department->id;
                   $professorModel->email = $professor[7];
                   $professorModel->save();

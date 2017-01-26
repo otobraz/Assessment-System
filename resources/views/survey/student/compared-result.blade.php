@@ -78,7 +78,7 @@
       @foreach ($answers as $key => $answer)
       colors[{{$key}}] = getRandomColor();
       @endforeach
-      @foreach ($questions as $question)
+      @foreach ($questions->whereInLoose('tipo_id', [2,3]) as $question)
 
       var data{{$question->id}} = {
          labels: {!! $question->opcoes->pluck('opcao') !!},

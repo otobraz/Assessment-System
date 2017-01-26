@@ -118,8 +118,8 @@ class StudentController extends Controller
             $ldapData = config('my_config.ldapData');
             foreach ($studentsData as $key => $student){
                $username = preg_replace('/[^0-9]+/', '', $student[0]);
-               $major = $sections->where('cod_curso', $student[1])->first();
-               if($studentModel = $students->where('usuario', $username)->first()){
+               $major = $sections->whereLoose('cod_curso', $student[1])->first();
+               if($studentModel = $students->whereLoose('usuario', $username)->first()){
                   $studentModel->matricula = $key;
                   $studentModel->curso_id = $major->id;
                   $studentModel->save();

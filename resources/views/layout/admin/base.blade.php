@@ -20,7 +20,7 @@
    <link href="{{asset('dist/css/skins/skin-ufop.css')}}" rel="stylesheet" type="text/css" />
 
    @yield('extraCss')
-   
+
    <link href="{{asset('css/styles.css')}}" rel="stylesheet" type="text/css" />
 
    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

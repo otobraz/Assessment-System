@@ -51,7 +51,7 @@
    <footer>
       <div class="container">
          <div class="row">
-            <span class="copyright"><a href="https://github.com/otobraz" target="_blank">Oto Braz Assunção</a> &copy; Sistema de Avaliação 2017</span>
+            <span class="copyright"><a href="https://github.com/otobraz" target="_blank">Oto Braz Assunção</a> &copy; Sistema de Avaliação {{date('Y')}}</span>
          </div>
       </div>
    </footer>

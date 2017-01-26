@@ -4,12 +4,6 @@
    Resultados
 @endsection
 
-{{-- @section('content-header')
-<h1>{{$survey->titulo . " - " . $section->disciplina->disciplina}}</h1>
-
-<hr class="hr-ufop">
-@endsection --}}
-
 @section('content')
 
    @foreach ($questions as $question)
@@ -111,7 +105,7 @@
       colors[{{$key}}] = getRandomColor();
       @endforeach
 
-      @foreach ($questions->whereIn('tipo_id', [2,3]) as $question)
+      @foreach ($questions->whereInLoose('tipo_id', [2,3]) as $question)
 
       var data{{$question->id}} = {
          labels: {!! $question->opcoes->pluck('opcao') !!},
@@ -178,7 +172,7 @@
                usePointStyle: true
             }
          },
-         
+
          responsive: true,
       };
 
