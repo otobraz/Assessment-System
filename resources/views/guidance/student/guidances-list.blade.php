@@ -8,7 +8,7 @@
          <th>Status</th>
          {{-- <th>Início</th> --}}
          <th>Detalhes</th>
-         <th>Questionário</th>
+         {{-- <th>Questionário</th> --}}
       </tr>
 
    </thead>
@@ -31,13 +31,13 @@
             <td align="center">
                <a class="btn btn-info btn-xs" role="button" href="{{route('guidance.show', encrypt($guidance->id))}}"> Detalhes</a>
             </td>
-            <td align="center">
+            {{-- <td align="center">
                @if ($guidance->questionario_liberado)
                   <a class="btn btn-primary-ufop btn-xs" role="button" href="#">Responder</a>
                @else
                   <a class="btn btn-warning btn-xs" role="button" href="#" disabled>Insdisponível</a>
                @endif
-            </td>
+            </td> --}}
          </tr>
       @endforeach
    </tbody>

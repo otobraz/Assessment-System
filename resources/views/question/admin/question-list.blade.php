@@ -4,7 +4,7 @@
 
    <div class="box-tools pull-right">
       <a class="btn btn-primary-ufop btn-sm" role="button"
-      href="{{route('question.create')}}">Criar pergunta</a>
+      href="{{route('question.create')}}">Criar Pergunta</a>
    </div><!-- /.box-tools -->
 </div><!-- /.box-header -->
 
@@ -140,4 +140,4 @@
 </div><!-- /.box-body -->
 </div><!-- /.box -->
 
-@include('question.admin.delete-modal')
+@include('question.delete-modal')

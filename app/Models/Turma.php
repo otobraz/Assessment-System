@@ -29,6 +29,10 @@ class Turma extends Model
       return $this->belongsTo('App\Models\Disciplina');
    }
 
+   public function departamento(){
+      return $this->belongsTo('App\Models\Departamento');
+   }
+
    public function alunos(){
       return $this->belongsToMany('App\Models\Aluno');
    }

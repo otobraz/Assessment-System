@@ -9,6 +9,8 @@ use App\Models\Turma;
 use App\Models\Professor;
 use App\Models\Aluno;
 use App\Models\Disciplina;
+use App\Models\Departamento;
+use App\Models\Questionario;
 use DB;
 
 class SectionController extends Controller
@@ -42,6 +44,12 @@ class SectionController extends Controller
          });
          return view ('section.professor.index', compact('sectionsGroup'));
          break;
+
+         case '3':
+         $sections = Turma::orderBy('ano', 'desc')->orderBy('semestre', 'desc')->get();
+         return  view ('section.prograd.index', compact('sections'));
+         break;
+
       }
 
    }
@@ -57,18 +65,27 @@ class SectionController extends Controller
 
       $section = Turma::find(decrypt($id));
       $students = $section->alunos()->orderBy('nome', 'asc')->orderBy('sobrenome', 'asc')->get();
+      $surveys = $section->questionarios;
 
       switch (session()->get('role')) {
          case '0':
-         return view('section.admin.show', compact('section', 'students'));
+         return view('section.admin.show', compact('section', 'students', 'surveys'));
          break;
 
          case '1':
-         return view('section.student.show', compact('section', 'students'));
+         return view('section.student.show', compact('section', 'students', 'surveys'));
          break;
 
          case '2':
-         return view('section.professor.show', compact('section', 'students'));;
+         return view('section.professor.show', compact('section', 'students', 'surveys'));;
+         break;
+
+         case '3':
+         return view('section.prograd.show', compact('section', 'students', 'surveys'));
+         break;
+
+         default:
+         return redirect('home');
          break;
       }
 
@@ -86,10 +103,16 @@ class SectionController extends Controller
       return redirect()->route('questionType.index')->with('successMessage', 'Registro deletado com sucesso.');
    }
 
+   /**
+   * Show the form for importing the courses registrations from the .csv
+   */
    public function importRegistrations(){
       return view('section.admin.import-registrations');
    }
 
+   /**
+   * Import the registrations
+   */
    public function storeRegistrationsFromCsv(Request $request){
 
       if($request->file('registrations-csv')->isValid()){
@@ -111,7 +134,7 @@ class SectionController extends Controller
          ];
 
          if($header == array_shift($registrationsCsv)){
-            $alunos = Aluno::all()->lists('id', 'matricula');
+            $alunos = Aluno::all()->pluck('id', 'matricula');
             foreach ($registrationsCsv as $registrationCsv){
 
                $registration = [
@@ -151,10 +174,16 @@ class SectionController extends Controller
       }
    }
 
+   /**
+   * Show the form for importing the semester classes from the csv file
+   */
    public function import(){
       return view('section.admin.import');
    }
 
+   /**
+   * Import the semester classes
+   */
    public function storeFromCsv(Request $request){
 
 
@@ -195,7 +224,7 @@ class SectionController extends Controller
          ];
 
          if($header == array_shift($sectionsCsv)){
-            $professors = Professor::all()->lists('id', 'nome_completo');
+            $professors = Professor::all()->pluck('id', 'nome_completo');
             $sectionsNotAllowed = config('my_config.sectionsNotAllowed');
             foreach ($sectionsCsv as $sectionCsv){
 
@@ -204,6 +233,7 @@ class SectionController extends Controller
                      'cod_turma' => $sectionCsv[5],
                      'disciplina' => $sectionCsv[3],
                      'cod_disciplina' => $sectionCsv[2],
+                     'cod_departamento' => $sectionCsv[4],
                      'professor' => preg_split("/\//", $sectionCsv[11]),
                      'ano' => $sectionCsv[0],
                      'semestre' => $sectionCsv[1]
@@ -211,16 +241,22 @@ class SectionController extends Controller
 
                   $courseId = Disciplina::where('cod_disciplina', $section['cod_disciplina'])->first()->id;
 
-                  $newSection = Turma::where('ano', $section['ano'])
+                  $departmentId = Departamento::where('cod_departamento', $section['cod_departamento'])->first()->id;
+
+                  $section = Turma::where('ano', $section['ano'])
                   ->where('semestre', $section['semestre'])
                   ->where('cod_turma', $section['cod_turma'])
                   ->where('disciplina_id', $courseId)->first();
 
-                  if(!isset($newSection)){
+                  // $section->departamento_id = $departmentId;
+                  // $section->save();
+
+                  if(!isset($section)){
                      $newSection = new Turma([
                         'ano' => $section['ano'],
                         'semestre' => $section['semestre'],
                         'disciplina_id' => $courseId,
+                        'departamento_id' => $departamentId,
                         'cod_turma' => $section['cod_turma']
                      ]);
                      $newSection->save();

@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Models\Pergunta;
 use App\Models\TipoPergunta;
 use App\Models\Opcao;
+use App\Models\Professor;
 
 class QuestionController extends Controller
 {
@@ -21,17 +22,31 @@ class QuestionController extends Controller
    {
       switch (session()->get('role')) {
          case 0:
-
          $questions = Pergunta::where('professor_id', NULL)->get();
-         $textQuestions = $questions->whereLoose('tipo_id', 1);
-         $singleChoiceQuestions = $questions->whereLoose('tipo_id', 2);
-         $multipleChoiceQuestions = $questions->whereLoose('tipo_id', 3);
+         $textQuestions = $questions->where('tipo_id', 1);
+         $singleChoiceQuestions = $questions->where('tipo_id', 2);
+         $multipleChoiceQuestions = $questions->where('tipo_id', 3);
          return view('question.admin.index', compact('textQuestions', 'singleChoiceQuestions', 'multipleChoiceQuestions'));
+         break;
 
+         case 2:
+         $professor = Professor::find(session()->get('id'));
+         $questions = $professor->perguntas;
+         $textQuestions = $questions->where('tipo_id', 1);
+         $singleChoiceQuestions = $questions->where('tipo_id', 2);
+         $multipleChoiceQuestions = $questions->where('tipo_id', 3);
+         return view('question.professor.index', compact('textQuestions', 'singleChoiceQuestions', 'multipleChoiceQuestions'));
+
+         case 3:
+         $questions = Pergunta::where('professor_id', NULL)->get();
+         $textQuestions = $questions->where('tipo_id', 1);
+         $singleChoiceQuestions = $questions->where('tipo_id', 2);
+         $multipleChoiceQuestions = $questions->where('tipo_id', 3);
+         return view('question.prograd.index', compact('textQuestions', 'singleChoiceQuestions', 'multipleChoiceQuestions'));
          break;
 
          default:
-         # code...
+         return redirect('home');
          break;
       }
    }
@@ -43,8 +58,25 @@ class QuestionController extends Controller
    */
    public function create()
    {
+
       $questionTypes = TipoPergunta::all();
-      return view('question.admin.create', compact('questionTypes'));
+      switch (session()->get('role')) {
+         case 0:
+         return view('question.admin.create', compact('questionTypes'));
+         break;
+
+         case 2:
+         return view('question.professor.create', compact('questionTypes'));
+
+         case 3:
+         return view('question.prograd.create', compact('questionTypes'));
+         break;
+
+         default:
+         return redirect('home');
+         break;
+      }
+
    }
 
    /**
@@ -55,32 +87,68 @@ class QuestionController extends Controller
    */
    public function store(Request $request)
    {
-      $question = new Pergunta([
-         'tipo_id' => $request->input('question-type'),
-         'pergunta' => $request->input('question')
-      ]);
-      $question->save();
-      if($question->tipo_id != 1){
-         foreach ($request->input('question-inputs') as $choice){
-            $choice = new Opcao([
-               'opcao' => $choice,
-               'pergunta_id' => $question->id
-            ]);
-            $choice->save();
-         }
-      }
-      return redirect()->route('question.index')->with('successMessage', 'Pergunta criada com sucesso.');
-   }
 
-   /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-   public function show($id)
-   {
-      //
+      switch (session()->get('role')) {
+         case 0:
+         $question = new Pergunta([
+            'tipo_id' => $request->input('question-type'),
+            'pergunta' => $request->input('question')
+         ]);
+         $question->save();
+         if($question->tipo_id != 1){
+            foreach ($request->input('question-inputs') as $choice){
+               $choice = new Opcao([
+                  'opcao' => $choice,
+                  'pergunta_id' => $question->id
+               ]);
+               $choice->save();
+            }
+         }
+         return redirect()->route('question.index')->with('successMessage', 'Pergunta criada com sucesso.');
+         break;
+
+         case 2:
+         $question = new Pergunta([
+            'tipo_id' => $request->input('question-type'),
+            'pergunta' => $request->input('question'),
+            'professor_id' => session()->get('id')
+         ]);
+         $question->save();
+         if($question->tipo_id != 1){
+            foreach ($request->input('question-inputs') as $choice){
+               $choice = new Opcao([
+                  'opcao' => $choice,
+                  'pergunta_id' => $question->id
+               ]);
+               $choice->save();
+            }
+         }
+         return redirect()->route('question.index')->with('successMessage', 'Pergunta criada com sucesso.');
+         break;
+
+         case 3:
+         $question = new Pergunta([
+            'tipo_id' => $request->input('question-type'),
+            'pergunta' => $request->input('question')
+         ]);
+         $question->save();
+         if($question->tipo_id != 1){
+            foreach ($request->input('question-inputs') as $choice){
+               $choice = new Opcao([
+                  'opcao' => $choice,
+                  'pergunta_id' => $question->id
+               ]);
+               $choice->save();
+            }
+         }
+         return redirect()->route('question.index')->with('successMessage', 'Pergunta criada com sucesso.');
+         break;
+
+         default:
+         return redirect('home');
+         break;
+      }
+
    }
 
    /**
@@ -91,12 +159,30 @@ class QuestionController extends Controller
    */
    public function edit($id)
    {
+
       $question = Pergunta::find(decrypt($id));
-      // $questionTypes = TipoPergunta::where('id', '!=', 1)->get();
-      // if($question->tipo_id != 1){
-      //    $choices = $question->opcoes;
-      // }
-      return view('question.admin.edit', compact('question', 'questionTypes', 'choices'));
+      switch (session()->get('role')) {
+         case 0:
+
+         return view('question.admin.edit', compact('question', 'questionTypes', 'choices'));
+         break;
+
+         case 2:
+         if($question->professor_id == session()->get('id')){
+            return view('question.professor.edit', compact('question', 'questionTypes', 'choices'));
+         }
+         abort(401);
+         break;
+
+         case 3:
+         return view('question.prograd.edit', compact('question', 'questionTypes', 'choices'));
+         break;
+
+         default:
+         return redirect('home');
+         break;
+      }
+
    }
 
    /**
@@ -110,7 +196,6 @@ class QuestionController extends Controller
    {
       $question = Pergunta::find(decrypt($id));
       $question->pergunta = $request->input('question');
-      // $question->tipo_id = $request->input('question-type');
       foreach ($request->input('choices') as $id => $value) {
          $choice = Opcao::find($id);
          $choice->opcao = $value;
@@ -132,19 +217,34 @@ class QuestionController extends Controller
    */
    public function destroy($id)
    {
-      $question = Pergunta::find(decrypt($id));
-      $surveys = $question->questionarios;
-      if(!isset($surveys)){
-         foreach ($question->opcoes as $choice) {
-            $choice->delete();
-         }
-         $question->delete();
-         return redirect()->route('question.index')->with('successMessage', 'Registro deletado com sucesso.');
-      }
-      return redirect()->route('question.index')->with('errorMessage', 'Não foi possível excluir a pergunta. Verifique se ela já não pertence a um questionário.');
 
+      $question = Pergunta::find(decrypt($id));
+      if(session()->get('role') == 0 || session()->get('role') == 3){
+         if($question->professor_id == NULL && $question->questionarios->isEmpty()){
+            foreach ($question->opcoes as $choice) {
+               $choice->delete();
+            }
+            $question->delete();
+            return redirect()->route('question.index')->with('successMessage', 'Pergunta excluída com sucesso.');
+         }
+         return redirect()->route('question.index')->with('errorMessage', 'Não foi possível excluir a pergunta. Verifique se ela já não pertence a um questionário.');
+
+      }else if(session()->get('role') == 2){
+         if($question->professor_id == session()->get('id') && $question->questionarios->isEmpty()){
+            foreach ($question->opcoes as $choice) {
+               $choice->delete();
+            }
+            $question->delete();
+            return redirect()->route('question.index')->with('successMessage', 'Pergunta excluída com sucesso.');
+         }
+         return redirect()->route('question.index')->with('errorMessage', 'Não foi possível excluir a pergunta. Verifique se ela já não pertence a um questionário.');
+      }
+      return redirect('home');
    }
 
+   /**
+   * Renders the proper input DOM based on the option selected by the user
+   */
    public function ajaxCreateInput($questionType){
       switch ($questionType) {
          case '1':

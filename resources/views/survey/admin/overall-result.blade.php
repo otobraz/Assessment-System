@@ -106,12 +106,13 @@
 
       var color = getRandomColor();
 
-      @foreach ($questions->whereInLoose('tipo_id', [2,3]) as $question)
+      @foreach ($questions->whereIn('tipo_id', [2,3]) as $question)
 
       var data{{$question->id}} = {
          labels: {!! $question->opcoes->pluck('opcao') !!},
          datasets: [
             {
+               label: "{{ $label }}",
                backgroundColor: color + '0.2)',
                borderColor: color + '1.0)',
                hoverBackgroundColor: color + '0.3)',

@@ -257,7 +257,11 @@ div .fixed{
    vertical-align: middle;
 }
 
-.table-ufop > tbody > tr > td {
+.table > tbody > tr > td {
+   vertical-align: middle;
+}
+
+.table > thead > tr > th {
    vertical-align: middle;
 }
 
@@ -294,6 +298,10 @@ div .fixed{
 .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
    background-color: rgb(139, 20, 43);
    border-color: rgb(139, 15, 40);
+}
+
+.span-error{
+   color: red;
 }
 
 .pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {

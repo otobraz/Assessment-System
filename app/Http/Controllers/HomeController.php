@@ -12,12 +12,17 @@ use App\Models\Turma;
 use App\Models\Orientacao;
 use App\Models\Admin;
 use App\Models\Resposta;
+use App\Models\Questionario;
 
 use DB;
 
 class HomeController extends Controller
 {
 
+   /**
+   * Renders the website home page view if the user isn't authenticated
+   * Otherwise, renders the user's home page
+   */
    public function index(Request $request){
       if($request->session()->has('username')){
          return redirect()->route('home');
@@ -25,6 +30,9 @@ class HomeController extends Controller
       return view('home');
    }
 
+   /**
+   * Renders the admin's home view
+   */
    public function adminsHome(){
       $students = Aluno::with('curso')->get();
       $professors = Professor::with('departamento')->get();
@@ -40,6 +48,9 @@ class HomeController extends Controller
       ));
    }
 
+   /**
+   * Renders the students's home view
+   */
    public function studentsHome(){
       $student = Aluno::find(session()->get('id'));
 
@@ -51,25 +62,40 @@ class HomeController extends Controller
 
       $myOpenSurveys = collect();
 
+      $generalSurveys = collect();
+
       foreach  ($student->turmas as $section){
          foreach ($section->questionarios as $survey) {
-
-            if($survey->pivot->aberto){
-               $response = Resposta::where('questionario_turma_id', $survey->pivot->id)->first();
-               if(!isset($response)){
-                  $myOpenSurveys = $myOpenSurveys->push(array($survey, $section));
+            if(is_null($survey->professor_id)){
+               if($survey->pivot->aberto){
+                  $response = Resposta::where('questionario_turma_id', $survey->pivot->id)->first();
+                  if(!isset($response)){
+                     $generalSurveys = $generalSurveys->push(array($survey, $section));
+                  }
+               }
+            }else{
+               if($survey->pivot->aberto){
+                  $response = Resposta::where('questionario_turma_id', $survey->pivot->id)->first();
+                  if(!isset($response)){
+                     $myOpenSurveys = $myOpenSurveys->push(array($survey, $section));
+                  }
                }
             }
          }
+
       }
       return view('student.home', compact(
          'currentSections',
          'currentGuidances',
-         'myOpenSurveys'
+         'myOpenSurveys',
+         'generalSurveys'
       ));
 
    }
 
+   /**
+   * Renders the professor's home view
+   */
    public function professorsHome(){
       $professor = Professor::find(session()->get('id'));
 
@@ -102,21 +128,40 @@ class HomeController extends Controller
 
    }
 
-   public function getUsersHome(Request $request){
-      switch (session()->get('role')) {
-         case '0':
-         return $this->adminsHome();
-         break;
-         case '1':
-         return $this->studentsHome();
-         break;
-
-         case '2':
-         return $this->professorsHome();
-         break;
-         default:
-         break;
-      }
+   /**
+   * Renders the prograd user's home view
+   */
+   public function progradsHome(){
+      $surveys = Questionario::all();
+      return view('survey.prograd.index', compact('surveys'));
    }
 
+   /**
+   * Renders the proper user's home page based on the role stored in the session
+   */
+   public function getUsersHome(Request $request){
+      if($request->session()->has('role')){
+         switch (session()->get('role')) {
+            case '0':
+            return $this->adminsHome();
+            break;
+            case '1':
+            return $this->studentsHome();
+            break;
+
+            case '2':
+            return $this->professorsHome();
+            break;
+
+            case '3':
+            return $this->progradsHome();
+            break;
+
+            default:
+            return redirect()->route('login');
+            break;
+         }
+      }
+      return redirect()->route('login');
+   }
 }

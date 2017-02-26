@@ -8,7 +8,7 @@
          <th>CPF</th>
          <th>E-mail</th>
          <th>Curso</th>
-         <th>Excluir</th>
+         <th>Detalhes</th>
       </tr>
    </thead>
 
@@ -22,7 +22,7 @@
             <td>{{$student->email}}</td>
             <td>{{$student->curso->curso}}</td>
             <td align="center">
-               <a type="button" class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal" data-action="aluno/{{encrypt($student->id)}}">Excluir</a>
+               <a type="button" class="btn btn-info btn-xs" data-toggle="modal" href="{{route('student.show', encrypt($student->id))}}" data-action="aluno/{{encrypt($student->id)}}">Detalhes</a>
             </td>
          </tr>
 

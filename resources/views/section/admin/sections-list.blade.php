@@ -19,7 +19,7 @@
             <td align="center">{{$section->id}}</td>
             <td>{{$section->disciplina->cod_disciplina . " - " . $section->disciplina->disciplina}}</td>
             <td align="center">{{$section->cod_turma}}</td>
-            <td align="center">{{$section->disciplina->departamento->cod_departamento}}</td>
+            <td align="center">{{$section->departamento->cod_departamento}}</td>
             <td align="center">{{$section->ano . "/" . $section->semestre}}</td>
             <td align="center">
                <a class="btn btn-info btn-xs" role="button" style="color: white" href="{{route('section.show', encrypt($section->id))}}">

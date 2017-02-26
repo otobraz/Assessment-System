@@ -34,7 +34,7 @@ class ResponseController extends Controller
             $student = Aluno::where('usuario', session()->get('username'))->first();
             if(isset($student)){
                $studentSections = $student->turmas;
-               $section = $studentSections->whereLoose('id', $surveySection->turma_id)->first();
+               $section = $studentSections->where('id', $surveySection->turma_id)->first();
 
                // Verifies whether or not the user belongs to one of the classes which the survey was assigned to
                if(isset($section)){
@@ -109,7 +109,7 @@ class ResponseController extends Controller
    }
 
    /**
-   * Display the survey answered if the user has answered it
+   * Display the answers
    *
    * @param  int  $id
    * @return \Illuminate\Http\Response
@@ -117,8 +117,11 @@ class ResponseController extends Controller
    public function show($id)
    {
 
-      if(session()->get('role') == 1 || session()->get('role') == 0){
-         $response = Resposta::find(decrypt($id));
+      $response = Resposta::find(decrypt($id));
+      if(!isset($response)){
+         return redirect('questionarios')->with('errorMessage', "Resposta não encontrada");
+      }
+      if($response->aluno_id == session()->get('id')){
          $survey = Questionario::find($response->questionario_id);
          $questions = $survey->perguntas;
 
@@ -130,19 +133,20 @@ class ResponseController extends Controller
                $answers[$question->id][$choice->id] = 0;
             }
          }
+
          foreach ($questions as $key => $question) {
             switch ($question->tipo_id) {
                case 1:
                $answers[$question->id] = RespostaAberta::where('pergunta_id', $question->id)->where('resposta_id', $response->id)->first()->resposta;
                break;
                case 2:
-               $choice = $resp->whereLoose('pergunta_id', $question->id)->first();
+               $choice = $resp->where('pergunta_id', $question->id)->first();
                $answers[$question->id][$choice->opcao_id]++;
                break;
 
                case 3:
-               $choice = $respM->whereLoose('pergunta_id', $question->id)->first();
-               $choices = DB::table('opcao_resposta_multipla_escolha')->whereLoose('resposta_me_id', $choice->id)->get();
+               $choice = $respM->where('pergunta_id', $question->id)->first();
+               $choices = DB::table('opcao_resposta_multipla_escolha')->where('resposta_me_id', $choice->id)->get();
                foreach ($choices as $choice){
                   $answers[$question->id][$choice->opcao_id]++;
                }
@@ -150,13 +154,26 @@ class ResponseController extends Controller
             }
 
          }
-         if(session()->get('role') == 0){
-            return view('response.admin.show', compact('response', 'survey', 'questions', 'answers'));
-         }
-         return view('response.student.show', compact('response', 'survey', 'questions', 'answers'));
 
+         switch (session()->get('role')) {
+            case 0:
+            return view('response.admin.show', compact('response', 'survey', 'questions', 'answers'));
+            break;
+
+            case 1:
+            return view('response.student.show', compact('response', 'survey', 'questions', 'answers'));
+            break;
+
+            case 3:
+            return view('response.prograd.show', compact('response', 'survey', 'questions', 'answers'));
+            break;
+
+            default:
+            return redirect('home');
+            break;
+         }
       }
-      return redirect()->route('home');
+      abort(401);
    }
 
 }

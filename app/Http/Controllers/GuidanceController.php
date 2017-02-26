@@ -39,7 +39,13 @@ class GuidanceController extends Controller
          return view ('guidance.professor.index', compact('guidances'));
          break;
 
+         case '3':
+         $guidances = Orientacao::orderBy('id', 'desc')->get();
+         return view ('guidance.prograd.index', compact('guidances'));
+         break;
+
          default:
+         return redirect('home');
          break;
       }
 
@@ -105,7 +111,12 @@ class GuidanceController extends Controller
          return view ('guidance..professor.show', compact('guidance'));
          break;
 
+         case '3':
+         return view ('guidance.prograd.show', compact('guidance'));
+         break;
+
          default:
+         return redirect('home');
          break;
       }
 
@@ -148,12 +159,13 @@ class GuidanceController extends Controller
       if($request->hasFile('tcc1') && $request->file('tcc1')->isValid()){
 
       }
-      
+
       $guidance->save();
       return redirect()->route('guidance.show', $id)->with('successMessage', 'Informações alteradas com sucesso');
 
    }
 
+   // Changes the guidance status to 0, which means it's finished
    public function finish($id){
 
       $guidance = Orientacao::find(decrypt($id));
@@ -165,6 +177,7 @@ class GuidanceController extends Controller
       return redirect()->route('guidance.index')->with('errorMessage', 'Orientação já foi encerrada.');
    }
 
+   // Changes the guidance status to 1, which means it's restarted
    public function restart($id){
 
       $guidance = Orientacao::find(decrypt($id));
@@ -198,17 +211,6 @@ class GuidanceController extends Controller
          return redirect()->route('guidance.index')->with('successMessage', 'Disponibilização cancelada.');
       }
       return redirect()->route('guidance.index')->with('errorMessage', 'O questionário ainda não foi disponibilizado.');
-
-   }
-
-   public function getResults(){
-
-      $guidance = Orientacao::find(decrypt($id));
-
-   }
-
-   public function showResponse($id){
-
 
    }
 

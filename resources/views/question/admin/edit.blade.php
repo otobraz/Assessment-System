@@ -4,11 +4,6 @@
    Pergunta | Editar
 @endsection
 
-{{-- @section('content-header')
-<h1>Editar Tipo de Pergunta</h1>
-<hr class="hr-ufop">
-@endsection --}}
-
 @section('content')
 
    <div class="box box-primary-ufop">
@@ -32,24 +27,6 @@
             <fieldset>
 
                <input type="hidden" name="id" value="{{encrypt($question->id)}}">
-
-               {{--
-               @if($question->tipo_id != 1)
-
-                  <div class="form-group">
-
-                     <label for="question-type">Tipo da Pergunta:</label>
-                     <select name="question-type" id="question-type" class="form-control">
-                        @foreach ($questionTypes as $questionType)
-                           @if ($questionType->id == $question->tipo_id)
-                              <option selected value="{{$questionType->id}}">{{$questionType->tipo}}</option>
-                           @else
-                              <option value="{{$questionType->id}}">{{$questionType->tipo}}</option>
-                           @endif
-                        @endforeach
-                     </select>
-                  </div>
-               @endif --}}
 
                <div class="form-group">
                   <label for="question-type">Pergunta:</label>

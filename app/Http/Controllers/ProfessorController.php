@@ -12,6 +12,7 @@ use App\Models\Aluno;
 class ProfessorController extends Controller
 {
 
+   // Gets and returns the LdapUser based on the username (CPF)
    public function getLdapUser($ldapData = null, $username = null){
       $ds = ldap_connect($ldapData['server']); // your ldap server
       try{
@@ -40,17 +41,20 @@ class ProfessorController extends Controller
    public function index()
    {
 
+      $professors = Professor::all();
       switch (session()->get('role')) {
 
          case '0':
-         $professors = Professor::all();
          return view ('professor.admin.index', compact('professors'));
          break;
 
          case '1':
-         $professors = Professor::all();
          $mySections = Aluno::find(session()->get('id'))->turmas;
          return view ('professor.student.index', compact('professors', 'mySections'));
+         break;
+
+         case '3':
+         return view ('professor.prograd.index', compact('professors'));
          break;
 
          default:
@@ -68,73 +72,42 @@ class ProfessorController extends Controller
    public function show($id)
    {
 
+      $professor = Professor::find(decrypt($id));
+      $surveys = $professor->questionarios;
+      $sectionsGroup = $professor->turmas->groupBy('ano')->transform(function($item, $k) {
+         return $item->groupBy('semestre');
+      });
+      $guidances = $professor->orientacoes;
       switch (session()->get('role')) {
          case '0':
-            $professor = Professor::find(decrypt($id));
-            $surveys = $professor->questionarios;
-            $sectionsGroup = $professor->turmas->groupBy('ano')->transform(function($item, $k) {
-               return $item->groupBy('semestre');
-            });
-            $guidances = $professor->orientacoes;
             return view ('professor.admin.show', compact('professor', 'surveys', 'sectionsGroup', 'guidances'));
             break;
 
          case '1':
-            $professor = Professor::find(decrypt($id));
-            $surveys = $professor->questionarios;
-            $sectionsGroup = $professor->turmas->groupBy('ano')->transform(function($item, $k) {
-               return $item->groupBy('semestre');
-            });
-            $guidances = $professor->orientacoes;
             return view ('professor.student.show', compact('professor', 'surveys', 'sectionsGroup', 'guidances'));
             break;
 
-         // case '2':
-         //    $professor = Professor::find(decrypt($id));
-         //    return view('professor.show', compact('professor'));
-         //    break;
+         case '3':
+            return view ('professor.prograd.show', compact('professor', 'surveys', 'sectionsGroup', 'guidances'));
+            break;
 
          default:
             return redirect('/');
             break;
-      }
-
-   }
-
-   public function showSurveys($id){
-
-      switch (session()->get('role')) {
-         case '0':
-         $professors = Professor::all();
-         return view ('professor.admin.index', compact('professors'));
-         break;
-
-         case '1':
-         $professor = Professor::find(decrypt($id));
-         $surveys = $professor->questionarios;
-         return view ('professor.student.show-surveys', compact('professor', 'surveys'));
-         break;
-
-         case '2':
-         $professor = Professor::find(decrypt($id));
-         return view('professor.show', compact('professor'));
-         break;
-         default:
-         return redirect('/');
-         break;
       }
    }
 
    /**
    * Show the form for editing the specified resource.
    *
-   * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-   public function edit($id)
+   public function edit()
    {
-      $professor = Professor::find(decrypt($id));
+
+      $professor = Professor::find(session()->get('id'));
       return view('professor.edit', compact('professor'));
+
    }
 
    /**
@@ -155,21 +128,12 @@ class ProfessorController extends Controller
       return redirect()->route('professor.edit', ['id' => $id])->with('errorMessage', 'Erro ao atualizar informações');
    }
 
-   /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-   public function destroy($id)
-   {
-      //
-   }
-
+   // Show the form for importing the professors from the .csv file
    public function import(){
       return view('professor.admin.import');
    }
 
+   // Import the professors from the .csv file
    public function storeFromCsv(Request $request){
 
       if($request->file('professors-csv')->isValid()){
@@ -199,8 +163,8 @@ class ProfessorController extends Controller
             $ldapData = config('my_config.ldapData');
             foreach ($professorsData as $professor){
                $username = preg_replace('/[^0-9]+/', '', $professor[6]);
-               $department = $departments->whereLoose('cod_departamento', preg_replace('/\s\s+/','', $professor[3]))->first();
-               if($professorModel = $professors->whereLoose('usuario', $username)->first()){
+               $department = $departments->where('cod_departamento', preg_replace('/\s\s+/','', $professor[3]))->first();
+               if($professorModel = $professors->where('usuario', $username)->first()){
                   $professorModel->departamento_id = $department->id;
                   $professorModel->email = $professor[7];
                   $professorModel->save();

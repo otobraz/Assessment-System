@@ -6,7 +6,7 @@
             <h4 class="modal-title" id="confirmDeleteModalTitle">Confirmar</h4>
          </div>
          <div class="modal-body">
-            <p class="text-center">Você tem certeza que quer excluir o aluno?</p>
+            <p class="text-center">Você tem certeza que quer excluir esse tipo de administrador?</p>
             <br>
             <form class="form" id="delete-form" name="delete-form" action="/" method="post">
                {{ method_field('DELETE') }}

@@ -15,14 +15,17 @@
          <div class="box-body">
 
             @include('alert-message.error')
-            
+
             <form class="form-signin" method="POST" autocomplete="off" enctype="multipart/form-data" action="{{action('SectionController@storeFromCsv')}}">
                {{ csrf_field() }}
                <fieldset>
 
                   <div class="form-group">
-                     <label for="sections-csv">Selecione o arquivo:</label>
-                     <input type="file" accept=".csv" id="sections-csv" name="sections-csv">
+                     <label for="sections-csv">Selecione o arquivo: <span class="span-error">*</span></label>
+                     <input type="file" accept=".csv" id="sections-csv" name="sections-csv"
+                        oninvalid="setCustomValidity('Selecione o arquivo.')"
+                        oninput="setCustomValidity('')"required
+                     >
                      <p class="help-block">Apenas arquivos do tipo .csv</p>
                   </div>
 

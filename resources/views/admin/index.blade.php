@@ -12,7 +12,6 @@
          <div class="box-tools pull-right">
             <a class="btn btn-primary-ufop btn-sm" role="button"
             style="color: white" href="{{route('admin.create')}}"><i class="fa fa-user-plus" aria-hidden="true"></i> Admin</a>
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
          </div>
       </div>

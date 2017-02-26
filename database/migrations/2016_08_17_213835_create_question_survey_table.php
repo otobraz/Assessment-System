@@ -13,6 +13,7 @@ class CreateQuestionSurveyTable extends Migration
    public function up()
    {
       Schema::create('pergunta_questionario', function (Blueprint $table) {
+         $table->integer('numero');
          $table->integer('pergunta_id')->unsigned();
          $table->integer('questionario_id')->unsigned();
 

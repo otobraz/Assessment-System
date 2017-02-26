@@ -15,10 +15,10 @@ class Departamento extends Model
    ];
 
    /**
-    * The attributes excluded from the model's JSON form.
-    *
-    * @var array
-    */
+   * The attributes excluded from the model's JSON form.
+   *
+   * @var array
+   */
    protected $hidden = [
 
    ];
@@ -26,7 +26,12 @@ class Departamento extends Model
    public function professores(){
       return $this->hasMany('App\Models\Professor');
    }
+
    public function disciplinas(){
       return $this->hasMany('App\Models\Disciplina');
+   }
+
+   public function turmas(){
+      return $this->hasMany('App\Models\Turma');
    }
 }

@@ -10,7 +10,7 @@ $("#question-type").on("click", function(){
    var inputDiv = $("#dynamic-input");
 
    if(previousValue == 1 || questionTypeId == 1){
-
+      
       inputDiv.load("ajax/novo-input/" + questionTypeId);
 
    }else if (questionTypeId == 2) {

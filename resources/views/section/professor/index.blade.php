@@ -1,7 +1,7 @@
 @extends('layout.professor.base')
 
 @section('title')
-   Gerenciar | Turmas
+   Turmas
 @endsection
 
 @section('content')
@@ -21,5 +21,5 @@
 @endsection
 
 @section('myScripts')
-   <script type="text/javascript" src="{{URL::asset('/js/deleteModal.js')}}"></script>
+
 @endsection

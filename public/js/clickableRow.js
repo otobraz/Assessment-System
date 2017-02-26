@@ -1,5 +1,17 @@
 window.onpageshow= function() {
    $('.clickable-row tbody').find('tr').removeClass('selected-row');
+
+   // Prevent form submission
+   $("form").submit(function(event) {
+      var form = $(event.target);
+      if(form.find('.selected-row').length == 0){
+         event.preventDefault();
+         alert('Selecione as colunas para realizar a comparação.');
+      }else{
+         $(this).unbind('submit').submit();
+      }
+   });
+
 };
 
 $('.clickable-row tbody tr').on('click', function(e){

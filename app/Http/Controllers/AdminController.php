@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\Admin;
-use Hash;
+use App\Models\TipoAdmin;
 
 class AdminController extends Controller
 {
@@ -27,7 +27,8 @@ class AdminController extends Controller
    */
    public function create()
    {
-      return view('admin.create');
+      $adminTypes = TipoAdmin::all();
+      return view('admin.create', compact('adminTypes'));
    }
 
    /**
@@ -38,28 +39,18 @@ class AdminController extends Controller
    */
    public function store(Request $request)
    {
-      $admin = new Admin();
-      $admin->nome = $request->first_name;
-      $admin->sobrenome = $request->last_name;
-      $admin->email = $request->email;
-      $admin->usuario = $request->username;
-      $admin->senha = bcrypt($request->password);
+      $admin = new Admin([
+         'nome' => $request->input('first-name'),
+         'sobrenome' => $request->input('surname'),
+         'email' => $request->input('email'),
+         'usuario' => $request->input('username'),
+         'tipo_id' => $request->input('admin-type'),
+      ]);
       if($admin->save()){
          return redirect()->route('admin.index')->with('successMessage', 'Administrador cadastrado com sucesso');
       }
       return redirect()->route('admin.create')->with('errorMessage', 'Erro ao cadastrar administrador');
 
-   }
-
-   /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-   public function show($id)
-   {
-      //
    }
 
    /**
@@ -71,7 +62,8 @@ class AdminController extends Controller
    public function edit($id)
    {
       $admin = Admin::find(decrypt($id));
-      return view('admin.edit', compact('admin'));
+      $adminTypes = TipoAdmin::all();
+      return view('admin.edit', compact('admin', 'adminTypes'));
    }
 
    /**
@@ -90,23 +82,6 @@ class AdminController extends Controller
       }
       return redirect()->route('admin.edit', ['id' => $id])->with('errorMessage', 'Erro ao atualizar informações');
 
-   }
-
-   public function updatePassword(Request $request, $id){
-      $admin = Admin::find(decrypt($id));
-      if(isset($admin) && Hash::check($request->password, $admin->senha)){
-         if($request->newPassword === $request->passwordConfirmation){
-            if (Hash::needsRehash($request->password)) {
-               $admin->senha = bcrypt($request->newPassword);
-            }
-            if($admin->save()){
-               return redirect()->route('admin.edit', ['id' => $id])->with('successMessage', 'Senha alterada com sucesso.');
-            }
-            return redirect()->route('admin.edit', ['id' => $id])->with('errorMessage', 'Erro ao alterar senha.');
-         }
-         return redirect()->route('admin.editPassword', ['id' => $id])->with('passwordConfirmationError', 'A nova senha e a confirmação dela devem ser idênticas');
-      }
-      return redirect()->route('admin.editPassword', ['id' => $id])->with('passwordError', 'Senha Incorreta');
    }
 
    /**

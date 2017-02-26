@@ -37,6 +37,10 @@
          'DEPARTAMENTO DE ENGENHARIA DE PRODUCAO - ICEA' => 2,
          'DEPARTAMENTO DE ENGENHARIA ELETRICA' => 2,
 
+         // Prograd
+
+         'PRO-REITORIA DE GRADUACAO' => 3,
+
 
       ],
 
@@ -45,7 +49,7 @@
 
          'CSI495', 'CSI496', 'CSI498', 'CSI499'
       ]
-      
+
    ]
 
 ?>

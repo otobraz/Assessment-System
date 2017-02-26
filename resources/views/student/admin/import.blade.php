@@ -20,8 +20,11 @@
                <fieldset>
 
                   <div class="form-group">
-                     <label for="professors-csv">Selecione o arquivo:</label>
-                     <input type="file" accept=".csv" id="students-csv" name="students-csv">
+                     <label for="professors-csv">Selecione o arquivo: <span class="span-error">*</span></label>
+                     <input type="file" accept=".csv" id="students-csv" name="students-csv"
+                        oninvalid="setCustomValidity('Selecione o arquivo.')"
+                        oninput="setCustomValidity('')"required
+                     >
                      <p class="help-block">Apenas arquivos do tipo .csv</p>
                   </div>
 

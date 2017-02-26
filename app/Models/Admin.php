@@ -19,6 +19,7 @@ class Admin extends Model
       'nome',
       'sobrenome',
       'email',
+      'tipo_id'
    ];
 
    /**
@@ -27,11 +28,15 @@ class Admin extends Model
     * @var array
     */
    protected $hidden = [
-      'senha'
+
    ];
 
    public function getNomeCompletoAttribute(){
       return $this->nome . " " . $this->sobrenome;
+   }
+
+   public function tipo(){
+      return $this->belongsTo('App\Models\TipoAdmin');
    }
 
 }

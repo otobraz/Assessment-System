@@ -45,13 +45,26 @@ class Handler extends ExceptionHandler
    */
    public function render($request, Exception $e)
    {
-
-      //check the type of the exception you are interested at
-      if ($e instanceof QueryException) {
-
-         //do wathever you want, for example returining a specific view
-         return response()->view('errors.query-exception', [], 500);
+      if($e instanceof \Illuminate\Database\QueryException) {
+         return back()->with('errorMessage', $e->getMessage());
       }
       return parent::render($request, $e);
    }
+
+   /**
+   * Convert an authentication exception into an unauthenticated response.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  \Illuminate\Auth\AuthenticationException  $exception
+   * @return \Illuminate\Http\Response
+   */
+   protected function unauthenticated($request, AuthenticationException $exception)
+   {
+      if ($request->expectsJson()) {
+         return response()->json(['error' => 'Unauthenticated.'], 401);
+      }
+
+      return redirect()->guest('login');
+   }
+
 }

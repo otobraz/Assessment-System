@@ -4,11 +4,6 @@
    Questionários | Gerenciar
 @endsection
 
-{{-- @section('content-header')
-   <h1>Gerenciar Questionários</h1>
-   <hr class="hr-ufop">
-@endsection --}}
-
 @section('extraCss')
    <link href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
 @endsection

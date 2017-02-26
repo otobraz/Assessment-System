@@ -1,12 +1,5 @@
 @extends('layout.admin.base')
 
-{{-- @section('content-header')
-   <h1>{{$survey->titulo}}</h1>
-   <br/>
-   <h1><small>{{$survey->descricao}}</small></h1>
-   <hr class="hr-ufop">
-@endsection --}}
-
 @section('content')
 
 
@@ -106,6 +99,7 @@
                         <th>Semestre</th>
                         <th>Disponibilização</th>
                         <th>Status</th>
+                        {{-- <th>No. Respostas</th> --}}
                         <th>Respostas</th>
                         <th>Resultado</th>
                      </tr>

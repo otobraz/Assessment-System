@@ -15,7 +15,7 @@
          <tr>
             <td align="center">{{$survey->id}}</td>
             <td>{{$survey->titulo}}</td>
-            <td>{{$survey->professor->nomeCompleto}}</td>
+            <td>{{$survey->professor->nome_completo}}</td>
             <td align="center">{{date("d/m/y", strtotime($survey->created_at))}}</td>
             <td align="center">
                <a class="btn btn-info btn-xs" role="button"

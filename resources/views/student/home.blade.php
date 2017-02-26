@@ -11,6 +11,103 @@
 
 @section('content')
 
+
+   {{-- QUESTIONÁRIOS ABERTOS --}}
+
+   <div class="box box-primary-ufop">
+      <div class="box-header with-border">
+         <h3 class="box-title">QUESTIONÁRIOS À RESPONDER</h3>
+         <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+         </div><!-- /.box-tools -->
+      </div><!-- /.box-header -->
+
+      <div class="box-body">
+
+         @if($generalSurveys->count() > 0){
+
+            <table class="table table-bordered table-col-condensed table-striped table-responsive">
+
+               <thead>
+                  <tr>
+                     <th colspan="5" class="text-center">Questionários Gerais</th>
+                  </tr>
+                  <tr>
+                     <th>Questionário</th>
+                     <th>Turma</th>
+                     <th>Disciplina</th>
+                     <th>Disponibilização</th>
+                     <th>Responder</th>
+                  </tr>
+               </thead>
+
+               <tbody>
+
+                  @foreach ($generalSurveys as $survey)
+                     <tr>
+                        <td>
+                           {{$survey[0]->titulo}}
+                        </td>
+                        <td align="center">{{$survey[1]->cod_turma}}</td>
+                        <td>{{$survey[1]->disciplina->cod_disciplina . " - " . $survey[1]->disciplina->disciplina}}</td>
+                        <td align="center">{{date("d/m/y", strtotime($survey[0]->pivot->created_at))}}</td>
+                        <td align="center">
+                           <a class="btn btn-primary-ufop btn-xs" role="button"
+                           style="color: white" href="{{action('ResponseController@create', encrypt($survey[0]->pivot->id))}}">Responder</a>
+                        </td>
+                     </tr>
+                  @endforeach
+
+               </tbody>
+
+            </table>
+
+            <hr class="hr-ufop">
+
+         @endif
+
+         <table class="table table-bordered table-col-condensed table-striped table-responsive">
+
+            <thead>
+               <tr>
+                  <th colspan="6" class="text-center">Questionários de Professores</th>
+               </tr>
+               <tr>
+                  <th>Questionário</th>
+                  <th>Turma</th>
+                  <th>Disciplina</th>
+                  <th>Professor</th>
+                  <th>Disponibilização</th>
+                  <th>Responder</th>
+               </tr>
+            </thead>
+
+            <tbody>
+
+               @foreach ($myOpenSurveys as $survey)
+                  <tr>
+                     <td>
+                        {{$survey[0]->titulo}}
+                     </td>
+                     <td align="center">{{$survey[1]->cod_turma}}</td>
+                     <td>{{$survey[1]->disciplina->cod_disciplina . " - " . $survey[1]->disciplina->disciplina}}</td>
+                     <td>{{$survey[0]->professor->nome_completo}}</td>
+                     <td align="center">{{date("d/m/y", strtotime($survey[0]->pivot->created_at))}}</td>
+                     <td align="center">
+                        <a class="btn btn-primary-ufop btn-xs" role="button"
+                        style="color: white" href="{{action('ResponseController@create', encrypt($survey[0]->pivot->id))}}">Responder</a>
+                     </td>
+                  </tr>
+               @endforeach
+
+            </tbody>
+
+         </table>
+
+      </div><!-- /.box-body -->
+   </div>
+
+
    {{-- TURMAS ATUAIS --}}
 
    <div class="box box-primary-ufop">
@@ -104,56 +201,6 @@
             </tbody>
          </table>
       </div>
-   </div>
-
-   {{-- QUESTIONÁRIOS ABERTOS --}}
-
-   <div class="box box-primary-ufop">
-      <div class="box-header with-border">
-         <h3 class="box-title">Questionários não Respondidos</h3>
-         <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-         </div><!-- /.box-tools -->
-      </div><!-- /.box-header -->
-
-      <div class="box-body">
-
-         <table class="table table-bordered table-col-condensed table-striped table-responsive">
-
-            <thead>
-               <tr>
-                  <th>Questionário</th>
-                  <th>Turma</th>
-                  <th>Disciplina</th>
-                  <th>Professor</th>
-                  <th>Disponibilização</th>
-                  <th>Responder</th>
-               </tr>
-            </thead>
-
-            <tbody>
-
-               @foreach ($myOpenSurveys as $survey)
-                  <tr>
-                     <td>
-                        {{$survey[0]->titulo}}
-                     </td>
-                     <td align="center">{{$survey[1]->cod_turma}}</td>
-                     <td>{{$survey[1]->disciplina->cod_disciplina . " - " . $survey[1]->disciplina->disciplina}}</td>
-                     <td>{{$survey[0]->professor->nome_completo}}</td>
-                     <td align="center">{{date("d/m/y", strtotime($survey[0]->pivot->created_at))}}</td>
-                     <td align="center">
-                        <a class="btn btn-primary-ufop btn-xs" role="button"
-                        style="color: white" href="{{action('ResponseController@create', encrypt($survey[0]->pivot->id))}}">Responder</a>
-                     </td>
-                  </tr>
-               @endforeach
-
-            </tbody>
-
-         </table>
-
-      </div><!-- /.box-body -->
    </div>
 
 @endsection

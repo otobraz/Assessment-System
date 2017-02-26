@@ -10,8 +10,6 @@
       <div class="box-header with-border">
          <h3 class="box-title">{{$guidance->tipo->tipo}}</h3>
          <div class="box-tools pull-right">
-            <a class="btn btn-primary-ufop btn-sm" role="button"
-            style="color: white" href="{{action('GuidanceController@showResponse', encrypt($guidance->id))}}">Ver resposta</a>
          </div><!-- /.box-tools -->
       </div><!-- /.box-header -->
 

@@ -4,10 +4,6 @@
 Pergunta | Criar
 @endsection
 
-@section('sidebar')
-   @include('layout.admin.sidebar')
-@endsection
-
 @section('content')
 
    <div class="box box-primary-ufop">
@@ -46,7 +42,7 @@ Pergunta | Criar
 
                <div class="form-group">
                   <label for="question">Pergunta:</label>
-                  <input type="text" class="form-control" id="question" name="question" placeholder="Pergunta">
+                  <input type="text" class="form-control" id="question" name="question" placeholder="Pergunta" required>
                </div>
 
                <div id="dynamic-input" class="form-group">

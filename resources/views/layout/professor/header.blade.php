@@ -43,7 +43,7 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                      <div class="pull-left">
-                        <a href="{{action('ProfessorController@edit', encrypt(session()->get('id')))}}" class="btn btn-default"><i class="fa fa-id-badge"></i> Perfil</a>
+                        <a href="{{action('ProfessorController@edit')}}" class="btn btn-default"><i class="fa fa-id-badge"></i> Perfil</a>
                      </div>
                      <div class="pull-right">
                         <a href="{{action('AuthController@logout')}}" class="btn btn-default"><i class="fa fa-sign-out"></i> Sair</a>

@@ -33,51 +33,48 @@
 @section('myScripts')
 
    <script type="text/javascript" src="{{URL::asset('/js/deleteModal.js')}}"></script>
+   <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+   <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 
-   @section('myScripts')
-
-      <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
-      <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
-
-      <script>
-      $(document).ready(function () {
-         $("#index-table").DataTable( {
-            "language": {
-               "lengthMenu": "Mostrar  _MENU_  registros por página",
-               "zeroRecords": "Nada encontrado.",
-               "info": "Mostrando página _PAGE_ de _PAGES_",
-               "infoEmpty": "Nenhum registro disponível",
-               "infoFiltered": "(Filtrado de _MAX_ registros)",
-               "search": "Procurar: ",
-               "paginate": {
-                  "next": "Próximo",
-                  "previous": "Anterior"
-               }
-            },
-            "autoWidth": true,
-            "aLengthMenu": [[25, 50, 100, 200, 300, -1], [25, 50, 100, 200, 300, "Tudo"]],
-            "columnDefs": [{
-               "orderable": false,
-               "targets": [4,5]
-            }]
-         });
+   <script>
+   $(document).ready(function () {
+      $("#index-table").DataTable( {
+         "language": {
+            "lengthMenu": "Mostrar  _MENU_  registros por página",
+            "zeroRecords": "Nada encontrado.",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
+            "infoEmpty": "Nenhum registro disponível",
+            "infoFiltered": "(Filtrado de _MAX_ registros)",
+            "search": "Procurar: ",
+            "paginate": {
+               "next": "Próximo",
+               "previous": "Anterior"
+            }
+         },
+         "autoWidth": true,
+         "aLengthMenu": [[25, 50, 100, 200, 300, -1], [25, 50, 100, 200, 300, "Tudo"]],
+         "columnDefs": [{
+            "orderable": false,
+            "targets": [4,5]
+         }]
       });
-      </script>
+   });
+   </script>
 
-      {{-- <script>
-      $(document).ready(function () {
-      $("#professors").DataTable( {
-      "language": {
-      "lengthMenu": "Mostrar  _MENU_  registros por página",
-      "zeroRecords": "Nada encontrado.",
-      "info": "Mostrando página _PAGE_ de _PAGES_",
-      "infoEmpty": "Nenhum registro disponível",
-      "infoFiltered": "(Filtrado de _MAX_ registros)",
-      "search": "Procurar: ",
-      "paginate": {
-      "next": "Próximo",
-      "previous": "Anterior"
-   }
+   {{-- <script>
+   $(document).ready(function () {
+   $("#professors").DataTable( {
+   "language": {
+   "lengthMenu": "Mostrar  _MENU_  registros por página",
+   "zeroRecords": "Nada encontrado.",
+   "info": "Mostrando página _PAGE_ de _PAGES_",
+   "infoEmpty": "Nenhum registro disponível",
+   "infoFiltered": "(Filtrado de _MAX_ registros)",
+   "search": "Procurar: ",
+   "paginate": {
+   "next": "Próximo",
+   "previous": "Anterior"
+}
 },
 "scrollY":        '50vh',
 "scrollCollapse": true,
@@ -85,7 +82,5 @@
 });
 });
 </script> --}}
-
-@endsection
 
 @endsection

@@ -44,8 +44,14 @@ class Orientacao extends Model
       return $this->belongsTo('App\Models\TipoOrientacao');
    }
 
+   public function resposta(){
+      return $this->belongsTo('App\Models\RespostaOrientacao');
+   }
+
    public function scopeEmAndamento($query){
       return $query->where('status', 1);
    }
+
+
 
 }

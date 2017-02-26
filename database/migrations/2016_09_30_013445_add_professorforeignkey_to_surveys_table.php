@@ -14,7 +14,7 @@ class AddProfessorforeignkeyToSurveysTable extends Migration
    {
       Schema::table('questionarios', function (Blueprint $table) {
 
-         $table->integer('professor_id')->unsigned()->after('descricao');
+         $table->integer('professor_id')->unsigned()->nullable()->after('descricao');
 
          $table->foreign('professor_id')->references('id')->on('professores');
       });

@@ -4,11 +4,6 @@
    Gerenciar | Perguntas
 @endsection
 
-{{-- @section('content-header')
-<h1>Tipos de Pergunta</h1>
-<hr class="hr-ufop">
-@endsection --}}
-
 @section('content')
 
    @include('question.admin.question-list')

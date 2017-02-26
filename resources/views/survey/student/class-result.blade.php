@@ -81,7 +81,7 @@
 
       color = getRandomColor();
 
-      @foreach ($questions->whereInLoose('tipo_id', [2,3]) as $question)
+      @foreach ($questions->whereIn('tipo_id', [2,3]) as $question)
 
       var data{{$question->id}} = {
          labels: {!! $question->opcoes->pluck('opcao') !!},
@@ -139,7 +139,15 @@
             onComplete: showBarValues
          },
 
+         legend: {
+            labels: {
+               fontStyle: 'bold',
+               usePointStyle: true
+            }
+         },
+
          responsive: true,
+
       };
 
       var barChart{{$question->id}} = new Chart(barChart{{$question->id}}Canvas, {

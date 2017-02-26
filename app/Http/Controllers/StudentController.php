@@ -7,10 +7,12 @@ use App\Http\Requests;
 
 use App\Models\Aluno;
 use App\Models\Curso;
+use App\Models\Resposta;
 
 class StudentController extends Controller
 {
 
+   // Gets and returns the LdapUser based on the username (CPF)
    public function getLdapUser($ldapData = null, $username = null){
       $ds = ldap_connect($ldapData['server']); // your ldap server
       try{
@@ -39,20 +41,75 @@ class StudentController extends Controller
    */
    public function index()
    {
+
+      $students = Aluno::all();
       switch (session()->get('role')) {
+
          case '0':
-         $students = Aluno::all();
          return view ('student.admin.index', compact('students'));
          break;
 
          case '2':
-         $students = Aluno::all();
          return view ('student.professor.index', compact('students'));
          break;
 
-         default:
-            return redirect('/');
+         case '3':
+         return view ('student.prograd.index', compact('students'));
          break;
+
+         default:
+         return redirect('home');
+         break;
+      }
+
+   }
+
+   /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+   public function show($id){
+
+      $student = Aluno::find(decrypt($id));
+      if(isset($student)){
+         $currentSections = $student->turmas()->OrderByDisciplina()->get()->groupBy('ano')->transform(function($item, $k) {
+            return $item->groupBy('semestre');
+         })->first()->first();
+
+         $currentGuidances = $student->orientacoes()->emAndamento()->get();
+         $openSurveys = collect();
+         $generalSurveys = collect();
+
+         foreach  ($student->turmas as $section){
+            foreach ($section->questionarios as $survey) {
+               if(is_null($survey->professor_id)){
+                  if($survey->pivot->aberto){
+                     $response = Resposta::where('questionario_turma_id', $survey->pivot->id)->first();
+                     if(!isset($response)){
+                        $generalSurveys = $generalSurveys->push(array($survey, $section));
+                     }
+                  }
+               }else{
+                  if($survey->pivot->aberto){
+                     $response = Resposta::where('questionario_turma_id', $survey->pivot->id)->first();
+                     if(!isset($response)){
+                        $openSurveys = $openSurveys->push(array($survey, $section));
+                     }
+                  }
+               }
+            }
+
+         }
+
+         return view('student.admin.show', compact(
+            'currentSections',
+            'currentGuidances',
+            'openSurveys',
+            'generalSurveys',
+            'student'
+         ));
       }
 
    }
@@ -60,15 +117,21 @@ class StudentController extends Controller
    /**
    * Show the form for editing the specified resource.
    *
-   * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-   public function edit($id)
+   public function edit()
    {
-      $student = Aluno::find(decrypt($id));
+      $student = Aluno::find(session()->get('id'));
       return view('student.edit', compact('student'));
    }
 
+   /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
    public function update(Request $request, $id)
    {
 
@@ -80,10 +143,16 @@ class StudentController extends Controller
       return redirect()->route('student.edit', ['id' => $id])->with('errorMessage', 'Erro ao atualizar informações');
    }
 
+   /**
+   * Show the form for importing the students from the .csv file
+   */
    public function import(){
       return view('student.admin.import');
    }
 
+   /**
+   * Import the students from the .csv file
+   */
    public function storeFromCsv(Request $request){
 
       if($request->file('students-csv')->isValid()){
@@ -118,8 +187,8 @@ class StudentController extends Controller
             $ldapData = config('my_config.ldapData');
             foreach ($studentsData as $key => $student){
                $username = preg_replace('/[^0-9]+/', '', $student[0]);
-               $major = $sections->whereLoose('cod_curso', $student[1])->first();
-               if($studentModel = $students->whereLoose('usuario', $username)->first()){
+               $major = $sections->where('cod_curso', $student[1])->first();
+               if($studentModel = $students->where('usuario', $username)->first()){
                   $studentModel->matricula = $key;
                   $studentModel->curso_id = $major->id;
                   $studentModel->save();

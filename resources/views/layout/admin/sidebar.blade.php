@@ -32,7 +32,7 @@
                   <a href="{{route('guidance.index')}}"><i class="fa fa-circle-o"></i>Orientações</a>
                </li>
                <li>
-                  <a href="{{route('guidanceType.index')}}"><i class="fa fa-circle-o"></i>Tipos de Orientações</a>
+                  <a href="{{route('guidanceType.index')}}"><i class="fa fa-circle-o"></i>Tipos de Orientação</a>
                </li>
             </ul>
          </li>
@@ -46,6 +46,9 @@
             <ul class="treeview-menu">
                <li>
                   <a href="{{route('admin.index')}}"><i class="fa fa-circle-o"></i>Administradores</a>
+               </li>
+               <li>
+                  <a href="{{route('adminType.index')}}"><i class="fa fa-circle-o"></i>Tipos de Administrador</a>
                </li>
                <li>
                   <a href="{{route('student.index')}}"><i class="fa fa-circle-o"></i>Alunos</a>
@@ -64,7 +67,10 @@
             </a>
             <ul class="treeview-menu">
                <li>
-                  <a href="{{route('survey.index')}}"><i class="fa fa-circle-o"></i>Turmas</a>
+                  <a href="{{route('survey.generalSurveysIndex')}}"><i class="fa fa-circle-o"></i>QuestionárioS Gerais</a>
+               </li>
+               <li>
+                  <a href="{{route('survey.index')}}"><i class="fa fa-circle-o"></i>Questionários Pessoais</a>
                </li>
                <li>
                   <a href="{{route('question.index')}}"><i class="fa fa-circle-o"></i>Perguntas</a>

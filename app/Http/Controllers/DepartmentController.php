@@ -48,18 +48,7 @@ class DepartmentController extends Controller
       return redirect()->route('department.create')->with('errorMessage', 'Erro ao criar departamento');
 
    }
-
-   /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-   public function show($id)
-   {
-
-   }
-
+   
    /**
    * Show the form for editing the specified resource.
    *

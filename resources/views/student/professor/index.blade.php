@@ -8,11 +8,6 @@
    <link href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
-{{-- @section('content-header')
-   <h1>Alunos</h1>
-   <hr class="hr-ufop">
-@endsection --}}
-
 @section('content')
 
    <div class="box box-primary-ufop">

@@ -200,12 +200,12 @@ class DatabaseSeeder extends Seeder
       //    }
       // }
 
-      $respostas = Resposta::where('questionario_turma_id', 0)->get();
-      foreach ($respostas as $resposta){
-         $qSId = DB::table('questionario_turma')->where('questionario_id', $resposta->questionario_id)->where('turma_id', $resposta->turma_id)->first();
-         $resposta->questionario_turma_id = $qSId->id;
-         $resposta->save();
-       }
+      // $respostas = Resposta::where('questionario_turma_id', 0)->get();
+      // foreach ($respostas as $resposta){
+      //    $qSId = DB::table('questionario_turma')->where('questionario_id', $resposta->questionario_id)->where('turma_id', $resposta->turma_id)->first();
+      //    $resposta->questionario_turma_id = $qSId->id;
+      //    $resposta->save();
+      //  }
 
       // Pergunta_Questionario
       // $surveys = Questionario::where('id', '>', '305')->pluck('id')->all();
@@ -218,6 +218,16 @@ class DatabaseSeeder extends Seeder
       //       ]);
       //    }
       // }
+
+      $surveys = Questionario::all();
+      foreach($surveys as $survey){
+         $i = 1;
+         foreach($survey->perguntas as $question){
+            $question->pivot->numero = $i;
+            $i++;
+            $question->pivot->save();
+         }
+      }
 
       //Choices
       // $questions = Pergunta::all();

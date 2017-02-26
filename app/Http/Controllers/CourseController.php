@@ -56,17 +56,6 @@ class CourseController extends Controller
    }
 
    /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-   public function show($id)
-   {
-
-   }
-
-   /**
    * Show the form for editing the specified resource.
    *
    * @param  int  $id
@@ -106,7 +95,9 @@ class CourseController extends Controller
    */
    public function destroy($id)
    {
+
       Disciplina::find(decrypt($id))->delete();
       return redirect()->route('course.index')->with('successMessage', 'Disciplina excluído com sucesso.');
+
    }
 }

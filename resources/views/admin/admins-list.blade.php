@@ -7,6 +7,7 @@
          <th>Nome</th>
          <th>Sobrenome</th>
          <th>E-mail</th>
+         <th>Tipo</th>
          <th>Editar</th>
          <th>Excluir</th>
       </tr>
@@ -20,6 +21,7 @@
             <td>{{$admin->nome}}</td>
             <td>{{$admin->sobrenome}}</td>
             <td>{{$admin->email}}</td>
+            <td>{{$admin->tipo->tipo}}</td>
             <td align="center">
                <a role="button" class="btn btn-warning btn-xs" href="{{route('admin.edit', encrypt($admin->id))}}">Editar</a>
 

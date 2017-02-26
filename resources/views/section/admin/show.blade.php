@@ -4,14 +4,11 @@
    {{$section->disciplina->disciplina}}
 @endsection
 
-@section('content-header')
-   {{-- <h1>{{$section->disciplina->cod_disciplina . " - " . $section->disciplina->disciplina}}</h1>
-   <hr class="hr-ufop"> --}}
-@endsection
-
 @section('content')
 
-   <div class="box box-primary-ufop">
+   {{-- ALUNOS --}}
+
+   <div class="box box-primary-ufop collapsed-box">
       <div class="box-header with-border">
          <h3 class="box-title">{{$section->disciplina->cod_disciplina . " - " . $section->disciplina->disciplina}}</h3>
          @foreach ($section->professores as $professor)
@@ -19,7 +16,7 @@
             <h3 class="box-title"><small>{{$professor->nome_completo . " - " . $professor->email}}</small></h3>
          @endforeach
          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
          </div><!-- /.box-tools -->
       </div><!-- /.box-header -->
       <div class="box-body">
@@ -53,6 +50,49 @@
                   <th>Curso</th>
                </tr>
             </tfoot>
+         </table>
+
+      </div><!-- /.box-body -->
+   </div><!-- /.box -->
+
+   {{-- QUESTIONÁRIOS --}}
+
+   <div class="box box-primary-ufop">
+      <div class="box-header with-border">
+         <h3 class="box-title">Questionários</h3>
+
+         <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+         </div><!-- /.box-tools -->
+      </div><!-- /.box-header -->
+      <div class="box-body">
+
+         @include('alert-message.success')
+         @include('alert-message.error')
+
+         <table id="index-table" class="table table-ufop table-col-condensed table-bordered table-striped table-responsive">
+
+            <thead>
+               <tr>
+                  <th>Id</th>
+                  <th>Título</th>
+                  <th>Detalhes</th>
+               </tr>
+            </thead>
+
+            <tbody>
+               @foreach($surveys as $survey)
+                  <tr>
+                     <td align="center">{{$survey->id}}</td>
+                     <td>{{$survey->titulo}}</td>
+                     <td align="center">
+                        <a class="btn btn-info btn-xs" role="button"
+                        style="color: white" href="{{action('SurveyController@generalSurveyShow', encrypt($survey->id))}}">Detalhes</a>
+                     </td>
+                  </tr>
+               @endforeach
+            </tbody>
+
          </table>
 
       </div><!-- /.box-body -->

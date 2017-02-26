@@ -11,7 +11,8 @@ class Pergunta extends Model
 
    protected $fillable = [
       'pergunta',
-      'tipo_id'
+      'tipo_id',
+      'professor_id'
    ];
 
    /**
