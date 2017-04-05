@@ -11,7 +11,7 @@
          <h3 class="box-title">ORIENTAÇÕES</h3>
          <div class="box-tools pull-right">
             <a class="btn btn-primary-ufop btn-sm" role="button"
-            style="color: white" href="{{action('GuidanceController@getResults')}}"><i class="fa fa-bar-chart"></i> Resultado Geral</a>
+            style="color: white" href="{{action('StudentController@index')}}"> Orientar</a>
          </div><!-- /.box-tools -->
       </div><!-- /.box-header -->
 

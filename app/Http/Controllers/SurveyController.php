@@ -165,6 +165,7 @@ class SurveyController extends Controller
       }
 
       $survey->save();
+      $n = 1;
 
       foreach ($inputs as $input){
          if(is_array($input)){
@@ -174,7 +175,7 @@ class SurveyController extends Controller
             ]);
             $question->professor_id = session()->get('id');
             $question->save();
-            $question->questionarios()->attach($survey->id);
+            $question->questionarios()->attach($survey->id, ['numero' => $n]);
             if($question->tipo_id != 1){
                foreach ($input as $choice){
                   if(!empty($choice)){
@@ -188,8 +189,9 @@ class SurveyController extends Controller
             }
          }else{
             $question = Pergunta::find($input);
-            $question->questionarios()->attach($survey->id);
+            $question->questionarios()->attach($survey->id, ['numero' => $n]);
          }
+         $n++;
       }
       if(session()->get('role') == 2){
          return redirect()->route('survey.index')->with('successMessage', 'Questionário criado com sucesso');
@@ -342,9 +344,8 @@ class SurveyController extends Controller
 
    // Attaches the survey to the classes the professor has choosen
    public function attach(Request $request){
-      $surveyId = $request->input('survey-id');
       foreach ($request->input('sections') as $sectionId) {
-         Turma::find($sectionId)->questionarios()->attach($surveyId);
+         Turma::find($sectionId)->questionarios()->attach($request->input('survey-id'));
       }
       return redirect()->route('survey.index')->with('successMessage', 'Questionário disponibilizado com sucesso.');
    }
@@ -367,7 +368,7 @@ class SurveyController extends Controller
             $section->questionarios()->attach($request->input('survey-id'));
          }
       }
-      return redirect()->route('survey.generalSurveysIndex')->with('successMessage', 'Questionário disponibilizados com sucesso.');
+      return redirect()->route('survey.generalSurveysIndex')->with('successMessage', 'Questionário disponibilizado com sucesso.');
    }
 
    // Opens a survey
@@ -939,9 +940,13 @@ class SurveyController extends Controller
    }
 
    public function ajaxSelectQuestion($count){
-      $defaultQuestions = Pergunta::all();
-      $professorQuestions = Professor::find(session()->get('id'))->perguntas;
-      return view('survey.ajax.select-questions', compact('defaultQuestions', 'professorQuestions', 'count'))->render();
+
+      if(session()->get('role') == 2){
+         $questions = Professor::find(session()->get('id'))->perguntas;
+      }else{
+         $questions = Pergunta::all();
+      }
+      return view('survey.ajax.select-questions', compact('questions', 'count'))->render();
    }
 
    public function ajaxCreateQuestion($count){

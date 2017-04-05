@@ -10,6 +10,8 @@
       <div class="box-header with-border">
          <h3 class="box-title">{{$guidance->tipo->tipo}}</h3>
          <div class="box-tools pull-right">
+            {{-- <a class="btn btn-primary-ufop btn-sm" role="button"
+            style="color: white" href="{{action('GuidanceController@showResponse', encrypt($guidance->id))}}">Ver resposta</a> --}}
          </div><!-- /.box-tools -->
       </div><!-- /.box-header -->
 
@@ -32,7 +34,15 @@
                </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label for="student">Status:</label>
+                  <input class="form-control input-xlarge" type="text" name="student" id="student"
+                  value="{{$guidance->status ? 'Em andamento' : 'Finalizada'}}" disabled>
+               </div>
+            </div>
+
+            <div class="col-md-12">
                <div class="form-group">
                   <label for="student">Titulo:</label>
                   <input class="form-control input-xlarge" type="text" name="student" id="student"
@@ -40,13 +50,6 @@
                </div>
             </div>
 
-            <div class="col-md-6">
-               <div class="form-group">
-                  <label for="student">Status:</label>
-                  <input class="form-control input-xlarge" type="text" name="student" id="student"
-                  value="{{$guidance->status ? 'Em andamento' : 'Finalizada'}}" disabled>
-               </div>
-            </div>
          </div>
 
          <label>Descrição:</label>

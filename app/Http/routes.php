@@ -35,12 +35,7 @@ Route::group(['middleware' => ['auth.student']], function () {
 
 });
 
-// Routes that can be accessed iff the user is a professor
-Route::group(['middleware' => ['auth.professor']], function () {
-
-   // Professor's route
-   Route::get('professor/editar', ['as' => 'professor.edit', 'uses' => 'ProfessorController@edit']);
-   Route::put('professor/{id}', ['as' => 'professor.update', 'uses' => 'ProfessorController@update']);
+Route::group(['middleware' => ['auth.studentProf']], function () {
 
    // Guidance routes
    Route::get('orientacao/{studentId}/criar', ['as' => 'guidance.create', 'uses' => 'GuidanceController@create']);
@@ -49,8 +44,16 @@ Route::group(['middleware' => ['auth.professor']], function () {
    Route::put('orientacao/{id}', ['as' => 'guidance.update', 'uses' => 'GuidanceController@update']);
    Route::get('orientacao/{id}/finalizar', ['as' => 'guidance.finish', 'uses' => 'GuidanceController@finish']);
    Route::get('orientacao/{id}/recomecar', ['as' => 'guidance.restart', 'uses' => 'GuidanceController@restart']);
-   Route::get('orientacao/{id}/disponibilizar-questionario/', ['as' => 'guidance.provideSurvey', 'uses' => 'GuidanceController@provideSurvey']);
-   Route::get('orientacao/{id}/cancelar-questionario/', ['as' => 'guidance.cancelSurvey', 'uses' => 'GuidanceController@cancelSurvey']);
+   // Route::get('orientacao/{id}/disponibilizar-questionario/', ['as' => 'guidance.provideSurvey', 'uses' => 'GuidanceController@provideSurvey']);
+   // Route::get('orientacao/{id}/cancelar-questionario/', ['as' => 'guidance.cancelSurvey', 'uses' => 'GuidanceController@cancelSurvey']);
+});
+
+// Routes that can be accessed iff the user is a professor
+Route::group(['middleware' => ['auth.professor']], function () {
+
+   // Professor's route
+   Route::get('professor/editar', ['as' => 'professor.edit', 'uses' => 'ProfessorController@edit']);
+   Route::put('professor/{id}', ['as' => 'professor.update', 'uses' => 'ProfessorController@update']);
 
    Route::get('questionario/{id}/disponibilizar', ['as' => 'survey.provide', 'uses' => 'SurveyController@provide']);
    Route::post('questionario/disponibilizar', ['as' => 'survey.attach', 'uses' => 'SurveyController@attach']);
@@ -210,7 +213,7 @@ Route::group(['middleware' => ['auth.user']], function () {
    // General Surveys
    Route::get('questionarios-gerais', ['as' => 'survey.generalSurveysIndex', 'uses' => 'SurveyController@generalSurveysIndex']);
    Route::get('questionario-geral/{year}/{semester}/{departmentid}/{surveyId}', ['as' => 'survey.generalSurveyDepartmentSections', 'uses' => 'SurveyController@generalSurveyDepartmentSections']);
-   Route::get('questionario-geral/{id}', ['as' => 'survey.generalSurveyShow', 'uses' => 'SurveyController@generalSurveyShow']);
+   // Route::get('questionario-geral/{id}', ['as' => 'survey.generalSurveyShow', 'uses' => 'SurveyController@show']);
    Route::get('questionario-geral/resultado/departamento/{year}/{semester}/{surveyId}/{departmentId}', ['as' => 'survey.departmentResult', 'uses' => 'SurveyController@departmentResult']);
    Route::get('questionario-geral/resultado/departamento/{year}/{semester}/{surveyId}', ['as' => 'survey.semesterResult', 'uses' => 'SurveyController@semesterResult']);
    Route::post('questionario-geral/resultados-comparados', ['as' => 'survey.generalSurveyComparedResult', 'uses' => 'SurveyController@generalSurveyComparedResult']);
@@ -226,8 +229,6 @@ Route::group(['middleware' => ['auth.user']], function () {
    // Guidances
    Route::get('orientacoes', ['as' => 'guidance.index', 'uses' => 'GuidanceController@index']);
    Route::get('orientacao/{id}', ['as' => 'guidance.show', 'uses' => 'GuidanceController@show']);
-   Route::get('orientacao/questionario/resposta/{guidanceId}', ['as' => 'guidance.response', 'uses' => 'GuidanceController@showResponse']);
-   Route::get('orientacao/resultados/', ['as' => 'guidance.results', 'uses' => 'GuidanceController@getResults']);
 
    // Questions
    Route::get('perguntas', ['as' => 'question.index', 'uses' => 'QuestionController@index']);

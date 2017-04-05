@@ -39,21 +39,22 @@
                </div>
             </div>
 
-            <div class="col-md-6">
-               <div class="form-group">
-                  <label for="student">Titulo:</label>
-                  <input class="form-control input-xlarge" type="text" name="student" id="student"
-                  value="{{$guidance->titulo}}" disabled>
-               </div>
-            </div>
-
-            <div class="col-md-6">
+            <div class="col-md-12">
                <div class="form-group">
                   <label for="student">Status:</label>
                   <input class="form-control input-xlarge" type="text" name="student" id="student"
                   value="{{$guidance->status ? 'Em andamento' : 'Finalizada'}}" disabled>
                </div>
             </div>
+
+            <div class="col-md-12">
+               <div class="form-group">
+                  <label for="student">Titulo:</label>
+                  <input class="form-control input-xlarge" type="text" name="student" id="student"
+                  value="{{$guidance->titulo}}" disabled>
+               </div>
+            </div>
+         
          </div>
 
          <label>Descrição:</label>

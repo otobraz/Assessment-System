@@ -74,7 +74,8 @@ class GuidanceController extends Controller
 
       if(!empty($request->input('guidance-type'))){
          $guidance = new Orientacao([
-            'descricao' => $request->description,
+            'titulo' => $request->input('title'),
+            'descricao' => $request->input('description'),
             'aluno_id' => $request->input('aluno-id'),
             'professor_id' => session()->get('id'),
             'tipo_id' => $request->input('guidance-type')
@@ -136,6 +137,9 @@ class GuidanceController extends Controller
       $guidance = Orientacao::find(decrypt($id));
       if($guidance->isOwner(session()->get('id'))){
          $guidanceTypes = TipoOrientacao::all();
+         if (session()->get('role') == 1) {
+            return view('guidance.student.edit', compact('guidance', 'guidanceTypes'));
+         }
          return view('guidance.professor.edit', compact('guidance', 'guidanceTypes'));
       }
       return redirect()->route('home');
@@ -190,28 +194,28 @@ class GuidanceController extends Controller
 
    }
 
-   public function provideSurvey($id){
-
-      $guidance = Orientacao::find(decrypt($id));
-      if(!$guidance->questionario_liberado){
-         $guidance->questionario_liberado = 1;
-         $guidance->save();
-         return redirect()->route('guidance.index')->with('successMessage', 'Questionário disponibilizado.');
-      }
-      return redirect()->route('guidance.index')->with('errorMessage', 'O questionário já foi disponibilizado.');
-
-   }
-
-   public function cancelSurvey($id){
-
-      $guidance = Orientacao::find(decrypt($id));
-      if($guidance->questionario_liberado){
-         $guidance->questionario_liberado = 0;
-         $guidance->save();
-         return redirect()->route('guidance.index')->with('successMessage', 'Disponibilização cancelada.');
-      }
-      return redirect()->route('guidance.index')->with('errorMessage', 'O questionário ainda não foi disponibilizado.');
-
-   }
+   // public function provideSurvey($id){
+   //
+   //    $guidance = Orientacao::find(decrypt($id));
+   //    if(!$guidance->questionario_liberado){
+   //       $guidance->questionario_liberado = 1;
+   //       $guidance->save();
+   //       return redirect()->route('guidance.index')->with('successMessage', 'Questionário disponibilizado.');
+   //    }
+   //    return redirect()->route('guidance.index')->with('errorMessage', 'O questionário já foi disponibilizado.');
+   //
+   // }
+   //
+   // public function cancelSurvey($id){
+   //
+   //    $guidance = Orientacao::find(decrypt($id));
+   //    if($guidance->questionario_liberado){
+   //       $guidance->questionario_liberado = 0;
+   //       $guidance->save();
+   //       return redirect()->route('guidance.index')->with('successMessage', 'Disponibilização cancelada.');
+   //    }
+   //    return redirect()->route('guidance.index')->with('errorMessage', 'O questionário ainda não foi disponibilizado.');
+   //
+   // }
 
 }

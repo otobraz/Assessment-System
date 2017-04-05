@@ -21,7 +21,7 @@
             <a href="{{action('ProfessorController@index')}}"><i class="fa fa-graduation-cap"></i> <span>Professores</span></a>
          </li>
          <li>
-            <a href="{{action('StudentController@edit')}}"><i class="fa fa-id-badge"></i> Perfil</a>
+            <a href="{{action('StudentController@edit')}}"><i class="fa fa-id-badge"></i> <span>Perfil</span></a>
          </li>
          <li>
             <a href="https://zeppelin10.ufop.br/minhaUfop/desktop/login.xhtml" target="_blank"><i class="fa fa-pencil-square-o"></i> <span>Editar Cadastro - minhaUFOP</span></a>

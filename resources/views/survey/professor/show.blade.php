@@ -6,11 +6,10 @@
 
 @section('content')
 
-   <div class="box box-primary-ufop collapsed-box">
+   <div class="box box-primary-ufop">
       <div class="box-header with-border">
          <h3 class="box-title">{{$survey->titulo}}</h3>
          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
          </div><!-- /.box-tools -->
       </div><!-- /.box-header -->
 
@@ -65,11 +64,9 @@
          </fieldset>
 
       </div>
-
    </div>
 
-
-   <div class="box box-primary-ufop">
+   {{-- <div class="box box-primary-ufop">
       <div class="box-header with-border">
          <h3 class="box-title">DISPONIBILIZAÇÕES</h3>
          <div class="box-tools pull-right">
@@ -102,8 +99,6 @@
                         <th>Semestre</th>
                         <th>Disponibilização</th>
                         <th>Status</th>
-                        {{-- <th>No. Respostas</th> --}}
-                        <th>Respostas</th>
                         <th>Resultado</th>
                      </tr>
                   </thead>
@@ -131,9 +126,6 @@
                                     Fechado
                                  @endif
                               </td>
-                              <td align="center"><a class="btn btn-primary btn-xs" role="button"
-                                 style="color: white" href="{{route('survey.showResponses', encrypt($section->pivot->id))}}">Respostas</a>
-                              </td>
                               <td align="center"><a class="btn btn-info btn-xs" role="button"
                                  style="color: white" href="{{route('survey.classResult', encrypt($section->pivot->id))}}"><i class="fa fa-bar-chart"></i> Resultado</a>
                               </td>
@@ -160,5 +152,5 @@
          </form>
 
       </div><!-- /.box-body -->
-   </div><!-- /.box -->
+   </div><!-- /.box --> --}}
 @endsection

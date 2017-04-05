@@ -14,7 +14,7 @@ class AddSectionFkToResponsesTable extends Migration
    {
       Schema::table('respostas', function (Blueprint $table) {
 
-         $table->integer('turma_id')->unsigned();
+         $table->integer('turma_id')->unsigned()->after('questionario_id');
          $table->foreign('turma_id')->references('id')->on('turmas');
 
       });

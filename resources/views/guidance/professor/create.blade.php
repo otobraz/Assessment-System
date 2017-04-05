@@ -72,6 +72,11 @@
                </div>
 
                <div class="form-group">
+                  <label for="description">Título:</label>
+                  <input class="form-control input-xlarge" type="text" name="title" id="tile" placeholder="Título"></input>
+               </div>
+
+               <div class="form-group">
                   <label for="description">Descrição:</label>
                   <textarea class="form-control input-xlarge" type="text" name="description" id="description" rows="4" placeholder="Descrição sobre a orientação"></textarea>
                </div>

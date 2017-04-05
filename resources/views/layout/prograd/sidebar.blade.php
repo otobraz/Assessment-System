@@ -39,10 +39,10 @@
             </a>
             <ul class="treeview-menu">
                <li>
-                  <a href="{{route('survey.generalSurveysIndex')}}"><i class="fa fa-circle-o"></i>QuestionárioS Gerais</a>
+                  <a href="{{route('survey.generalSurveysIndex')}}"><i class="fa fa-circle-o"></i>Questionários Gerais</a>
                </li>
                <li>
-                  <a href="{{route('survey.index')}}"><i class="fa fa-circle-o"></i>Questionários Pessoais</a>
+                  <a href="{{route('survey.index')}}"><i class="fa fa-circle-o"></i>Questionários dos Professores</a>
                </li>
                <li>
                   <a href="{{route('question.index')}}"><i class="fa fa-circle-o"></i>Perguntas</a>

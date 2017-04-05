@@ -139,7 +139,7 @@ class AuthController extends Controller{
       }
 
       // $authenticatedUser = array(
-      //    'id' => "30",
+      //    'id' => "53",
       //    'username' => $request->username,
       //    'first_name' => "Professor",
       //    'last_name' => "Professor",
@@ -157,8 +157,8 @@ class AuthController extends Controller{
          if ($this->isPasswordValid($userPassword, $request->input('password'))){
 
             if ($major = Curso::where('curso', $ldapUser[0][$ldapData['group_field']][0])->first()){
-               // $this->insertUpdateStudent($ldapUser, $ldapData);
-               // return redirect()->route('home');
+               $this->insertUpdateStudent($ldapUser, $ldapData);
+               return redirect()->route('home');
             }else if($department = Departamento::where('departamento', 'LIKE', $ldapUser[0][$ldapData['group_field']][0])->first()){
                $this->insertUpdateProfessor($authenticatedUser);
                return redirect()->route('home');

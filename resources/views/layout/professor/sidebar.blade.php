@@ -29,16 +29,16 @@
          </li>
 
          <li>
-            <a href="{{action('SectionController@index')}}"><i class="fa fa-book"></i> <span>Turmas</span></a>
+            <a href="{{action('SectionController@index')}}"><i class="fa fa-book"></i> <span>Minhas Turmas</span></a>
          </li>
          <li>
-            <a href="{{action('GuidanceController@index')}}"><i class="fa fa-cubes"></i> <span>Orientações</span></a>
+            <a href="{{action('GuidanceController@index')}}"><i class="fa fa-cubes"></i> <span>Minhas Orientações</span></a>
          </li>
          <li>
             <a href="{{action('StudentController@index')}}"><i class="fa fa-graduation-cap"></i> <span>Alunos</span></a>
          </li>
          <li>
-            <a href="{{action('ProfessorController@edit')}}"><i class="fa fa-id-badge"></i> Perfil</a>
+            <a href="{{action('ProfessorController@edit')}}"><i class="fa fa-id-badge"></i> <span>Perfil</span></a>
          </li>
          <li>
             <a href="https://zeppelin10.ufop.br/minhaUfop/desktop/login.xhtml" target="_blank"><i class="fa fa-pencil-square-o"></i> <span>Editar Cadastro - minhaUFOP</span></a>

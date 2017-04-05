@@ -54,26 +54,4 @@
    });
    </script>
 
-   {{-- <script>
-   $(document).ready(function () {
-   $("#professors").DataTable( {
-   "language": {
-   "lengthMenu": "Mostrar  _MENU_  registros por página",
-   "zeroRecords": "Nada encontrado.",
-   "info": "Mostrando página _PAGE_ de _PAGES_",
-   "infoEmpty": "Nenhum registro disponível",
-   "infoFiltered": "(Filtrado de _MAX_ registros)",
-   "search": "Procurar: ",
-   "paginate": {
-   "next": "Próximo",
-   "previous": "Anterior"
-}
-},
-"scrollY":        '50vh',
-"scrollCollapse": true,
-"paging":         false
-});
-});
-</script> --}}
-
 @endsection

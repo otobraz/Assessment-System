@@ -5,7 +5,7 @@
    <div class="login-box">
       <div class="login-logo">
          <i class="fa fa-bar-chart"></i>
-         <b>Sis</b>tema de <b>Av</b>aliação de classes e orientações
+         <b>Sis</b>tema de <b>Av</b>aliação
       </div>
       <!-- /.login-logo -->
       <div class="login-box-body ufop-border">
@@ -51,7 +51,7 @@
                <hr>
 
                <p class="text-center">
-                  Use o <span class="text-bold">mesmo CPF</span> e a <span class="text-bold">mesma SENHA</span><br> do <a href="http://www.minha.ufop.br/" target="_blank"><i class="fa fa-home"></i>Minha UFOP</a>
+                  Use o <span class="text-bold">mesmo CPF</span> e a <span class="text-bold">mesma SENHA</span><br> da <a href="http://www.minha.ufop.br/" target="_blank"><i class="fa fa-home"></i> minhaUFOP</a>
                </p>
 
             </form>

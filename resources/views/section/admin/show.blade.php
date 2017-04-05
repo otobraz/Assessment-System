@@ -87,7 +87,7 @@
                      <td>{{$survey->titulo}}</td>
                      <td align="center">
                         <a class="btn btn-info btn-xs" role="button"
-                        style="color: white" href="{{action('SurveyController@generalSurveyShow', encrypt($survey->id))}}">Detalhes</a>
+                        style="color: white" href="{{action('SurveyController@show', encrypt($survey->id))}}">Detalhes</a>
                      </td>
                   </tr>
                @endforeach

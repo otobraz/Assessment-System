@@ -29,7 +29,7 @@ class Orientacao extends Model
    ];
 
    public function isOwner($id){
-      return $this->professor_id == $id;
+      return $this->professor_id == $id || $this->aluno_id == $id;
    }
 
    public function aluno(){
